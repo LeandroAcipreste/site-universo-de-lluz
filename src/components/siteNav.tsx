@@ -2,8 +2,17 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { BTN_PRIMARY } from "../constants/btnPrimary";
+import { useNavigate } from "react-router-dom";
 
 export const NAV_LABELS = ["Orações", "Limpezas", "Defesas", "Magias", "Oráculo"] as const;
+
+const NAV_ICONS: Record<string, string> = {
+  "Orações": "/icons/universo-pray.png",
+  "Limpezas": "/icons/universo-incense.png",
+  "Defesas": "/icons/defenses-luz.png",
+  "Magias": "/icons/universo-sticky-notes.png",
+  "Oráculo": "/icons/ayahuasca.png",
+};
 
 const NAV_BTN_CLASS =
   "group relative flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-[1.02] hover:brightness-110 sm:py-2 sm:px-5 sm:text-sm";
@@ -13,6 +22,16 @@ const NAV_BTN_CLASS =
  */
 export default function SiteNav() {
   const [navOpen, setNavOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavClick = (label: string) => {
+    if (label === "Orações") {
+      navigate("/prayers");
+    } else {
+      navigate("/");
+    }
+    setNavOpen(false);
+  };
 
   useEffect(() => {
     if (!navOpen) return;
@@ -54,6 +73,7 @@ export default function SiteNav() {
                 type="button"
                 className={`${NAV_BTN_CLASS} shrink-0`}
                 style={BTN_PRIMARY}
+                onClick={() => handleNavClick(label)}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLButtonElement).style.boxShadow =
                     "0 0 40px -8px rgba(139,92,246,0.75)";
@@ -63,7 +83,17 @@ export default function SiteNav() {
                 }}
               >
                 {label}
-                <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 sm:h-3.5 sm:w-3.5" />
+                {NAV_ICONS[label] ? (
+                  <img 
+                    src={`${NAV_ICONS[label]}?v=4`} 
+                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5 ${
+                      label === "Defesas" || label === "Oráculo" ? "invert mix-blend-screen" : "brightness-0 invert"
+                    }`}
+                    alt="" 
+                  />
+                ) : (
+                  <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 sm:h-3.5 sm:w-3.5" />
+                )}
               </button>
             ))}
           </div>
@@ -98,10 +128,20 @@ export default function SiteNav() {
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
               }}
-              onClick={() => setNavOpen(false)}
+              onClick={() => handleNavClick(label)}
             >
               {label}
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              {NAV_ICONS[label] ? (
+                <img 
+                  src={`${NAV_ICONS[label]}?v=4`} 
+                  className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5 ${
+                    label === "Defesas" || label === "Oráculo" ? "invert mix-blend-screen" : "brightness-0 invert"
+                  }`}
+                  alt="" 
+                />
+              ) : (
+                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              )}
             </button>
           ))}
         </div>

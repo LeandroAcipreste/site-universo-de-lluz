@@ -1,11 +1,23 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import SiteNav from "./components/siteNav";
-import HomePage from "./pages/homePage/homePage";
 import Introduction from "./pages/homePage/introduction";
+import { AppRoutes } from "./routes/router";
 
-export default function App() {
-  const [phase, setPhase] = useState<"intro" | "home">("intro");
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+function AppContent() {
+  const [phase, setPhase] = useState<"intro" | "home">(
+    window.location.pathname !== "/" ? "home" : "intro"
+  );
+  const location = useLocation();
 
   const handleIntroComplete = useCallback(() => setPhase("home"), []);
 
@@ -24,15 +36,25 @@ export default function App() {
           </motion.div>
         ) : (
           <motion.div
-            key="home"
+            key={location.pathname} // CHAVE DINÂMICA: Essencial para transições entre rotas
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.55, ease: "easeOut" }}
           >
-            <HomePage />
+            <AppRoutes />
           </motion.div>
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <AppContent />
+    </BrowserRouter>
   );
 }
