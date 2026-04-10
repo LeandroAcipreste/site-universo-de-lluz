@@ -198,7 +198,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
               animate={bgReady ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
               transition={{ duration: 0.7, delay: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
-              className="mb-10 max-w-xl text-lg leading-relaxed text-neutral-400"
+              className="mb-10 max-w-xl text-lg leading-relaxed text-white"
             >
               Vivências transformadoras que expandem a consciência, reconectam com o sagrado e promovem cura profunda do ser.
             </motion.p>
