@@ -50,7 +50,7 @@ export default function Introduction({ onComplete }: Props) {
         strokeDashoffset: ringLen,
       });
       gsap.set(shadowGRef.current, { opacity: 0 });
-      gsap.set(textRef.current, { y: 10, opacity: 1 });
+      gsap.set(textRef.current, { y: 10, autoAlpha: 0 });
       gsap.set(textNameRef.current, {
         fillOpacity: 0,
         stroke: "#9BA1A6",
@@ -80,7 +80,9 @@ export default function Introduction({ onComplete }: Props) {
         .to(shadowGRef.current, { opacity: 1, duration: 0.8, ease: "power2.out" }, 2.1);
 
       // Fase 3 (3.1 → 5.3 s): construção do texto
-      tl.to(textNameRef.current, { strokeOpacity: 1, duration: 0.2 }, 3.1)
+      // autoAlpha: 1 retira o visibility:hidden antes de qualquer frame do texto
+      tl.to(textRef.current, { autoAlpha: 1, duration: 0.01 }, 3.1)
+        .to(textNameRef.current, { strokeOpacity: 1, duration: 0.2 }, 3.1)
         .to(textNameRef.current, { strokeDashoffset: 0, duration: 1.8, ease: "power2.inOut" }, 3.1)
         .to(textRef.current, { y: 0, duration: 1.8, ease: "power3.out" }, 3.1)
         .to(textNameRef.current, { fillOpacity: 1,   duration: 0.8, ease: "power2.out" }, 4.6)
