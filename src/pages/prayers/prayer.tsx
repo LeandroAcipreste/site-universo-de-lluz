@@ -57,7 +57,7 @@ export default function Prayer() {
             <div className="sticky top-[80px] h-[calc(100vh-80px)] w-full flex flex-col md:flex-row overflow-hidden">
 
                 {/* ── PAINEL ESQUERDO ── */}
-                <div className="relative z-20 flex h-[20%] md:h-full w-full flex-col justify-center px-6 py-2 md:w-1/2 md:px-16 lg:px-24 md:py-12 bg-[#050505]/90 backdrop-blur-sm md:bg-transparent">
+                <div className="relative z-20 flex h-[20%] md:h-full w-full flex-col justify-center px-6 py-2 md:w-1/2 md:px-16 lg:px-24 md:py-12 backdrop-blur-[2px]">
 
                     <div className="mb-2 md:mb-10 flex flex-wrap gap-2">
                         {CATEGORIES.map(({ key, label }) => (
@@ -124,7 +124,7 @@ export default function Prayer() {
                 </div>
 
                 {/* ── PAINEL DIREITO: CARDS ── */}
-                <div className="relative h-[80%] w-full bg-[#080808]/50 md:h-full md:w-1/2 border-t md:border-t-0 md:border-l border-white/5">
+                <div className="relative h-[80%] w-full md:h-full md:w-1/2 border-t md:border-t-0 md:border-l border-white/5">
                     <BackgroundSnake />
 
                     <div className="relative flex h-full items-center justify-center overflow-hidden">

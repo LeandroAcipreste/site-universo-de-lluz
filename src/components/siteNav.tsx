@@ -113,37 +113,39 @@ export default function SiteNav() {
 
         <div
           id="site-nav-mobile"
-          className={`${navOpen ? "flex" : "hidden"} w-full basis-full flex-col gap-2 pt-4 sm:hidden`}
+          className={`${navOpen ? "flex" : "hidden"} w-full basis-full flex-col items-end pt-2 sm:hidden`}
         >
-          {NAV_LABELS.map((label) => (
-            <button
-              key={label}
-              type="button"
-              className={`${NAV_BTN_CLASS} w-full`}
-              style={BTN_PRIMARY}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.boxShadow =
-                  "0 0 40px -8px rgba(139,92,246,0.75)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
-              }}
-              onClick={() => handleNavClick(label)}
-            >
-              {label}
-              {NAV_ICONS[label] ? (
-                <img 
-                  src={`${NAV_ICONS[label]}?v=4`} 
-                  className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5 ${
-                    label === "Defesas" || label === "Oráculo" ? "invert mix-blend-screen" : "brightness-0 invert"
-                  }`}
-                  alt="" 
-                />
-              ) : (
-                <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-              )}
-            </button>
-          ))}
+          <div className="flex w-fit flex-col gap-2">
+            {NAV_LABELS.map((label) => (
+              <button
+                key={label}
+                type="button"
+                className={`${NAV_BTN_CLASS} w-full`}
+                style={BTN_PRIMARY}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                    "0 0 40px -8px rgba(139,92,246,0.75)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
+                }}
+                onClick={() => handleNavClick(label)}
+              >
+                {label}
+                {NAV_ICONS[label] ? (
+                  <img 
+                    src={`${NAV_ICONS[label]}?v=4`} 
+                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5 ${
+                      label === "Defesas" || label === "Oráculo" ? "invert mix-blend-screen" : "brightness-0 invert"
+                    }`}
+                    alt="" 
+                  />
+                ) : (
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </motion.nav>

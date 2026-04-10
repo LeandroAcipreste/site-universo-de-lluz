@@ -42,8 +42,8 @@ export const PRAYERS_DB: Record<CategoryType, PrayerData[]> = {
                 "Ave Maria Cheia de graça, o Senhor é convosco,",
                 "Bendita sois Vós entre as mulheres,",
                 "Bendito é o fruto do vosso ventre, Jesus.",
-                "Santa Maria, Mãe de Deus, rogai por nós,",
-                "Agora e na hora de nossa morte."
+                "Santa Maria, Mãe de Jesus, rogai por nós seus filhos,",
+                "Agora e na hora de nossa passagem e por toda a eternindade Amém!."
             ]
         },
         {
