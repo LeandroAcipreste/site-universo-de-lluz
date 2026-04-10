@@ -2,20 +2,11 @@ import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useState } from "react";
 import HomePage from "./pages/homePage/homePage";
 import Introduction from "./pages/homePage/introduction";
-import DesignSystem from "./pages/designSystem/designSystem";
-
-// Rota simples por hash: /#/design-system abre o Design System
-const isDesignSystemRoute = () =>
-  typeof window !== "undefined" && window.location.hash === "#/design-system";
 
 export default function App() {
   const [phase, setPhase] = useState<"intro" | "home">("intro");
 
   const handleIntroComplete = useCallback(() => setPhase("home"), []);
-
-  if (isDesignSystemRoute()) {
-    return <DesignSystem />;
-  }
 
   return (
     <AnimatePresence mode="wait">
