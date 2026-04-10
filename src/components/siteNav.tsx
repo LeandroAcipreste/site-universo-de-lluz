@@ -51,7 +51,7 @@ export default function SiteNav() {
       role="navigation"
       aria-label="Principal"
     >
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-2 md:px-6 md:py-4">
         <a href="/" className="flex shrink-0 items-center gap-2 outline-none ring-offset-2 ring-offset-transparent focus-visible:ring-2 focus-visible:ring-violet-400">
           <img
             src="/logos/logo.svg"
