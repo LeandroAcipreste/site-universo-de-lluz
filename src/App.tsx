@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useState } from "react";
+import SiteNav from "./components/siteNav";
 import HomePage from "./pages/homePage/homePage";
 import Introduction from "./pages/homePage/introduction";
 
@@ -9,25 +10,29 @@ export default function App() {
   const handleIntroComplete = useCallback(() => setPhase("home"), []);
 
   return (
-    <AnimatePresence mode="wait">
-      {phase === "intro" ? (
-        <motion.div
-          key="intro"
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.55, ease: "easeInOut" }}
-        >
-          <Introduction onComplete={handleIntroComplete} />
-        </motion.div>
-      ) : (
-        <motion.div
-          key="home"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.55, ease: "easeOut" }}
-        >
-          <HomePage />
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <>
+      {/* Fora do motion.div da home: opacidade animada no pai deixava a nav fixa invisível */}
+      {phase === "home" ? <SiteNav /> : null}
+      <AnimatePresence mode="wait">
+        {phase === "intro" ? (
+          <motion.div
+            key="intro"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.55, ease: "easeInOut" }}
+          >
+            <Introduction onComplete={handleIntroComplete} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="home"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+          >
+            <HomePage />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

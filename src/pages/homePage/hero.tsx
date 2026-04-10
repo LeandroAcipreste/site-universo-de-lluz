@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import { BTN_PRIMARY } from "../../constants/btnPrimary";
 /*
   Hero Section — Universo de Luz
   ──────────────────────────────
@@ -69,12 +70,6 @@ function useUnicornStudio() {
 
 
 // ── Constantes de estilo ──────────────────────────────────────────────────────
-// Gradiente do botão principal (cyan → azul → roxo)
-const BTN_PRIMARY: React.CSSProperties = {
-  background: "linear-gradient(to top, #a5f3fc, #3b82f6, #7c3aed)",
-  boxShadow: "0 0 40px -5px rgba(139,92,246,0.6)",
-};
-
 /** Card da oração — alinhado ao electric card do design-system.html */
 const ORACAO_CARD_SHADOW =
   "0 0 30px rgba(139,92,246,0.35), inset 0 0 24px rgba(139,92,246,0.12)";
@@ -102,6 +97,7 @@ const GRAD_TITULO_ORACAO: React.CSSProperties = {
   backgroundClip: "text",
   color: "transparent",
 };
+
 // ╔══════════════════════════════════════════════════════════════════════════╗
 // ║                             HERO COMPONENT                              ║
 // ╚══════════════════════════════════════════════════════════════════════════╝
@@ -154,50 +150,12 @@ export default function Hero() {
           <div className="absolute bottom-0 right-0 h-[600px] w-[600px] rounded-full bg-fuchsia-900/20 blur-[100px]" />
         </div>
 
-        {/* ── NAV + CONTEÚDO — só aparece após o WebGL estar pronto ── */}
-        <motion.nav
-          initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
-          animate={bgReady ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-          transition={{ duration: 0.7, delay: 0.15, ease: [0.2, 0.8, 0.2, 1] }}
-          className="relative z-10 mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-6 py-6"
-        >
-          {/* Logo */}
-          <div className="flex shrink-0 items-center gap-2">
-            <img
-              src="/logos/logo.svg"
-              aria-hidden="true"
-              style={{ height: "32px", width: "32px", flexShrink: 0 }}
-            />
-            <img
-              src="/logos/name.svg"
-              alt="Universo de Luz"
-              style={{ height: "26px", width: "auto", flexShrink: 0 }}
-            />
-          </div>
-
-          {/* Orações · Limpezas · Defesas · Magias — nav */}
-          <div className="flex max-w-full flex-wrap items-center justify-end gap-2 sm:gap-2.5">
-            {["Orações", "Limpezas", "Defesas", "Magias"].map((label) => (
-              <button
-                key={label}
-                type="button"
-                className="group relative flex shrink-0 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-[1.03] hover:brightness-110 sm:px-5 sm:text-sm"
-                style={BTN_PRIMARY}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 40px -8px rgba(139,92,246,0.75)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string; }}
-              >
-                {label}
-                <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 sm:h-3.5 sm:w-3.5" />
-              </button>
-            ))}
-          </div>
-        </motion.nav>
-
+        {/* ── Conteúdo (offset para a SiteNav fixa) + WebGL visível após ready ── */}
+        <div className="relative z-10 pt-20 sm:pt-[4.75rem]">
         {/* ── HERO GRID ───────────────────────────────────────────── */}
-        <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-start gap-12 px-6 pb-20 pt-12 lg:grid-cols-12 lg:gap-10 lg:pt-16">
+        <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-start gap-12 px-6 pb-20 pt-12 lg:grid-cols-12 lg:items-stretch lg:gap-10 lg:pt-16">
 
-          <div className="flex flex-col items-start lg:col-span-7">
-
+          <div className="flex min-h-0 flex-col items-start lg:col-span-7 lg:h-full">
             <motion.div
               initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
               animate={bgReady ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
@@ -240,11 +198,14 @@ export default function Hero() {
               Vivências transformadoras que expandem a consciência, reconectam com o sagrado e promovem cura profunda do ser.
             </motion.p>
 
+            {/* Desktop: empurra os CTAs para a base da célula, alinhando com o fim do card da oração */}
+            <div className="hidden min-h-0 flex-1 lg:block" aria-hidden />
+
             <motion.div
               initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
               animate={bgReady ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
               transition={{ duration: 0.7, delay: 0.75, ease: [0.2, 0.8, 0.2, 1] }}
-              className="mb-20 flex flex-wrap items-center gap-4"
+              className="mb-20 flex w-full flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-start lg:mb-0"
             >
               <button
                 className="group relative flex items-center justify-center gap-2.5 rounded-full px-8 py-3 text-lg font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-105"
@@ -272,7 +233,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
             animate={bgReady ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
             transition={{ duration: 0.85, delay: 0.55, ease: [0.2, 0.8, 0.2, 1] }}
-            className="flex justify-center lg:sticky lg:top-24 lg:col-span-5 lg:justify-end"
+            className="flex justify-center lg:sticky lg:top-24 lg:col-span-5 lg:h-full lg:min-h-0 lg:flex-col lg:items-end lg:justify-end"
           >
             <div
               className="relative w-full max-w-md overflow-hidden rounded-[32px] bg-neutral-900 p-[2px]"
@@ -280,57 +241,57 @@ export default function Hero() {
             >
               <div className="absolute inset-0 z-0 rounded-[32px] bg-linear-to-b from-indigo-300 via-violet-500 to-transparent opacity-80" />
               <div
-                className="relative z-10 overflow-hidden rounded-[30px] px-8 pb-10 pt-9 antialiased sm:px-10 sm:pb-12 sm:pt-10"
+                className="relative z-10 overflow-hidden rounded-[30px] px-8 pb-10 pt-9 antialiased sm:px-10 sm:pb-12 sm:pt-10 lg:px-7 lg:pb-6 lg:pt-6"
                 style={{ backgroundColor: "#090b18", ...ORACAO_TIPO }}
               >
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-linear-to-b from-violet-500/12 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-linear-to-b from-violet-500/12 to-transparent lg:h-28" />
 
-                <div className="relative space-y-7">
-                  <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-3 rounded-full border border-white/10 bg-slate-900/55 px-5 py-2 backdrop-blur-md sm:gap-3.5 sm:px-6">
+                <div className="relative space-y-7 lg:space-y-4">
+                  <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-3 rounded-full border border-white/10 bg-slate-900/55 px-5 py-2 backdrop-blur-md sm:gap-3.5 sm:px-6 lg:gap-2.5 lg:px-4 lg:py-1.5">
                     <img
                       src="/logos/logo.svg"
                       alt=""
                       aria-hidden
-                      className="h-4 w-4 shrink-0 opacity-95 sm:h-[18px] sm:w-[18px]"
+                      className="h-4 w-4 shrink-0 opacity-95 sm:h-[18px] sm:w-[18px] lg:h-3.5 lg:w-3.5"
                     />
-                    <span className="text-center text-xs font-bold uppercase leading-tight tracking-[0.08em] text-slate-200 sm:text-sm sm:tracking-[0.12em]">
+                    <span className="text-center text-xs font-bold uppercase leading-tight tracking-[0.08em] text-slate-200 sm:text-sm sm:tracking-[0.12em] lg:text-[0.65rem] lg:tracking-[0.1em]">
                       Oração do Universo de Luz
                     </span>
                     <img
                       src="/logos/logo.svg"
                       alt=""
                       aria-hidden
-                      className="h-4 w-4 shrink-0 opacity-95 sm:h-[18px] sm:w-[18px]"
+                      className="h-4 w-4 shrink-0 opacity-95 sm:h-[18px] sm:w-[18px] lg:h-3.5 lg:w-3.5"
                     />
                   </div>
 
                   <h2
-                    className="text-[1.85rem] font-semibold leading-snug tracking-wide sm:text-4xl md:text-[2.35rem]"
+                    className="text-[1.85rem] font-semibold leading-snug tracking-wide sm:text-4xl md:text-[2.35rem] lg:text-[1.65rem] lg:leading-tight"
                     style={GRAD_TITULO_ORACAO}
                   >
                     {ORACAO.titulo}
                   </h2>
 
-                  <div className="space-y-4 border-l border-violet-500/25 pl-5 sm:pl-6">
+                  <div className="space-y-4 border-l border-violet-500/25 pl-5 sm:pl-6 lg:space-y-2 lg:pl-4">
                     {ORACAO.estrofes.map((linha) => (
                       <p
                         key={linha}
-                        className="text-lg font-medium leading-relaxed tracking-wide text-white sm:text-xl"
+                        className="text-lg font-medium leading-relaxed tracking-wide text-white sm:text-xl lg:text-[0.9375rem] lg:leading-snug"
                       >
                         {linha}
                       </p>
                     ))}
                   </div>
 
-                  <p className="text-center text-lg font-medium italic leading-relaxed tracking-wide text-white/90 sm:text-xl">
+                  <p className="text-center text-lg font-medium italic leading-relaxed tracking-wide text-white/90 sm:text-xl lg:text-base lg:leading-snug">
                     {ORACAO.fecho}
                   </p>
 
-                  <div className="flex flex-col items-center gap-3 pt-1 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8 sm:gap-y-2">
+                  <div className="flex flex-col items-center gap-3 pt-1 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-8 sm:gap-y-2 lg:gap-x-5 lg:pt-0">
                     {ORACAO.amens.map((a) => (
                       <span
                         key={a}
-                        className="text-sm font-semibold tracking-wide text-transparent sm:text-base"
+                        className="text-sm font-semibold tracking-wide text-transparent sm:text-base lg:text-xs"
                         style={{
                           backgroundImage: "linear-gradient(90deg,#e9d5ff,#a78bfa,#f0abfc)",
                           WebkitBackgroundClip: "text",
@@ -354,6 +315,7 @@ export default function Hero() {
               </div>
             </div>
           </motion.aside>
+        </div>
         </div>
       </section>
 
