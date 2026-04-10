@@ -169,6 +169,7 @@ export default function Introduction({ onComplete }: Props) {
               x="400" y="125"
               textAnchor="middle"
               fill="url(#nm-grad)"
+              fillOpacity={0}
               fontSize="82"
               fontWeight="400"
               letterSpacing="-6"

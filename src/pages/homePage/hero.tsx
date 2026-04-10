@@ -188,8 +188,8 @@ export default function Hero() {
                   backgroundClip: "text",
                 }}
               >
-                SUA LUZ
-              </span>
+                SUA LU
+              </span><span style={{ color: "#67e8f9" }}>Z</span>
               <br />
               INTERIOR
             </motion.h1>
