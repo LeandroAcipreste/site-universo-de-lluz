@@ -1,5 +1,6 @@
 # Referências locais de design (não vão para produção)
 designSystem/
+src/pages/designSystem/
 
 logs
 *.log
