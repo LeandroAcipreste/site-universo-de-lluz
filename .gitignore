@@ -1,6 +1,6 @@
 # Referências locais de design (não vão para produção)
 designSystem/
-src/pages/designSystem/
+# src/pages/designSystem/ ← removido: componente necessário no build
 
 logs
 *.log
