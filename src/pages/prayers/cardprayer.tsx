@@ -1,23 +1,21 @@
-import type { MotionValue } from "motion/react";
 import { motion } from "motion/react";
-import { Triangle } from "lucide-react";
 import type { PrayerData } from "./prayerData";
 
 interface CardPrayerProps {
     prayer: PrayerData;
     index?: number;
-    opacity: MotionValue<number>;
-    y: MotionValue<number>;
-    rotate: MotionValue<number>;
-    scale: MotionValue<number>;
+    opacity?: MotionValue<number> | number;
+    y?: MotionValue<number> | number;
+    rotate?: MotionValue<number> | number;
+    scale?: MotionValue<number> | number;
 }
 
 export default function CardPrayer({
     prayer,
-    opacity,
-    y,
-    rotate,
-    scale,
+    opacity = 1,
+    y = 0,
+    rotate = 0,
+    scale = 1,
 }: CardPrayerProps) {
     return (
         <motion.div
