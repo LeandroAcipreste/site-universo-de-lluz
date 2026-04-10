@@ -21,6 +21,7 @@ interface Props {
 
 export default function Introduction({ onComplete }: Props) {
   const rootRef        = useRef<HTMLElement>(null);
+  const svgRef         = useRef<SVGSVGElement>(null);    // SVG raiz — oculto até GSAP estar pronto
   const armRef         = useRef<SVGPathElement>(null);   // <path id="arm-shape"> em <defs>
   const shadowGroupRef = useRef<SVGGElement>(null);      // <g> com os <use> das sombras
   const ringRef        = useRef<SVGCircleElement>(null); // <circle id="outer-ring">
@@ -37,6 +38,9 @@ export default function Introduction({ onComplete }: Props) {
       const ringLen = 2 * Math.PI * 185; // ≈ 1162.4
 
       // ── Estado inicial ─────────────────────────────────────────────
+      // SVG permanece invisível até todos os estados iniciais estarem definidos
+      gsap.set(svgRef.current, { visibility: "hidden" });
+
       gsap.set(arm, {
         fillOpacity: 0,
         stroke: "#9BA1A6",
@@ -52,16 +56,18 @@ export default function Introduction({ onComplete }: Props) {
       gsap.set(shadowGroupRef.current, { opacity: 0 });
 
       // Texto: fill invisível + traço prontos para construção (igual ao triângulo)
-      // strokeDasharray=3000 cobre com folga o perímetro total de todos os glifos
       gsap.set(textRef.current, { y: 10 });
       gsap.set(textNameRef.current, {
         fillOpacity: 0,
         stroke: "#9BA1A6",
-        strokeWidth: 1.5,    // em unidades do viewBox 800-wide
+        strokeWidth: 1.5,
         strokeOpacity: 0,
         strokeDasharray: 3000,
         strokeDashoffset: 3000,
       });
+
+      // Tudo configurado — agora torna o SVG visível (zero flash)
+      gsap.set(svgRef.current, { visibility: "visible" });
 
       // ── Timeline GSAP ───────────────────────────────────────────────
       const tl = gsap.timeline({
@@ -115,10 +121,12 @@ export default function Introduction({ onComplete }: Props) {
         transform scale(0.955) para criar gap de 5 px com o anel.
       */}
       <svg
+        ref={svgRef}
         viewBox="0 0 500 640"
         className="relative w-[210px] sm:w-[270px] md:w-[330px]"
         aria-labelledby="ul-logo-title"
         role="img"
+        style={{ visibility: "hidden" }}
       >
         <title id="ul-logo-title">Universo de Luz</title>
 
@@ -156,12 +164,6 @@ export default function Introduction({ onComplete }: Props) {
             id="arm-shape"
             d="M 250 121.0 L 361.7 314.5 L 410.2 314.5 L 274.2 79.0 A 28 28 0 0 0 225.8 79.0 Z"
             fill="url(#arm-grad)"
-            fillOpacity={0}
-            stroke="#9BA1A6"
-            strokeWidth={2}
-            strokeOpacity={1}
-            strokeDasharray={9999}
-            strokeDashoffset={9999}
           />
 
           {/* Sombra de profundidade — d= intocado */}
@@ -189,14 +191,13 @@ export default function Introduction({ onComplete }: Props) {
         <g
           ref={shadowGroupRef}
           transform="translate(250,250) scale(0.955) translate(-250,-250)"
-          opacity={0}
         >
           <use href="#arm-shadow" />
           <use href="#arm-shadow" transform="rotate(120 250 250)" />
           <use href="#arm-shadow" transform="rotate(240 250 250)" />
         </g>
 
-        {/* Anel circular externo — oculto por CSS antes do GSAP arrancar */}
+        {/* Anel circular externo */}
         <circle
           ref={ringRef}
           id="outer-ring"
@@ -206,8 +207,6 @@ export default function Introduction({ onComplete }: Props) {
           fill="none"
           stroke="url(#ring-grad)"
           strokeWidth="7"
-          strokeDasharray={1163}
-          strokeDashoffset={1163}
         />
 
         {/*
@@ -217,7 +216,7 @@ export default function Introduction({ onComplete }: Props) {
           · Baseline inner y=125 → outer y = 447 + 125×0.625 = 525 = 435 + 90 ✓
           O gradiente é redefinido dentro do <svg> aninhado (escopo isolado).
         */}
-        <g ref={textRef} style={{ transform: "translateY(10px)" }}>
+        <g ref={textRef}>
           <svg
             x="0"
             y="447"
@@ -241,12 +240,6 @@ export default function Introduction({ onComplete }: Props) {
               y="125"
               textAnchor="middle"
               fill="url(#nm-grad)"
-              fillOpacity={0}
-              stroke="#9BA1A6"
-              strokeWidth={1.5}
-              strokeOpacity={0}
-              strokeDasharray={3000}
-              strokeDashoffset={3000}
               fontSize="82"
               fontWeight="400"
               letterSpacing="-6"
