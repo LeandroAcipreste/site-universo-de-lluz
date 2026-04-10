@@ -156,6 +156,12 @@ export default function Introduction({ onComplete }: Props) {
             id="arm-shape"
             d="M 250 121.0 L 361.7 314.5 L 410.2 314.5 L 274.2 79.0 A 28 28 0 0 0 225.8 79.0 Z"
             fill="url(#arm-grad)"
+            fillOpacity={0}
+            stroke="#9BA1A6"
+            strokeWidth={2}
+            strokeOpacity={1}
+            strokeDasharray={9999}
+            strokeDashoffset={9999}
           />
 
           {/* Sombra de profundidade — d= intocado */}
@@ -183,13 +189,14 @@ export default function Introduction({ onComplete }: Props) {
         <g
           ref={shadowGroupRef}
           transform="translate(250,250) scale(0.955) translate(-250,-250)"
+          opacity={0}
         >
           <use href="#arm-shadow" />
           <use href="#arm-shadow" transform="rotate(120 250 250)" />
           <use href="#arm-shadow" transform="rotate(240 250 250)" />
         </g>
 
-        {/* Anel circular externo */}
+        {/* Anel circular externo — oculto por CSS antes do GSAP arrancar */}
         <circle
           ref={ringRef}
           id="outer-ring"
@@ -199,6 +206,8 @@ export default function Introduction({ onComplete }: Props) {
           fill="none"
           stroke="url(#ring-grad)"
           strokeWidth="7"
+          strokeDasharray={1163}
+          strokeDashoffset={1163}
         />
 
         {/*
@@ -208,7 +217,7 @@ export default function Introduction({ onComplete }: Props) {
           · Baseline inner y=125 → outer y = 447 + 125×0.625 = 525 = 435 + 90 ✓
           O gradiente é redefinido dentro do <svg> aninhado (escopo isolado).
         */}
-        <g ref={textRef}>
+        <g ref={textRef} style={{ transform: "translateY(10px)" }}>
           <svg
             x="0"
             y="447"
@@ -232,6 +241,12 @@ export default function Introduction({ onComplete }: Props) {
               y="125"
               textAnchor="middle"
               fill="url(#nm-grad)"
+              fillOpacity={0}
+              stroke="#9BA1A6"
+              strokeWidth={1.5}
+              strokeOpacity={0}
+              strokeDasharray={3000}
+              strokeDashoffset={3000}
               fontSize="82"
               fontWeight="400"
               letterSpacing="-6"
