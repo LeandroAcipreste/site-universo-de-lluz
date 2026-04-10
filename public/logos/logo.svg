@@ -1,0 +1,43 @@
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradiente Metálico para a Fita (Ajustado para as novas dimensões mais finas) -->
+    <linearGradient id="arm-grad" x1="250" y1="37" x2="410.2" y2="314.5" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F8F9FA" />
+      <stop offset="20%" stop-color="#DDE0E3" />
+      <stop offset="60%" stop-color="#9BA1A6" />
+      <stop offset="100%" stop-color="#5B6166" />
+    </linearGradient>
+
+    <!-- Gradiente Metálico para o Anel Externo -->
+    <linearGradient id="ring-grad" x1="100" y1="100" x2="400" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#9BA1A6" />
+      <stop offset="25%" stop-color="#F8F9FA" />
+      <stop offset="65%" stop-color="#888E93" />
+      <stop offset="100%" stop-color="#4A5055" />
+    </linearGradient>
+
+    <!-- Forma do Braço (Mais fino, calculado rigorosamente para manter a harmonia matemática) -->
+    <path id="arm-shape" d="M 250 121.0 L 361.7 314.5 L 410.2 314.5 L 274.2 79.0 A 28 28 0 0 0 225.8 79.0 Z" fill="url(#arm-grad)" />
+    
+    <!-- Sombra de Profundidade (Separada para garantir que é renderizada por cima da dobra) -->
+    <path id="arm-shadow" d="M 225.8 79.0 L 250 121.0 L 244.0 131.4 L 219.8 89.4 Z" fill="#000000" fill-opacity="0.18" filter="blur(1px)"/>
+  </defs>
+
+  <!-- 1. O Triângulo Impossível de Penrose -->
+  <g id="ribbon-triangle">
+    <!-- Camada 1: Os 3 braços base desenhados em simetria -->
+    <use href="#arm-shape" />
+    <use href="#arm-shape" transform="rotate(120 250 250)" />
+    <use href="#arm-shape" transform="rotate(240 250 250)" />
+
+    <!-- Camada 2: As sombras aplicadas por cima para realçar o efeito 3D fotorealista -->
+    <use href="#arm-shadow" />
+    <use href="#arm-shadow" transform="rotate(120 250 250)" />
+    <use href="#arm-shadow" transform="rotate(240 250 250)" />
+  </g>
+
+  <!-- 2. Anel Circular Externo -->
+  <!-- A ponta superior do triângulo continua a tocar milimetricamente a parte interior do anel -->
+  <circle id="outer-ring" cx="250" cy="250" r="185" stroke="url(#ring-grad)" stroke-width="7" />
+
+</svg>

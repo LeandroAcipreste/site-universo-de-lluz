@@ -1,0 +1,21 @@
+<svg width="460" height="72" viewBox="0 0 460 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="text-metallic-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#c8cdd2" />
+      <stop offset="25%"  stop-color="#f0f2f4" />
+      <stop offset="50%"  stop-color="#a8adb3" />
+      <stop offset="75%"  stop-color="#f0f2f4" />
+      <stop offset="100%" stop-color="#c8cdd2" />
+    </linearGradient>
+  </defs>
+  <text
+    x="0"
+    y="58"
+    text-anchor="start"
+    font-family="'Optima', 'Zapf Humanist', Georgia, serif"
+    font-size="58"
+    font-weight="400"
+    letter-spacing="-2"
+    fill="url(#text-metallic-grad)"
+  >Universo de Luz</text>
+</svg>
