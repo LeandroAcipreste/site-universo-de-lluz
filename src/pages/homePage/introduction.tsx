@@ -50,7 +50,7 @@ export default function Introduction({ onComplete }: Props) {
         strokeDashoffset: ringLen,
       });
       gsap.set(shadowGRef.current, { opacity: 0 });
-      gsap.set(textRef.current, { y: 10 });
+      gsap.set(textRef.current, { y: 10, opacity: 1 });
       gsap.set(textNameRef.current, {
         fillOpacity: 0,
         stroke: "#9BA1A6",
@@ -127,6 +127,13 @@ export default function Introduction({ onComplete }: Props) {
             <stop offset="65%"  stopColor="#888E93" />
             <stop offset="100%" stopColor="#4A5055" />
           </linearGradient>
+          <linearGradient id="nm-grad" x1="0" y1="0" x2="500" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%"   stopColor="#5C6369" />
+            <stop offset="25%"  stopColor="#737B82" />
+            <stop offset="50%"  stopColor="#464C51" />
+            <stop offset="75%"  stopColor="#737B82" />
+            <stop offset="100%" stopColor="#5C6369" />
+          </linearGradient>
         </defs>
 
         {/* 3 braços com refs diretos — sem <use>, compatível com iOS Safari */}
@@ -152,32 +159,27 @@ export default function Introduction({ onComplete }: Props) {
           strokeWidth="7"
         />
 
-        {/* Texto "Universo de Luz" */}
-        <g ref={textRef}>
-          <svg x="0" y="447" width="500" height="125" viewBox="0 0 800 200" overflow="visible">
-            <defs>
-              <linearGradient id="nm-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%"   stopColor="#5C6369" />
-                <stop offset="25%"  stopColor="#737B82" />
-                <stop offset="50%"  stopColor="#464C51" />
-                <stop offset="75%"  stopColor="#737B82" />
-                <stop offset="100%" stopColor="#5C6369" />
-              </linearGradient>
-            </defs>
-            <text
-              ref={textNameRef}
-              x="400" y="125"
-              textAnchor="middle"
-              fill="url(#nm-grad)"
-              fillOpacity={0}
-              fontSize="82"
-              fontWeight="400"
-              letterSpacing="-6"
-              style={{ fontFamily: "'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif" }}
-            >
-              Universo de Luz
-            </text>
-          </svg>
+        {/* Texto "Universo de Luz" — sem SVG aninhado para evitar flash no Safari/iPhone */}
+        <g ref={textRef} opacity={0}>
+          <text
+            ref={textNameRef}
+            x="250"
+            y="525"
+            textAnchor="middle"
+            fill="url(#nm-grad)"
+            fillOpacity={0}
+            stroke="#9BA1A6"
+            strokeWidth="0.94"
+            strokeOpacity={0}
+            strokeDasharray={3000}
+            strokeDashoffset={3000}
+            fontSize="51.25"
+            fontWeight="400"
+            letterSpacing="-3.75"
+            style={{ fontFamily: "'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif" }}
+          >
+            Universo de Luz
+          </text>
         </g>
       </svg>
     </section>
