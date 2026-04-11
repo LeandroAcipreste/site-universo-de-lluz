@@ -15,10 +15,10 @@ export const PRAYERS_DB: Record<CategoryType, PrayerData[]> = {
             description: "A afirmação da fé e a conexão com a linhagem cristã ancestral.",
             cardLines: [
                 "Creio em Deus Pai Todo Poderoso, Criador dos céus e da terra.",
-                "Creio em Jesus Cristo, um só, seu filho, nosso senhor.",
+                "Creio em Jesus Cristo, um só, seu filho, nosso Senhor.",
                 "O qual foi concebido pelo poder do Espírito Santo, nasceu da Virgem Maria, padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado.",
                 "Desceu à mansão dos mortos, ressuscitou ao terceiro dia, subiu aos céus e está sentado à direita de Deus Pai, Todo Poderoso de onde há de vir a julgar os vivos e os mortos.",
-                "Creio no Espírito Santo, nas santas leis cristãs, na comunhão dos santos, na remissão dos pecados, na ressureição da carne e numa vida eterna para todo sempre."
+                "Creio no Espírito Santo, nas santas leis cristãs, na comunhão dos santos, na remissão dos pecados, na ressureição da carne e numa vida eterna para todo sempre. Amém!"
             ]
         },
         {
@@ -31,7 +31,7 @@ export const PRAYERS_DB: Record<CategoryType, PrayerData[]> = {
                 "Seja feita a Vossa vontade, assim na Terra como nos Céus,",
                 "O pão nosso, de cada dia, nos daí hoje,",
                 "Perdoai, as nossas ofensas, assim como nós perdoamos a quem nos tenha ofendido",
-                "Não nos deixeis cair em tentação mas livrai-nos do mal."
+                "Não nos deixeis cair em tentação mas livrai-nos do mal. Amém!"
             ]
         },
         {
@@ -54,7 +54,7 @@ export const PRAYERS_DB: Record<CategoryType, PrayerData[]> = {
                 "Salve a Rainha, Mãe de Misericórdia! Vida, Doçura, Esperança nossa, Salve!",
                 "A vós, chamamos, confiando e orando, neste planeta em ascensão,",
                 "Eia, pois ó advogada nossa, Esses vossos olhos misericordiosos, a nós volvei.",
-                "E depois deste desterro, Mostrai-nos, Jesus, Bendito é o fruto do vosso ventre,",
+                "E depois deste desterro, mostrai-nos, Jesus, bendito é o fruto do vosso ventre,",
                 "Ó clemente, ó piedosa, Ó doce, sempre Virgem Maria,",
                 "Rogai por nós, Santíssima Mãe de Jesus,",
                 "Para que sejamos dignos de alcançar as promessas de Cristo para sempre! Amém!"
