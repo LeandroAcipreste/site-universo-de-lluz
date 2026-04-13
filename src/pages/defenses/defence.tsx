@@ -56,14 +56,14 @@ export default function Defense() {
             <div className="sticky top-[80px] h-[calc(100vh-80px)] w-full flex flex-col md:flex-row overflow-hidden">
 
                 {/* ── PAINEL ESQUERDO ── */}
-                <div className="relative z-20 flex h-[20%] md:h-full w-full flex-col justify-center px-6 py-2 md:w-1/2 md:px-16 lg:px-24 md:py-12 backdrop-blur-[2px]">
+                <div className="relative z-20 flex h-[25%] md:h-full w-full flex-col justify-center px-6 py-4 md:w-1/2 md:px-12 lg:px-20 xl:px-24 md:py-12 backdrop-blur-[2px] transition-all duration-500">
 
-                    <div className="mb-2 md:mb-10 flex flex-wrap gap-2">
+                    <div className="mb-4 md:mb-10 flex flex-wrap gap-2">
                         {CATEGORIES.map(({ key, label }) => (
                             <button
                                 key={key}
                                 onClick={() => handleCategoryChange(key)}
-                                className={`rounded-full border px-4 py-1.5 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.15em] transition-all duration-300 ${selectedCategory === key
+                                className={`rounded-full border px-4 py-1.5 font-mono text-[9px] md:text-[11px] uppercase tracking-[0.15em] transition-all duration-300 ${selectedCategory === key
                                     ? "border-white/30 bg-white/10 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)]"
                                     : "border-white/10 bg-transparent text-white/40 hover:border-white/20 hover:text-white/70"
                                     }`}
@@ -73,25 +73,26 @@ export default function Defense() {
                         ))}
                     </div>
 
-                    <div className="relative h-[40px] md:h-[300px] w-full flex flex-col justify-center">
+                    <div className="relative h-fit min-h-[60px] md:min-h-[300px] w-full flex flex-col justify-center">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={`${selectedCategory}-${activeIndex}`}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: 10 }}
                                 transition={{ duration: 0.4 }}
-                                className="absolute inset-0 flex flex-col justify-center"
+                                className="flex flex-col justify-center"
                             >
-                                <h3 className="mb-0 md:mb-4 font-headline text-lg font-bold text-white uppercase tracking-tight md:text-5xl">
+                                <h3 className="mb-2 md:mb-6 font-headline font-bold text-white uppercase tracking-tight leading-[1.1]" 
+                                    style={{ fontSize: 'clamp(1.5rem, 4vw + 0.5rem, 3.5rem)' }}>
                                     {currentDefenses[activeIndex]?.title}
                                 </h3>
 
-                                <p className="hidden md:block max-w-md text-lg leading-relaxed text-neutral-400 font-light">
+                                <p className="hidden md:block max-w-md text-base lg:text-lg leading-relaxed text-neutral-400 font-light lg:mb-8">
                                     {currentDefenses[activeIndex]?.description}
                                 </p>
 
-                                <div className="hidden md:block mt-8 h-[2px] w-full max-w-sm bg-white/10">
+                                <div className="hidden md:block mt-4 h-[2px] w-full max-w-xs bg-white/10">
                                     <CategoryProgressBar scrollYProgress={scrollYProgress} activeIndex={activeIndex} total={total} />
                                 </div>
                             </motion.div>
@@ -105,7 +106,7 @@ export default function Defense() {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                className="absolute bottom-2 md:bottom-12 left-6 md:left-16 lg:left-24 flex items-center gap-2 text-white/40"
+                                className="absolute bottom-4 md:bottom-12 left-6 md:left-12 lg:left-20 xl:left-24 flex items-center gap-2 text-white/40"
                             >
                                 <motion.div
                                     animate={{ y: [0, 5, 0] }}
@@ -113,7 +114,7 @@ export default function Defense() {
                                 >
                                     <ChevronDown className="w-4 h-4 md:w-5 md:h-5" />
                                 </motion.div>
-                                <span className="font-mono text-[9px] md:text-[11px] uppercase tracking-[0.2em]">
+                                <span className="font-mono text-[8px] md:text-[10px] uppercase tracking-[0.2em]">
                                     Role para a próxima
                                 </span>
                             </motion.div>
@@ -123,10 +124,10 @@ export default function Defense() {
                 </div>
 
                 {/* ── PAINEL DIREITO: CARDS ── */}
-                <div className="relative h-[80%] w-full md:h-full md:w-1/2 border-t md:border-t-0 md:border-l border-white/5">
+                <div className="relative h-[75%] w-full md:h-full md:w-1/2 border-t md:border-t-0 md:border-l border-white/5 transition-all">
                     <DefenseBackground />
 
-                    <div className="relative flex h-full items-center justify-center overflow-hidden">
+                    <div className="relative flex h-full items-center justify-center overflow-hidden p-6 md:p-8 lg:p-12">
                         {currentDefenses.map((defense, index) => {
                             const isActive = index === activeIndex;
                             const isPast = index < activeIndex;

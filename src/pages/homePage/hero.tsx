@@ -67,8 +67,11 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.8, delay: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
-                className="mb-6 text-5xl font-light leading-[1.05] tracking-tight text-white lg:text-[76px]"
-                style={{ fontFamily: "'Optima','Zapf Humanist','Tenor Sans',sans-serif" }}
+                className="mb-6 font-light leading-[1.05] tracking-tight text-white"
+                style={{ 
+                  fontFamily: "'Optima','Zapf Humanist','Tenor Sans',sans-serif",
+                  fontSize: 'clamp(2.5rem, 8vw + 0.5rem, 4.75rem)'
+                }}
               >
                 DESPERTE
                 <br />
@@ -90,7 +93,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.7, delay: 0.6, ease: [0.2, 0.8, 0.2, 1] }}
-                className="mb-10 max-w-xl text-lg leading-relaxed text-white"
+                className="mb-10 max-w-xl text-base md:text-lg leading-relaxed text-white/80"
               >
                 Vivências transformadoras que expandem a consciência, reconectam com o sagrado e promovem cura profunda do ser.
               </motion.p>
@@ -101,10 +104,10 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.7, delay: 0.75, ease: [0.2, 0.8, 0.2, 1] }}
-                className="mb-20 flex w-full flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-start lg:mb-0"
+                className="mb-12 md:mb-20 flex w-full flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-start lg:mb-0"
               >
                 <button
-                  className="group relative flex items-center justify-center gap-2.5 rounded-full px-8 py-3 text-lg font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-105"
+                  className="group relative flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full px-8 py-3.5 text-base md:text-lg font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-105"
                   style={BTN_PRIMARY}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 60px -5px rgba(139,92,246,0.8)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string; }}
@@ -113,12 +116,12 @@ export default function Hero() {
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </button>
                 <button
-                  className="group relative flex items-center justify-center gap-2.5 rounded-full px-8 py-3 text-lg font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-105"
+                  className="group relative flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full px-8 py-3.5 text-base md:text-lg font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-105"
                   style={BTN_PRIMARY}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 60px -5px rgba(139,92,246,0.8)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string; }}
                 >
-                  Conheça o Universo de Luz
+                  Conheça o Universo
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </button>
               </motion.div>
@@ -128,18 +131,18 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.85, delay: 0.55, ease: [0.2, 0.8, 0.2, 1] }}
-              className="flex justify-center lg:sticky lg:top-24 lg:col-span-5 lg:h-full lg:min-h-0 lg:flex-col lg:items-end lg:justify-end"
+              className="flex justify-center lg:sticky lg:top-24 lg:col-span-5 lg:h-[calc(100vh-140px)] lg:flex-col lg:items-end lg:justify-center"
             >
               <div
-                className="relative w-full max-w-md overflow-hidden rounded-[32px] bg-neutral-900 p-[2px]"
+                className="relative w-full max-w-md overflow-hidden rounded-[32px] bg-neutral-900 p-[2px] transition-all duration-700"
                 style={{ boxShadow: ORACAO_CARD_SHADOW }}
               >
                 <div className="absolute inset-0 z-0 rounded-[32px] bg-linear-to-b from-indigo-300 via-violet-500 to-transparent opacity-80" />
                 <div
-                  className="relative z-10 overflow-hidden rounded-[30px] px-8 pb-10 pt-9 antialiased sm:px-10 sm:pb-12 sm:pt-10 lg:px-7 lg:pb-6 lg:pt-6"
+                  className="relative z-10 overflow-hidden rounded-[30px] px-8 pb-10 pt-9 antialiased sm:px-10 sm:pb-12 sm:pt-10 lg:px-8 lg:pb-10 lg:pt-9"
                   style={{ backgroundColor: "#090b18", ...ORACAO_TIPO }}
                 >
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-linear-to-b from-violet-500/12 to-transparent lg:h-28" />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-linear-to-b from-violet-500/12 to-transparent lg:h-32" />
 
                   <div className="relative space-y-7 lg:space-y-4">
                     <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-3 rounded-full border border-white/10 bg-slate-900/55 px-5 py-2 backdrop-blur-md sm:gap-3.5 sm:px-6 lg:gap-2.5 lg:px-4 lg:py-1.5">

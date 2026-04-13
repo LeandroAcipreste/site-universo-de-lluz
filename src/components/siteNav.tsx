@@ -30,6 +30,8 @@ export default function SiteNav() {
       navigate("/cleansing");
     } else if (label === "Defesas") {
       navigate("/defense");
+    } else if (label === "Oráculo") {
+      navigate("/oracle");
     } else {
       navigate("/");
     }
@@ -54,22 +56,23 @@ export default function SiteNav() {
       role="navigation"
       aria-label="Principal"
     >
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-2 md:px-6 md:py-4">
-        <a href="/" className="flex shrink-0 items-center gap-2 outline-none ring-offset-2 ring-offset-transparent focus-visible:ring-2 focus-visible:ring-violet-400">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8 md:py-5">
+        <a href="/" className="flex shrink-0 items-center gap-2.5 outline-none ring-offset-2 ring-offset-transparent focus-visible:ring-2 focus-visible:ring-violet-400 active:scale-95 transition-transform">
           <img
             src="/logos/logo.svg"
             aria-hidden={true}
-            style={{ height: "32px", width: "32px", flexShrink: 0 }}
+            className="h-8 w-8 md:h-9 md:w-9 shrink-0"
           />
           <img
             src="/logos/name.svg"
             alt="Universo de Luz"
-            style={{ height: "26px", width: "auto", flexShrink: 0 }}
+            className="h-6 w-auto md:h-7 shrink-0"
           />
         </a>
 
-        <div className="flex items-center gap-2">
-          <div className="hidden flex-wrap items-center justify-end gap-2 sm:flex sm:gap-2.5">
+        <div className="flex items-center gap-3">
+          {/* Desktop Nav */}
+          <div className="hidden flex-wrap items-center justify-end gap-2 md:flex lg:gap-3">
             {NAV_LABELS.map((label) => (
               <button
                 key={label}
@@ -89,19 +92,19 @@ export default function SiteNav() {
                 {NAV_ICONS[label] ? (
                   <img 
                     src={`${NAV_ICONS[label]}?v=4`} 
-                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5 ${
+                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 md:h-4.5 md:w-4.5 ${
                       label === "Defesas" || label === "Oráculo" ? "invert mix-blend-screen" : "brightness-0 invert"
                     }`}
                     alt="" 
                   />
                 ) : (
-                  <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 sm:h-3.5 sm:w-3.5" />
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                 )}
               </button>
             ))}
             <button
               type="button"
-              className={`${NAV_BTN_CLASS} shrink-0`}
+              className={`${NAV_BTN_CLASS} shrink-0 bg-red-600/10`}
               style={BTN_PRIMARY}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.boxShadow =
@@ -112,18 +115,20 @@ export default function SiteNav() {
               }}
             >
               YouTube
-              <Youtube className="h-4 w-4 text-white transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5" />
+              <Youtube className="h-4 w-4 text-white transition-transform group-hover:scale-110 md:h-4.5 md:w-4.5" />
             </button>
           </div>
 
-          <div className="flex items-center gap-2.5 sm:hidden">
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70">
-              Menu
-            </span>
-            <ArrowRight className="h-3.5 w-3.5 animate-pulse text-white/40" />
+          <div className="flex items-center gap-3 md:hidden">
+            <div className="flex items-center gap-1.5 opacity-60">
+              <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white">
+                Menu
+              </span>
+              <ArrowRight className="h-3 w-3 animate-pulse text-white" />
+            </div>
             <button
               type="button"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white ring-1 ring-inset ring-white/40 transition hover:brightness-110"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white ring-1 ring-inset ring-white/40 transition-all hover:brightness-110 active:scale-90"
               style={BTN_PRIMARY}
               aria-expanded={navOpen}
               aria-controls="site-nav-mobile"
