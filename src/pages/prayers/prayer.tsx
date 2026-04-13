@@ -84,8 +84,16 @@ export default function Prayer() {
                                 transition={{ duration: 0.4 }}
                                 className="flex flex-col justify-center"
                             >
-                                <h3 className="mb-2 md:mb-6 font-headline font-bold text-white uppercase tracking-tight leading-[1.1]" 
-                                    style={{ fontSize: 'clamp(1.5rem, 4vw + 0.5rem, 3.5rem)' }}>
+                                <h3 
+                                    className="mb-2 md:mb-6 font-headline font-bold text-white uppercase tracking-tight leading-[1.1]" 
+                                    style={{ 
+                                        fontSize: currentPrayers[activeIndex]?.title?.length > 40 
+                                            ? 'clamp(1.5rem, 3.5vw + 0.3rem, 2.4rem)' 
+                                            : currentPrayers[activeIndex]?.title?.length > 25
+                                            ? 'clamp(1.8rem, 4.5vw + 0.4rem, 3rem)'
+                                            : 'clamp(2rem, 5.5vw + 0.5rem, 4rem)'
+                                    }}
+                                >
                                     {currentPrayers[activeIndex]?.title}
                                 </h3>
 

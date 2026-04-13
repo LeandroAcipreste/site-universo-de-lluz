@@ -71,6 +71,20 @@ export const PRAYERS_DB: Record<CategoryType, PrayerData[]> = {
                 "Nunca me aconselhes coisas vãs. É mau o que tu me ofereces,",
                 "bebe tu mesmo o teu veneno!"
             ]
+        },
+        {
+            tag: "PASSO_06",
+            title: "Oração de São Francisco",
+            description: "Um hino de humildade, fraternidade e entrega ao serviço da paz.",
+            cardLines: [
+                "Senhor, fazei de mim um instrumento de vossa Paz.",
+                "Onde houver Ódio, que eu leve o Amor, onde houver Ofensa, que eu leve o Perdão.",
+                "Onde houver Discórdia, que eu leve a União, onde houver Dúvida, que eu leve a Fé.",
+                "Onde houver Erro, que eu leve a Verdade, onde houver Desespero, que eu leve a Esperança.",
+                "Onde houver Tristeza, que eu leve a Alegria, onde houver Trevas, que eu leve a Luz!",
+                "Ó Mestre, fazei que eu procure mais: consolar, que ser consolado; compreender, que ser compreendido; amar, que ser amado.",
+                "Pois é dando, que se recebe. Perdoando, que se é perdoado e é morrendo, que se vive para a vida eterna! Amém"
+            ]
         }
     ],
     xamanicas: [
@@ -102,7 +116,7 @@ export const PRAYERS_DB: Record<CategoryType, PrayerData[]> = {
         },
         {
             tag: "ANJO_02",
-            title: "Oração ao Arcanjo Miguel",
+            title: "Prece para proteção de Arcanjo Miguel ao sair de casa",
             description: "Círculo de proteção azul e presença do Arcanjo Miguel.",
             cardLines: [
                 "São Miguel à minha frente, São Miguel atrás de mim.",

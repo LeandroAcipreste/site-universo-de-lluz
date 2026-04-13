@@ -32,6 +32,8 @@ export default function SiteNav() {
       navigate("/defense");
     } else if (label === "Oráculo") {
       navigate("/oracle");
+    } else if (label === "YouTube") {
+      navigate("/youtube");
     } else {
       navigate("/");
     }
@@ -106,6 +108,7 @@ export default function SiteNav() {
               type="button"
               className={`${NAV_BTN_CLASS} shrink-0 bg-red-600/10`}
               style={BTN_PRIMARY}
+              onClick={() => handleNavClick("YouTube")}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.boxShadow =
                   "0 0 40px -8px rgba(139,92,246,0.75)";
@@ -178,6 +181,7 @@ export default function SiteNav() {
               type="button"
               className={`${NAV_BTN_CLASS} w-full`}
               style={BTN_PRIMARY}
+              onClick={() => handleNavClick("YouTube")}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.boxShadow =
                   "0 0 40px -8px rgba(139,92,246,0.75)";
