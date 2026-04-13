@@ -4,13 +4,12 @@ import { ArrowRight, Menu, X, Youtube } from "lucide-react";
 import { BTN_PRIMARY } from "../constants/btnPrimary";
 import { useNavigate } from "react-router-dom";
 
-export const NAV_LABELS = ["Orações", "Limpezas", "Defesas", "Magias", "Oráculo"] as const;
+export const NAV_LABELS = ["Orações", "Limpezas", "Defesas", "Oráculo"] as const;
 
 const NAV_ICONS: Record<string, string> = {
   "Orações": "/icons/universo-pray.png",
   "Limpezas": "/icons/universo-incense.png",
   "Defesas": "/icons/defenses-luz.png",
-  "Magias": "/icons/universo-sticky-notes.png",
   "Oráculo": "/icons/ayahuasca.png",
 };
 
@@ -27,6 +26,10 @@ export default function SiteNav() {
   const handleNavClick = (label: string) => {
     if (label === "Orações") {
       navigate("/prayers");
+    } else if (label === "Limpezas") {
+      navigate("/cleansing");
+    } else if (label === "Defesas") {
+      navigate("/defense");
     } else {
       navigate("/");
     }

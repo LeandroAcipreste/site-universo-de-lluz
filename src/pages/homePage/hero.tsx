@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Youtube } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { BTN_PRIMARY } from "../../constants/btnPrimary";
 import HeroBackground from "./heroBackground";
 
@@ -120,15 +120,6 @@ export default function Hero() {
                 >
                   Conheça o Universo de Luz
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </button>
-                <button
-                  className="group relative flex items-center justify-center gap-2.5 rounded-full px-8 py-3 text-lg font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-105"
-                  style={BTN_PRIMARY}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 60px -5px rgba(139,92,246,0.8)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string; }}
-                >
-                  YouTube
-                  <Youtube className="h-5 w-5 text-white transition-transform group-hover:scale-110" />
                 </button>
               </motion.div>
             </div>
