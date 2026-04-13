@@ -88,33 +88,41 @@ export default function YoutubePage() {
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6">
               {[
-                { label: "Hinduísmo", link: "https://www.youtube.com/watch?v=Vi9cG1wAEQ0&list=PLlwyMNQ7JxCjfdiGYQBLuRaFw2TV0eOaT" },
-                { label: "Orixás", link: "https://www.youtube.com/watch?v=NtLhlPbP4cw&list=PLlwyMNQ7JxChirJZdcldDvhXZfUJSWHoe" },
-                { label: "Entidades Auxiliares", link: "https://www.youtube.com/watch?v=Xsr42eC3EmA&list=PLlwyMNQ7JxCihBLTB7SxC6AZ9Og5zEXC4" },
-                { label: "Chakras", link: "https://www.youtube.com/watch?v=HB24ISctQbw&list=PLlwyMNQ7JxCjj_Bsn_-Cp_II0K1DlHJZ6" },
-                { label: "Arcanjos", link: "https://www.youtube.com/watch?v=DfKC6x_hVH0&list=PLlwyMNQ7JxCiBy5ouT07Vy4Ev2GyVb0l1" },
-                { label: "Xamanismo", link: "https://www.youtube.com/watch?v=UGyswblXraM&list=PLlwyMNQ7JxCit-UNiczPf236wMoLokcQu" }
+                { label: "Hinduísmo", videoId: "Vi9cG1wAEQ0", link: "https://www.youtube.com/watch?v=Vi9cG1wAEQ0&list=PLlwyMNQ7JxCjfdiGYQBLuRaFw2TV0eOaT" },
+                { label: "Orixás", videoId: "NtLhlPbP4cw", link: "https://www.youtube.com/watch?v=NtLhlPbP4cw&list=PLlwyMNQ7JxChirJZdcldDvhXZfUJSWHoe" },
+                { label: "Entidades Auxiliares", videoId: "Xsr42eC3EmA", link: "https://www.youtube.com/watch?v=Xsr42eC3EmA&list=PLlwyMNQ7JxCihBLTB7SxC6AZ9Og5zEXC4" },
+                { label: "Chakras", videoId: "HB24ISctQbw", link: "https://www.youtube.com/watch?v=HB24ISctQbw&list=PLlwyMNQ7JxCjj_Bsn_-Cp_II0K1DlHJZ6" },
+                { label: "Arcanjos", videoId: "DfKC6x_hVH0", link: "https://www.youtube.com/watch?v=DfKC6x_hVH0&list=PLlwyMNQ7JxCiBy5ouT07Vy4Ev2GyVb0l1" },
+                { label: "Xamanismo", videoId: "UGyswblXraM", link: "https://www.youtube.com/watch?v=UGyswblXraM&list=PLlwyMNQ7JxCit-UNiczPf236wMoLokcQu" }
               ].map((playlist, idx) => (
                 <a 
                   key={idx}
                   href={playlist.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative w-full overflow-hidden rounded-[20px] border border-white/10 bg-white/5 p-5 backdrop-blur-xl transition-all duration-500 hover:border-white/20 hover:bg-white/10"
+                  className="group relative flex w-full flex-col overflow-hidden rounded-[20px] border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.1)]"
                 >
-                  <div className="absolute inset-0 bg-linear-to-br from-violet-500/10 via-transparent to-red-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  <div className="relative flex items-center justify-between gap-4">
-                    <div className="text-left">
-                      <span className="mb-0.5 block text-[9px] font-bold uppercase tracking-[0.2em] text-red-500/80">
-                        Playlist
-                      </span>
-                      <h3 className="text-xl md:text-2xl font-light tracking-tight text-white uppercase" style={{ fontFamily: "'Optima', sans-serif" }}>
-                        {playlist.label}
-                      </h3>
+                  <div className="relative aspect-video w-full overflow-hidden bg-black/40">
+                    <img 
+                      src={`https://img.youtube.com/vi/${playlist.videoId}/hqdefault.jpg`} 
+                      alt={playlist.label}
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/20 to-transparent" />
+                    
+                    <div className="absolute bottom-4 right-4 flex h-10 w-10 shrink-0 scale-95 items-center justify-center rounded-full bg-red-600/90 text-white shadow-[0_0_15px_rgba(220,38,38,0.5)] backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:bg-red-500">
+                      <YoutubeIcon className="h-5 w-5" />
                     </div>
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-600/10 text-red-500 ring-1 ring-red-500/20 transition-all duration-500 group-hover:bg-red-600 group-hover:text-white md:h-12 md:w-12">
-                      <YoutubeIcon className="h-5 w-5 md:h-6 md:w-6" />
-                    </div>
+                  </div>
+                  
+                  <div className="relative flex flex-col p-6">
+                    <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-red-400">
+                      Playlist
+                    </span>
+                    <h3 className="text-xl md:text-2xl font-light tracking-tight text-white uppercase" style={{ fontFamily: "'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif" }}>
+                      {playlist.label}
+                    </h3>
                   </div>
                 </a>
               ))}

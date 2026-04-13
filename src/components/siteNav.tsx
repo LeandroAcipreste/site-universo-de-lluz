@@ -54,7 +54,7 @@ export default function SiteNav() {
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
-      className="fixed left-0 right-0 top-0 z-50 bg-transparent"
+      className="absolute left-0 right-0 top-0 z-50 bg-transparent"
       role="navigation"
       aria-label="Principal"
     >

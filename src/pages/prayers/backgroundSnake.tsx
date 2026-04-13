@@ -70,8 +70,8 @@ export default function BackgroundSnake() {
       const startPos = Math.floor(Math.random() * MAX_LINES);
       const color = COLORS[Math.floor(Math.random() * COLORS.length)];
       
-      const duration = 6 + Math.random() * 8;
-      const delay = Math.random() * 10;
+      const duration = 25 + Math.random() * 25; // Duração muito maior para movimento mais lento
+      const delay = Math.random() * 20;
       const size = 150 + Math.random() * 200;
       
       generated.push(
