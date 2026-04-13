@@ -7,7 +7,7 @@ export default function BackgroundSpiral() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext("webgl");
+    const gl = canvas.getContext("webgl", { alpha: true });
     if (!gl) return;
 
     const vsSource = `
@@ -42,7 +42,11 @@ export default function BackgroundSpiral() {
         
         // Brilho central
         col += vec3(0.9, 0.85, 1.0) * smoothstep(0.15, 0.0, r) * 1.2;
-        gl_FragColor = vec4(col, 1.0);
+        
+        // Alpha baseado na intensidade para não criar um bloco preto
+        float alpha = clamp(length(col) * 1.2, 0.0, 1.0);
+        
+        gl_FragColor = vec4(col, alpha);
       }
     `;
 
@@ -85,14 +89,13 @@ export default function BackgroundSpiral() {
 
     function resizeCanvas() {
       if (!canvas || !gl) return;
-      const displayWidth = canvas.clientWidth;
-      const displayHeight = canvas.clientHeight;
-      if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
-        canvas.width = displayWidth;
-        canvas.height = displayHeight;
-        gl.viewport(0, 0, canvas.width, canvas.height);
-        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
-      }
+      const displayWidth = window.innerWidth; // Usar window para garantir preenchimento
+      const displayHeight = window.innerHeight;
+      
+      canvas.width = displayWidth;
+      canvas.height = displayHeight;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
     }
 
     window.addEventListener("resize", resizeCanvas);
@@ -102,6 +105,8 @@ export default function BackgroundSpiral() {
 
     function render(time: number) {
       if (!gl) return;
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
       gl.uniform1f(timeLocation, time * 0.001);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       animationId = requestAnimationFrame(render);
@@ -116,8 +121,12 @@ export default function BackgroundSpiral() {
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-0 mix-blend-screen opacity-90 backdrop-blur-2xl">
-      <canvas ref={canvasRef} className="absolute inset-0 w-[120%] h-[120%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 object-cover mix-blend-screen" />
+    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+      <canvas 
+        ref={canvasRef} 
+        className="absolute inset-0 w-full h-full object-cover" 
+        style={{ mixBlendMode: 'screen' }}
+      />
     </div>
   );
 }
