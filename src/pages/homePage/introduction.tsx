@@ -109,7 +109,7 @@ export default function Introduction({ onComplete }: Props) {
       <svg
         ref={svgRef}
         viewBox="0 0 500 640"
-        className="relative w-[210px] sm:w-[270px] md:w-[330px]"
+        className="relative w-[273px] sm:w-[270px] md:w-[330px]"
         aria-labelledby="ul-logo-title"
         role="img"
         style={{ visibility: "hidden" }}
