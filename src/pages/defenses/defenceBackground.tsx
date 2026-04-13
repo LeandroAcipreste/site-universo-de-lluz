@@ -1,7 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function DefenseBackground() {
+  const [scale, setScale] = useState(0.45);
+
   useEffect(() => {
+    const handleResize = () => {
+      setScale(window.innerWidth < 768 ? 0.22 : 0.35);
+    };
+    
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
     const scriptId = "unicorn-studio-script";
     let script = document.getElementById(scriptId) as HTMLScriptElement;
 
@@ -17,7 +26,6 @@ export default function DefenseBackground() {
       document.head.appendChild(script);
     } else {
       if ((window as any).UnicornStudio) {
-        // timeout ensures the DOM node is rendered before studio tries to hook into it
         setTimeout(() => {
           (window as any).UnicornStudio.init();
         }, 100);
@@ -25,22 +33,20 @@ export default function DefenseBackground() {
     }
 
     return () => {
-        if ((window as any).UnicornStudio && typeof (window as any).UnicornStudio.destroy === "function") {
-            // Optional: call destroy if Unicorn Studio supports it to clean up webgl contexts when unmounting
-            // (window as any).UnicornStudio.destroy();
-        }
+        window.removeEventListener("resize", handleResize);
     }
   }, []);
 
   return (
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-90">
       <div 
+        key={scale}
         data-us-dpi="2" 
         data-us-fps="30" 
         data-us-lazyload="true" 
         data-us-production="true" 
         data-us-project="WL20Cho3hr5Ge8Pk2QUl" 
-        data-us-scale="0.45" 
+        data-us-scale={scale}
         style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }}
       ></div>
     </div>
