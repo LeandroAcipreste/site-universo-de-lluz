@@ -104,25 +104,25 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.7, delay: 0.75, ease: [0.2, 0.8, 0.2, 1] }}
-                className="mb-12 md:mb-20 flex w-full flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-start lg:mb-0"
+                className="mb-12 md:mb-20 flex w-full max-w-full flex-col gap-3.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-start lg:mb-0"
               >
                 <button
-                  className="group relative flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full px-8 py-3.5 text-base md:text-lg font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-105"
+                  className="group relative flex w-full sm:w-auto items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[0.9rem] sm:px-8 sm:text-base md:text-lg font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-[1.02] active:scale-95"
                   style={BTN_PRIMARY}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 60px -5px rgba(139,92,246,0.8)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string; }}
                 >
-                  Retiro Cura do Beija-Flor
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <span className="truncate">Retiro Cura do Beija-Flor</span>
+                  <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
                 </button>
                 <button
-                  className="group relative flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full px-8 py-3.5 text-base md:text-lg font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-105"
+                  className="group relative flex w-full sm:w-auto items-center justify-center gap-2 rounded-full px-5 py-3.5 text-[0.9rem] sm:px-8 sm:text-base md:text-lg font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-[1.02] active:scale-95"
                   style={BTN_PRIMARY}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 60px -5px rgba(139,92,246,0.8)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string; }}
                 >
-                  Conheça o Universo
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <span className="truncate">Conheça o Universo</span>
+                  <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
                 </button>
               </motion.div>
             </div>
