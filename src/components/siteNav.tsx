@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { ArrowRight, Menu, X, Youtube } from "lucide-react";
 import { BTN_PRIMARY } from "../constants/btnPrimary";
 import { useNavigate } from "react-router-dom";
 
@@ -96,19 +96,40 @@ export default function SiteNav() {
                 )}
               </button>
             ))}
+            <button
+              type="button"
+              className={`${NAV_BTN_CLASS} shrink-0`}
+              style={BTN_PRIMARY}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                  "0 0 40px -8px rgba(139,92,246,0.75)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
+              }}
+            >
+              YouTube
+              <Youtube className="h-4 w-4 text-white transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5" />
+            </button>
           </div>
 
-          <button
-            type="button"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white ring-1 ring-inset ring-white/40 transition hover:brightness-110 sm:hidden"
-            style={BTN_PRIMARY}
-            aria-expanded={navOpen}
-            aria-controls="site-nav-mobile"
-            aria-label={navOpen ? "Fechar menu" : "Abrir menu"}
-            onClick={() => setNavOpen((o) => !o)}
-          >
-            {navOpen ? <X className="h-5 w-5" strokeWidth={2} /> : <Menu className="h-5 w-5" strokeWidth={2} />}
-          </button>
+          <div className="flex items-center gap-2.5 sm:hidden">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70">
+              Menu
+            </span>
+            <ArrowRight className="h-3.5 w-3.5 animate-pulse text-white/40" />
+            <button
+              type="button"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-white ring-1 ring-inset ring-white/40 transition hover:brightness-110"
+              style={BTN_PRIMARY}
+              aria-expanded={navOpen}
+              aria-controls="site-nav-mobile"
+              aria-label={navOpen ? "Fechar menu" : "Abrir menu"}
+              onClick={() => setNavOpen((o) => !o)}
+            >
+              {navOpen ? <X className="h-5 w-5" strokeWidth={2} /> : <Menu className="h-5 w-5" strokeWidth={2} />}
+            </button>
+          </div>
         </div>
 
         <div
@@ -145,6 +166,21 @@ export default function SiteNav() {
                 )}
               </button>
             ))}
+            <button
+              type="button"
+              className={`${NAV_BTN_CLASS} w-full`}
+              style={BTN_PRIMARY}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                  "0 0 40px -8px rgba(139,92,246,0.75)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
+              }}
+            >
+              YouTube
+              <Youtube className="h-4.5 w-4.5 text-white transition-transform group-hover:scale-110" />
+            </button>
           </div>
         </div>
       </div>
