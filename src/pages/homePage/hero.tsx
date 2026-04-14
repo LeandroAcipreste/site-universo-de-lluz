@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { BTN_PRIMARY } from "../../constants/btnPrimary";
 import HeroBackground from "./heroBackground";
 
@@ -40,6 +41,7 @@ const GRAD_TITULO_ORACAO: React.CSSProperties = {
 };
 
 export default function Hero() {
+  const navigate = useNavigate();
   return (
     <>
       <section
@@ -111,6 +113,7 @@ export default function Hero() {
                   style={BTN_PRIMARY}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 60px -5px rgba(139,92,246,0.8)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string; }}
+                  onClick={() => navigate("/retiro")}
                 >
                   <span className="truncate">Retiro Cura do Beija-Flor</span>
                   <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />

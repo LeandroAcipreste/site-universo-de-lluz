@@ -5,6 +5,7 @@ import EnergyCleasing from "../pages/energyCleasing/energyCleasing";
 import Defense from "../pages/defenses/defence";
 import Oracle from "../pages/oracle/oracle";
 import YoutubePage from "../pages/youtube/youtube";
+import Retiro from "../pages/retiro/retiro";
 
 export function AppRoutes() {
   return (
@@ -15,6 +16,7 @@ export function AppRoutes() {
       <Route path="/defense" element={<Defense />} />
       <Route path="/oracle" element={<Oracle />} />
       <Route path="/youtube" element={<YoutubePage />} />
+      <Route path="/retiro" element={<Retiro />} />
     </Routes>
   );
 }
