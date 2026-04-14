@@ -1,7 +1,7 @@
 import SiteNav from "../../components/siteNav";
 import { useEffect } from "react";
 import RetiroHero from "./retiroHero";
-import backgroundSection from "./imagens/BACKGROUND.svg";
+import backgroundSection from "./imagens/background_section.svg";
 
 export default function Retiro() {
   useEffect(() => {
