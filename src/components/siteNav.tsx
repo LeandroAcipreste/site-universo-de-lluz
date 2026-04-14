@@ -21,7 +21,33 @@ const NAV_BTN_CLASS =
  */
 export default function SiteNav() {
   const [navOpen, setNavOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
+
+  // Show/Hide Nav based on proximity (Desktop only)
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // Show if mouse is in top 80px or if menu is open
+      if (e.clientY < 80 || navOpen) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    // Only apply to devices with mouse (checked via media hover)
+    const isDesktop = window.matchMedia("(hover: hover)").matches;
+    if (isDesktop) {
+      window.addEventListener("mousemove", handleMouseMove);
+    } else {
+      // Always visible on mobile
+      setIsVisible(true);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [navOpen]);
 
   const handleNavClick = (label: string) => {
     if (label === "Orações") {
@@ -51,10 +77,13 @@ export default function SiteNav() {
 
   return (
     <motion.nav
-      initial={{ opacity: 0, y: -12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
-      className="absolute left-0 right-0 top-0 z-50 bg-transparent"
+      initial={{ opacity: 0, y: -80 }}
+      animate={{ 
+        opacity: isVisible || navOpen ? 1 : 0, 
+        y: isVisible || navOpen ? 0 : -80 
+      }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed left-0 right-0 top-0 z-50 bg-transparent md:bg-gradient-to-b md:from-black/80 md:to-transparent md:backdrop-blur-[2px]"
       role="navigation"
       aria-label="Principal"
     >

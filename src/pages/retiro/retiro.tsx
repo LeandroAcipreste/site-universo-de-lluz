@@ -1,6 +1,7 @@
 import SiteNav from "../../components/siteNav";
 import { useEffect } from "react";
 import RetiroHero from "./retiroHero";
+import backgroundSection from "./imagens/BACKGROUND.svg";
 
 export default function Retiro() {
   useEffect(() => {
@@ -8,11 +9,20 @@ export default function Retiro() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#050505] selection:bg-violet-500/30">
+    <main className="min-h-screen bg-[#050505] selection:bg-violet-500/30 overflow-x-hidden">
       <SiteNav />
       
       {/* Chamada do componente Hero */}
       <RetiroHero />
+      
+      {/* Segunda dobra com background SVG */}
+      <section className="relative -mt-[15vh] md:-mt-[25vh] lg:-mt-[35vh] z-0 overflow-hidden">
+        <img 
+          src={backgroundSection} 
+          alt="Background Flores" 
+          className="w-full h-auto min-h-[50vh] object-cover"
+        />
+      </section>
       
       {/* Footer minimalista */}
       <footer className="border-t border-white/5 bg-[#050505] py-12 text-center">
