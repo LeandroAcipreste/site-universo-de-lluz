@@ -16,46 +16,41 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Retiro() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Garantir que a página inicie no topo
-  useEffect(() => {
-    window.history.scrollRestoration = 'manual';
-    window.scrollTo(0, 0);
-  }, []);
-
   useGSAP(() => {
+    window.scrollTo(0, 0);
 
     // Animação das flores ao rolar a página
     gsap.set([
-      "#content-flower-left", 
-      "#content-flower-right", 
+      "#content-flower-left",
+      "#content-flower-right",
       "#content-flower-middle"
-    ], { 
+    ], {
       opacity: 0,
       visibility: "visible"
     });
 
-    const tl = gsap.timeline({ 
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "bottom 95%", // Dispara quando o final da seção está quase visível
       },
-      defaults: { ease: "power3.out", duration: 1.2, force3D: true } 
+      defaults: { ease: "power3.out", duration: 1.2, force3D: true }
     });
 
-    tl.fromTo("#content-flower-left", 
-      { y: 100, opacity: 0, rotate: -30 }, 
+    tl.fromTo("#content-flower-left",
+      { y: 100, opacity: 0, rotate: -30 },
       { y: 0, opacity: 1, rotate: -15 }
     )
-    .fromTo("#content-flower-right", 
-      { y: 100, opacity: 0, rotate: 30 }, 
-      { y: 0, opacity: 1, rotate: 15 }, 
-      "<"
-    )
-    .fromTo("#content-flower-middle", 
-      { y: 150, opacity: 0 }, 
-      { y: 0, opacity: 1 }, 
-      "-=1.0"
-    );
+      .fromTo("#content-flower-right",
+        { y: 100, opacity: 0, rotate: 30 },
+        { y: 0, opacity: 1, rotate: 15 },
+        "<"
+      )
+      .fromTo("#content-flower-middle",
+        { y: 150, opacity: 0 },
+        { y: 0, opacity: 1 },
+        "-=1.0"
+      );
 
   }, []);
 
@@ -69,7 +64,7 @@ export default function Retiro() {
       </div>
 
       {/* Segunda dobra com background SVG - Z-index 20 */}
-      <section 
+      <section
         ref={sectionRef}
         className="relative -mt-[15vh] md:-mt-[25vh] lg:-mt-[35vh] z-20 flex flex-col items-center min-h-[70vh] lg:min-h-[85vh] bg-[#050505]"
       >
@@ -116,12 +111,12 @@ export default function Retiro() {
 
       {/* Footer com altura ditada pela foto */}
       <footer className="relative w-full z-10 overflow-hidden flex flex-col items-center justify-center">
-        <img 
-          src={backgroundFooter} 
-          alt="Footer Background" 
+        <img
+          src={backgroundFooter}
+          alt="Footer Background"
           className="w-full h-auto block pointer-events-none z-0"
         />
-        
+
         {/* Texto centralizado sobre a foto */}
         <div className="absolute inset-0 flex items-center justify-center z-10">
           <p className="font-mono text-[10px] md:text-[12px] uppercase tracking-widest text-[#050505] md:text-zinc-600">
