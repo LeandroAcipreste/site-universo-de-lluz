@@ -22,7 +22,8 @@ export default function RetiroHero() {
       "#hummingbird", 
       "#hummingbird-left",
       "#flower-top-middle",
-      "#hero-title-container"
+      "#hero-title-container",
+      "#retiro-footer"
     ], { 
       opacity: 0,
       visibility: "visible"
@@ -73,7 +74,8 @@ export default function RetiroHero() {
       { x: "120vw", y: -100, opacity: 0, rotate: 20 }, 
       { x: 0, y: 0, opacity: 1, rotate: 0, duration: 2.5, ease: "power2.inOut" }, 
       "<"
-    );
+    )
+    .to("#retiro-footer", { opacity: 1, duration: 1.5, ease: "power2.inOut" }, "-=1");
   });
 
   return (
@@ -180,7 +182,7 @@ export default function RetiroHero() {
         id="flower-bottom-left"
         src={flowerBottomLeft}
         alt="Flower Bottom Left"
-        className="absolute w-[260px] md:w-[350px] lg:w-[650px] select-none z-20 -bottom-20 -left-28 md:-bottom-52 md:-left-20 lg:-bottom-72 lg:-left-28 invisible will-change-transform"
+        className="absolute w-[260px] md:w-[350px] lg:w-[650px] select-none z-20 -bottom-10 -left-28 md:-bottom-40 md:-left-20 lg:-bottom-60 lg:-left-28 invisible will-change-transform"
       />
 
       {/* Flower Bottom Right */}
