@@ -1,5 +1,5 @@
 import SiteNav from "../../components/siteNav";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import RetiroHero from "./retiroHero";
 import backgroundSection from "./imagens/background_section.svg";
 import backgroundFooter from "./imagens/background-footer.svg";
@@ -16,8 +16,16 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Retiro() {
   const sectionRef = useRef<HTMLElement>(null);
 
+  // Desativa a restauração automática de scroll do browser e força o topo
+  // antes de qualquer paint (useLayoutEffect é síncrono, anterior ao DOM paint)
+  useLayoutEffect(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, []);
+
   useGSAP(() => {
-    window.scrollTo(0, 0);
 
     // Animação das flores ao rolar a página
     gsap.set([
@@ -66,19 +74,29 @@ export default function Retiro() {
       {/* Segunda dobra com background SVG - Z-index 20 */}
       <section
         ref={sectionRef}
-        className="relative -mt-[15vh] md:-mt-[25vh] lg:-mt-[35vh] z-20 flex flex-col items-center min-h-[70vh] lg:min-h-[85vh] bg-[#050505]"
+        className="relative -mt-[15vh] md:-mt-[25vh] lg:-mt-[35vh] z-20 bg-[#050505]"
+        style={{ minHeight: "clamp(600px, 185vw, 1100px)" }}
       >
 
-        {/* Camada de Fundo */}
-        <img
-          src={backgroundSection}
-          alt="Background Flores"
-          className="w-full max-w-[1300px] h-auto block pointer-events-none"
+        {/* Spacer que define a altura da seção no desktop (o bg acompanha) */}
+        <div
+          className="hidden sm:block w-full max-w-[1300px] mx-auto pointer-events-none"
+          style={{ paddingBottom: "78%" }}
+          aria-hidden="true"
         />
+
+        {/* Background absolutamente posicionado — cobre 100% da seção sempre */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <img
+            src={backgroundSection}
+            alt="Background Flores"
+            className="w-full h-full object-cover object-top"
+          />
+        </div>
 
         {/* Guirlanda de Flores */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-10 flex justify-center">
-          <div className="relative w-full max-w-[1300px] h-full overflow-hidden">
+          <div className="relative w-full max-w-[1300px] h-full">
             <FlowerGarland />
           </div>
         </div>
@@ -110,7 +128,7 @@ export default function Retiro() {
       </section>
 
       {/* Footer com altura ditada pela foto */}
-      <footer className="relative w-full z-10 overflow-hidden flex flex-col items-center justify-center">
+      <footer id="retiro-footer" className="relative w-full z-10 overflow-hidden flex flex-col items-center justify-center">
         <img
           src={backgroundFooter}
           alt="Footer Background"

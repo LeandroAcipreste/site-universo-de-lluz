@@ -54,3 +54,16 @@
     height: auto;
   }
 }
+
+/* =====================================================
+   DESIGN TOKENS GLOBAIS — Cores da marca
+   Estilos de componente devem ser declarados como
+   objetos const dentro do próprio arquivo .tsx
+   ===================================================== */
+@layer components {
+  .text-brand-blue        { color: #015b8b; }
+  .text-brand-blue-light  { color: #38bdf8; }
+  .text-brand-green       { color: #1c642c; }
+  .text-brand-teal        { color: #1c92d2; }
+  .text-brand-navy        { color: #032e4d; }
+}
