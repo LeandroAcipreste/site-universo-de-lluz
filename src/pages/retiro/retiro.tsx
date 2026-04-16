@@ -1,5 +1,5 @@
 import SiteNav from "../../components/siteNav";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import RetiroHero from "./retiroHero";
 import backgroundSection from "./imagens/background_section.svg";
 import backgroundFooter from "./imagens/background-footer.svg";
