@@ -116,7 +116,7 @@ export default function FlowerGarlandMobile() {
             ease: "back.out(1.5)",
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top 70%",
+                start: "top 95%",
                 end: "bottom 20%",
                 scrub: 1.5,
             },
