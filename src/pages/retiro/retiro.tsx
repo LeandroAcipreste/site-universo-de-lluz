@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useEffect } from "react";
 import RetiroHero from "./hero/retiroHero";
 import backgroundSection from "./imagens/background_section.svg";
 import backgroundFooter from "./imagens/background-footer.svg";
@@ -14,13 +14,10 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── COMPONENTE REUTILIZÁVEL: Flores de Transição ──────────────────────────
-// z-50 garantido para que as flores sobreponham qualquer conteúdo interno
 const BottomFlowers = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    // BottomFlowers — entrada por scroll, sem flutuação
     gsap.set(
       [".flower-bottom-left", ".flower-bottom-right", ".flower-bottom-middle"],
       { opacity: 0, visibility: "visible" }
@@ -64,39 +61,24 @@ export default function Retiro() {
   const mainRef = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
-    // 1. Desliga o comportamento nativo do navegador reter a rolagem
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
+    // Reset limpo e instantâneo sem brigar com o usuário
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    ScrollTrigger.clearScrollMemory("manual");
+  }, []);
 
-    // 2. Trava a rolagem no topo por MÚLTIPLOS frames logo que o componente monta.
-    // Isso anula a ação assíncrona do navegador de tentar descer a página após carregar.
-    let count = 0;
-    let animFrameId: number;
-
-    const forceScrollToTop = () => {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-      count++;
-      if (count < 30) {
-        animFrameId = requestAnimationFrame(forceScrollToTop);
-      } else {
-        // Quando terminar de forçar, avisa o GSAP que posições mudaram
-        ScrollTrigger.refresh();
-      }
-    };
-    forceScrollToTop();
-
-    const onBeforeUnload = () => window.scrollTo(0, 0);
-    window.addEventListener("beforeunload", onBeforeUnload);
-
-    return () => {
-      cancelAnimationFrame(animFrameId);
-      window.removeEventListener("beforeunload", onBeforeUnload);
-    };
+  // O VIGIA DE IMAGENS: Se alguma foto baixar atrasada e aumentar a tela, ele atualiza o GSAP na hora!
+  useEffect(() => {
+    const observer = new ResizeObserver(() => {
+      ScrollTrigger.refresh();
+    });
+    observer.observe(document.body);
+    return () => observer.disconnect();
   }, []);
 
   useGSAP(() => {
-
     gsap.fromTo("#retiro-footer",
       { opacity: 0, y: 30 },
       {
@@ -110,68 +92,43 @@ export default function Retiro() {
         }
       }
     );
-
-    setTimeout(() => ScrollTrigger.refresh(), 200);
-
   }, { scope: mainRef });
 
   return (
     <main ref={mainRef} className="min-h-screen bg-[#050505] selection:bg-violet-500/30 overflow-x-hidden">
-
-      {/* HERO: Maior nível da página (z-40) */}
       <div className="relative z-40">
         <RetiroHero />
       </div>
 
-      {/* SEÇÃO 1: GUIRLANDA (z-30) - Fica acima da seção 2 para as flores vazarem por cima dela */}
-      <section
-        className="relative -mt-[15vh] md:-mt-[25vh] lg:-mt-[35vh] z-30 bg-[#050505]"
-        style={{ minHeight: "clamp(600px, 185vw, 1100px)" }}
-      >
+      <section className="relative -mt-[15vh] md:-mt-[25vh] lg:-mt-[35vh] z-30 bg-[#050505]" style={{ minHeight: "clamp(600px, 185vw, 1100px)" }}>
         <div className="hidden sm:block w-full max-w-[1300px] mx-auto pointer-events-none" style={{ paddingBottom: "78%" }} aria-hidden="true" />
-
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <img src={backgroundSection} alt="Background Flores" className="w-full h-full object-cover object-top" />
         </div>
-
         <div className="absolute inset-0 w-full h-full pointer-events-none z-10 flex justify-center">
           <div className="relative w-full max-w-[1300px] h-full">
             <FlowerGarland />
           </div>
         </div>
-
         <BottomFlowers />
       </section>
 
-      {/* SEÇÃO 2: VIVÊNCIAS (z-20) */}
       <RetiroVicencias>
         <BottomFlowers />
       </RetiroVicencias>
 
-      {/* SEÇÃO 3: LOCAL (O Refúgio) */}
       <RetiroLocal>
         <BottomFlowers />
       </RetiroLocal>
 
-      {/* SEÇÃO 3: FOOTER (z-10) - Nível mais baixo */}
       <footer id="retiro-footer" className="relative w-full z-10 overflow-hidden flex flex-col items-center justify-center opacity-0">
         <img src={backgroundFooter} alt="Footer Background" className="w-full h-auto block pointer-events-none z-0" />
         <div className="absolute inset-0 flex items-center justify-center z-10">
-          <a
-            href="https://wa.me/5571996612421"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center justify-center px-8 py-4 rounded-full text-white text-[12px] md:text-[14px] font-black uppercase tracking-[0.2em] shadow-2xl transition-all duration-500 hover:scale-110 active:scale-95 font-['Montserrat'] bg-gradient-to-r from-[#015b8b] to-[#1c642c] text-center leading-tight"
-            style={{ 
-              boxShadow: "0 0 50px -10px rgba(28,100,44,0.6)",
-              textShadow: "0 2px 4px rgba(0,0,0,0.3)"
-            }}
-          >
+          <a href="https://wa.me/5571996612421" target="_blank" rel="noopener noreferrer" className="group inline-flex items-center justify-center px-8 py-4 rounded-full text-white text-[12px] md:text-[14px] font-black uppercase tracking-[0.2em] shadow-2xl transition-all duration-500 hover:scale-110 active:scale-95 font-['Montserrat'] bg-gradient-to-r from-[#015b8b] to-[#1c642c] text-center leading-tight" style={{ boxShadow: "0 0 50px -10px rgba(28,100,44,0.6)", textShadow: "0 2px 4px rgba(0,0,0,0.3)" }}>
             QUERO VIVER ESSA EXPERIÊNCIA
           </a>
         </div>
       </footer>
-
     </main>
   );
 }

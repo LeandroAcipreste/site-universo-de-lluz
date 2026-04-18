@@ -113,7 +113,7 @@ export default function Hero() {
                   style={BTN_PRIMARY}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 60px -5px rgba(139,92,246,0.8)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string; }}
-                  onClick={() => { navigate("/retiro"); }}
+                  onClick={() => { window.location.href = "/retiro"; }}
                 >
                   <span className="truncate">Retiro Cura do Beija-Flor</span>
                   <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />
