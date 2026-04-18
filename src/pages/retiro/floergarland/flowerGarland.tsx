@@ -81,7 +81,7 @@ export default function FlowerGarland() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkBreakpoint = () => setIsMobile(window.innerWidth <= 600);
+    const checkBreakpoint = () => setIsMobile(window.innerWidth <= 768);
     checkBreakpoint();
     window.addEventListener("resize", checkBreakpoint);
     return () => window.removeEventListener("resize", checkBreakpoint);

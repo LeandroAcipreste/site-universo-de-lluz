@@ -21,7 +21,8 @@
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     width: 100%;
-    overflow-x: clip;
+    overflow-x: hidden; /* 'clip' não funciona em Android antigo */
+    -webkit-overflow-scrolling: touch;
   }
 
   body {
@@ -29,8 +30,11 @@
     min-height: 100vh;
     min-height: 100dvh;
     width: 100%;
-    overflow-x: clip;
+    overflow-x: hidden;
     cursor: url('/logos/cursor.svg') 16 16, auto;
+    touch-action: manipulation;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   a,
@@ -60,8 +64,6 @@
 
 /* =====================================================
    DESIGN TOKENS GLOBAIS — Cores da marca
-   Estilos de componente devem ser declarados como
-   objetos const dentro do próprio arquivo .tsx
    ===================================================== */
 @layer components {
   .text-brand-blue {
@@ -84,21 +86,25 @@
     color: #032e4d;
   }
 
-  /* Animações CSS de loop para as flores e pássaros - alta performance */
+  /* Animações CSS de loop — GPU accelerated */
   .animate-float-slow {
     animation: floatSlow 8s ease-in-out infinite;
+    will-change: transform;
   }
   
   .animate-float-slower {
     animation: floatSlower 10s ease-in-out infinite;
+    will-change: transform;
   }
 
   .animate-float-reverse {
     animation: floatReverse 9s ease-in-out infinite;
+    will-change: transform;
   }
   
   .animate-float-bird {
     animation: floatBird 6s ease-in-out infinite;
+    will-change: transform;
   }
 }
 
@@ -120,65 +126,4 @@
 @keyframes floatBird {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-25px); }
-}
-
-/* ── Entrada das flores da Hero (CSS puro, sem GSAP) ── */
-@keyframes flowerEnterTop {
-  from { opacity: 0; transform: translate(-50%, -100px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
-}
-
-@keyframes flowerEnterTopLeft {
-  from { opacity: 0; transform: translate(-100px, -100px); }
-  to { opacity: 1; transform: translate(0, 0); }
-}
-
-@keyframes flowerEnterTopRight {
-  from { opacity: 0; transform: translate(100px, -100px); }
-  to { opacity: 1; transform: translate(0, 0); }
-}
-
-@keyframes flowerEnterBottomLeft {
-  from { opacity: 0; transform: translate(0, 100px) rotate(-30deg); }
-  to { opacity: 1; transform: translate(0, 0) rotate(-15deg); }
-}
-
-@keyframes flowerEnterBottomRight {
-  from { opacity: 0; transform: translate(0, 100px) rotate(30deg); }
-  to { opacity: 1; transform: translate(0, 0) rotate(15deg); }
-}
-
-@keyframes flowerEnterBottom {
-  from { opacity: 0; transform: translate(-50%, 150px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
-}
-
-.animate-flower-enter-top {
-  opacity: 0;
-  animation: flowerEnterTop 1s ease-out 0.3s forwards;
-}
-
-.animate-flower-enter-top-left {
-  opacity: 0;
-  animation: flowerEnterTopLeft 1s ease-out 0.3s forwards;
-}
-
-.animate-flower-enter-top-right {
-  opacity: 0;
-  animation: flowerEnterTopRight 1s ease-out 0.3s forwards;
-}
-
-.animate-flower-enter-bottom-left {
-  opacity: 0;
-  animation: flowerEnterBottomLeft 1s ease-out 0.45s forwards;
-}
-
-.animate-flower-enter-bottom-right {
-  opacity: 0;
-  animation: flowerEnterBottomRight 1s ease-out 0.45s forwards;
-}
-
-.animate-flower-enter-bottom {
-  opacity: 0;
-  animation: flowerEnterBottom 1s ease-out 0.45s forwards;
 }
