@@ -67,21 +67,36 @@ export default function RetiroHeroMobile() {
     const tl = gsap.timeline({ defaults: { force3D: true } });
 
     // ─── 1. FLORES (todas juntas, rápido) ───
-    tl.fromTo("#m-fl-top-left",  { y: -80, x: -60 }, { y: 0, x: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 0.2)
-      .fromTo("#m-fl-top-right", { y: -80, x: 60  }, { y: 0, x: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 0.2)
-      .fromTo("#m-fl-top-mid",   { y: -80         }, { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 0.2)
-      .fromTo("#m-fl-bot-left",  { y: 80           }, { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 0.35)
-      .fromTo("#m-fl-bot-right", { y: 80           }, { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 0.35)
-      .fromTo("#m-fl-mid",       { y: 100          }, { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }, 0.35)
-
-    // ─── 2. TÍTULO CENTRAL ───
+    tl.fromTo(
+      ["#m-fl-top-left", "#m-fl-top-right", "#m-fl-top-mid", "#m-fl-bot-left", "#m-fl-bot-right", "#m-fl-mid"],
+      {
+        y: (i) => i < 3 ? -60 : 60, // Topo vem de cima, base vem de baixo
+        x: (i) => i === 0 ? -40 : (i === 1 ? 40 : 0), // Lados vêm levemente das diagonais
+        opacity: 0,
+        scale: 0.9 // Um leve zoom in ajuda na percepção de fluidez
+      },
+      {
+        y: 0,
+        x: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 1.2,
+        ease: "expo.out", // Ease mais sofisticado que o power2
+        stagger: {
+          amount: 0.4, // Distribui a entrada em 0.4s entre elas
+          from: "center" // Começa pelo meio e expande para as pontas
+        }
+      },
+      0.2 // Início do delay da timeline
+    )
+      // ─── 2. TÍTULO CENTRAL ───
       .fromTo(title, { scale: 0.85, y: 25 }, { scale: 1, y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }, 1.1)
 
-    // ─── 3. BEIJA-FLORES ───
+      // ─── 3. BEIJA-FLORES ───
       .fromTo("#m-bird-right", { x: -300, rotate: -15 }, { x: 0, rotate: 0, opacity: 1, duration: 1.8, ease: "power2.inOut" }, 2.0)
-      .fromTo("#m-bird-left",  { x: 300, rotate: 15  }, { x: 0, rotate: 0, opacity: 1, duration: 1.8, ease: "power2.inOut" }, 2.0)
+      .fromTo("#m-bird-left", { x: 300, rotate: 15 }, { x: 0, rotate: 0, opacity: 1, duration: 1.8, ease: "power2.inOut" }, 2.0)
 
-    // ─── 4. SCROLL INDICATOR ───
+      // ─── 4. SCROLL INDICATOR ───
       .to(scroll, { opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.7)" }, 3.2);
 
     // Seta do scroll — loop infinito
@@ -121,15 +136,15 @@ export default function RetiroHeroMobile() {
       </div>
 
       {/* FLORES — IDs curtos, scoped ao ref, sem classes CSS de animação */}
-      <img id="m-fl-top-mid"   src={flowerTopMiddle}   alt="" aria-hidden="true" className="absolute top-10 left-1/2 -translate-x-1/2 w-[210px] select-none z-10 invisible" />
-      <img id="m-fl-top-left"  src={flowerLeft}         alt="" aria-hidden="true" className="absolute top-7 -left-6 w-[180px] select-none z-10 invisible" />
-      <img id="m-fl-bot-left"  src={flowerBottomLeft}   alt="" aria-hidden="true" className="absolute w-[260px] select-none z-20 -bottom-10 -left-28 invisible" />
-      <img id="m-fl-bot-right" src={flowerBottomRight}  alt="" aria-hidden="true" className="absolute w-[320px] select-none z-20 -bottom-32 -right-36 invisible" />
-      <img id="m-fl-mid"       src={flowerMiddle}       alt="" aria-hidden="true" className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[280px] select-none z-20 invisible" />
+      <img id="m-fl-top-mid" src={flowerTopMiddle} alt="" aria-hidden="true" className="absolute top-10 left-1/2 -translate-x-1/2 w-[210px] select-none z-10 invisible" />
+      <img id="m-fl-top-left" src={flowerLeft} alt="" aria-hidden="true" className="absolute top-7 -left-6 w-[180px] select-none z-10 invisible" />
+      <img id="m-fl-bot-left" src={flowerBottomLeft} alt="" aria-hidden="true" className="absolute w-[260px] select-none z-20 -bottom-10 -left-28 invisible" />
+      <img id="m-fl-bot-right" src={flowerBottomRight} alt="" aria-hidden="true" className="absolute w-[320px] select-none z-20 -bottom-32 -right-36 invisible" />
+      <img id="m-fl-mid" src={flowerMiddle} alt="" aria-hidden="true" className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[280px] select-none z-20 invisible" />
 
       <div className="absolute top-16 -right-10 w-[180px] z-10 -rotate-12">
         <img id="m-fl-top-right" src={flowerRight} alt="" aria-hidden="true" className="w-full h-auto select-none invisible" />
-        <img id="m-bird-right"   src={hummingbird} alt="Beija-flor" className="absolute top-[50%] left-[5%] w-[45%] drop-shadow-2xl z-30 invisible" />
+        <img id="m-bird-right" src={hummingbird} alt="Beija-flor" className="absolute top-[50%] left-[5%] w-[45%] drop-shadow-2xl z-30 invisible" />
       </div>
 
       <img id="m-bird-left" src={hummingbirdLeft} alt="Beija-flor" className="absolute top-[30%] left-[16%] w-[15%] drop-shadow-2xl z-30 invisible" />

@@ -7,6 +7,7 @@ import flowerBottomRight from "./imagens/flor de baixo da direita.svg";
 import flowerMiddle from "./imagens/flores do meio.svg";
 import FlowerGarland from "./floergarland/flowerGarland";
 import RetiroVicencias from "./retiroVivencias/retiroVicencias";
+import RetiroLocal from "./retiroLocal/retirolocal";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -15,23 +16,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 // ─── COMPONENTE REUTILIZÁVEL: Flores de Transição ──────────────────────────
 // z-50 garantido para que as flores sobreponham qualquer conteúdo interno
-const BottomFlowers = () => (
-  <>
-    <img className="flower-bottom-left absolute w-[260px] md:w-[350px] lg:w-[650px] select-none z-50 -bottom-10 -left-28 md:-bottom-40 md:-left-20 lg:-bottom-60 lg:-left-28 invisible" src={flowerBottomLeft} alt="Flower Bottom Left" />
-    <img className="flower-bottom-right absolute w-[320px] md:w-[350px] lg:w-[650px] select-none z-50 -bottom-32 -right-36 md:-bottom-52 md:-right-20 lg:-bottom-72 lg:-right-28 invisible" src={flowerBottomRight} alt="Flower Bottom Right" />
-    <img className="flower-bottom-middle absolute -bottom-20 left-1/2 w-[280px] -translate-x-1/2 md:w-[400px] lg:w-[750px] select-none z-50 md:-bottom-48 lg:-bottom-64 invisible" src={flowerMiddle} alt="Flowers Middle" />
-  </>
-);
-
-export default function Retiro() {
-  const mainRef = useRef<HTMLElement>(null);
-
-  useLayoutEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, []);
+const BottomFlowers = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     // BottomFlowers — entrada por scroll, sem flutuação
@@ -44,7 +30,7 @@ export default function Retiro() {
       const parent = el.closest("section") || el.parentElement;
       gsap.fromTo(el,
         { y: 120, opacity: 0, rotate: -30 },
-        { y: 0, opacity: 1, rotate: -15, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: parent, start: "bottom 90%", once: true } }
+        { y: 0, opacity: 1, rotate: -15, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: parent, start: "bottom 95%", once: true } }
       );
     });
 
@@ -52,7 +38,7 @@ export default function Retiro() {
       const parent = el.closest("section") || el.parentElement;
       gsap.fromTo(el,
         { y: 120, opacity: 0, rotate: 30 },
-        { y: 0, opacity: 1, rotate: 15, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: parent, start: "bottom 90%", once: true } }
+        { y: 0, opacity: 1, rotate: 15, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: parent, start: "bottom 95%", once: true } }
       );
     });
 
@@ -60,9 +46,56 @@ export default function Retiro() {
       const parent = el.closest("section") || el.parentElement;
       gsap.fromTo(el,
         { y: 150, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: parent, start: "bottom 90%", once: true } }
+        { y: 0, opacity: 1, duration: 1.2, ease: "power3.out", scrollTrigger: { trigger: parent, start: "bottom 95%", once: true } }
       );
     });
+  }, { scope: containerRef });
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 pointer-events-none z-50">
+      <img className="flower-bottom-left absolute w-[260px] md:w-[350px] lg:w-[650px] select-none -bottom-10 -left-28 md:-bottom-40 md:-left-20 lg:-bottom-60 lg:-left-28 invisible" src={flowerBottomLeft} alt="Flower Bottom Left" />
+      <img className="flower-bottom-right absolute w-[320px] md:w-[350px] lg:w-[650px] select-none -bottom-32 -right-36 md:-bottom-52 md:-right-20 lg:-bottom-72 lg:-right-28 invisible" src={flowerBottomRight} alt="Flower Bottom Right" />
+      <img className="flower-bottom-middle absolute -bottom-20 left-1/2 w-[280px] -translate-x-1/2 md:w-[400px] lg:w-[750px] select-none md:-bottom-48 lg:-bottom-64 invisible" src={flowerMiddle} alt="Flowers Middle" />
+    </div>
+  );
+};
+
+export default function Retiro() {
+  const mainRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    // 1. Desliga o comportamento nativo do navegador reter a rolagem
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    // 2. Trava a rolagem no topo por MÚLTIPLOS frames logo que o componente monta.
+    // Isso anula a ação assíncrona do navegador de tentar descer a página após carregar.
+    let count = 0;
+    let animFrameId: number;
+
+    const forceScrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      count++;
+      if (count < 30) {
+        animFrameId = requestAnimationFrame(forceScrollToTop);
+      } else {
+        // Quando terminar de forçar, avisa o GSAP que posições mudaram
+        ScrollTrigger.refresh();
+      }
+    };
+    forceScrollToTop();
+
+    const onBeforeUnload = () => window.scrollTo(0, 0);
+    window.addEventListener("beforeunload", onBeforeUnload);
+
+    return () => {
+      cancelAnimationFrame(animFrameId);
+      window.removeEventListener("beforeunload", onBeforeUnload);
+    };
+  }, []);
+
+  useGSAP(() => {
 
     gsap.fromTo("#retiro-footer",
       { opacity: 0, y: 30 },
@@ -110,18 +143,32 @@ export default function Retiro() {
         <BottomFlowers />
       </section>
 
-      {/* SEÇÃO 2: VIVÊNCIAS (z-20) - Fica abaixo da Seção 1, mas acima do Footer */}
+      {/* SEÇÃO 2: VIVÊNCIAS (z-20) */}
       <RetiroVicencias>
         <BottomFlowers />
       </RetiroVicencias>
+
+      {/* SEÇÃO 3: LOCAL (O Refúgio) */}
+      <RetiroLocal>
+        <BottomFlowers />
+      </RetiroLocal>
 
       {/* SEÇÃO 3: FOOTER (z-10) - Nível mais baixo */}
       <footer id="retiro-footer" className="relative w-full z-10 overflow-hidden flex flex-col items-center justify-center opacity-0">
         <img src={backgroundFooter} alt="Footer Background" className="w-full h-auto block pointer-events-none z-0" />
         <div className="absolute inset-0 flex items-center justify-center z-10">
-          <p className="font-mono text-[10px] md:text-[12px] uppercase tracking-widest text-[#050505] md:text-zinc-600">
-            © 2026 Universo de Luz · Todos os direitos reservados
-          </p>
+          <a
+            href="https://wa.me/5571996612421"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center justify-center px-8 py-4 rounded-full text-white text-[12px] md:text-[14px] font-black uppercase tracking-[0.2em] shadow-2xl transition-all duration-500 hover:scale-110 active:scale-95 font-['Montserrat'] bg-gradient-to-r from-[#015b8b] to-[#1c642c] text-center leading-tight"
+            style={{ 
+              boxShadow: "0 0 50px -10px rgba(28,100,44,0.6)",
+              textShadow: "0 2px 4px rgba(0,0,0,0.3)"
+            }}
+          >
+            QUERO VIVER ESSA EXPERIÊNCIA
+          </a>
         </div>
       </footer>
 
