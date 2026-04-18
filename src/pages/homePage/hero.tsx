@@ -70,7 +70,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.8, delay: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
                 className="mb-6 font-light leading-[1.05] tracking-tight text-white"
-                style={{ 
+                style={{
                   fontFamily: "'Optima','Zapf Humanist','Tenor Sans',sans-serif",
                   fontSize: 'clamp(2.5rem, 8vw + 0.5rem, 4.75rem)'
                 }}
@@ -113,7 +113,7 @@ export default function Hero() {
                   style={BTN_PRIMARY}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 60px -5px rgba(139,92,246,0.8)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string; }}
-                  onClick={() => navigate("/retiro")}
+                  onClick={() => { window.location.href = "/retiro"; }}
                 >
                   <span className="truncate">Retiro Cura do Beija-Flor</span>
                   <ArrowRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1" />

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowRight, Menu, X, Youtube } from "lucide-react";
 import { BTN_PRIMARY } from "../constants/btnPrimary";
-import { useNavigate } from "react-router-dom";
 
 export const NAV_LABELS = ["Orações", "Limpezas", "Defesas", "Oráculo"] as const;
 
@@ -16,18 +15,12 @@ const NAV_ICONS: Record<string, string> = {
 const NAV_BTN_CLASS =
   "group relative flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-[1.02] hover:brightness-110 sm:py-2 sm:px-5 sm:text-sm";
 
-/**
- * Barra de navegação global (fixa no topo). Reutilizar em todas as páginas.
- */
 export default function SiteNav() {
   const [navOpen, setNavOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const navigate = useNavigate();
 
-  // Show/Hide Nav based on proximity (Desktop only)
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      // Show if mouse is in top 80px or if menu is open
       if (e.clientY < 80 || navOpen) {
         setIsVisible(true);
       } else {
@@ -35,12 +28,10 @@ export default function SiteNav() {
       }
     };
 
-    // Only apply to devices with mouse (checked via media hover)
     const isDesktop = window.matchMedia("(hover: hover)").matches;
     if (isDesktop) {
       window.addEventListener("mousemove", handleMouseMove);
     } else {
-      // Always visible on mobile
       setIsVisible(true);
     }
 
@@ -49,21 +40,18 @@ export default function SiteNav() {
     };
   }, [navOpen]);
 
+  // ─── O SEGREDO: Roteamento nativo limpa o lixo de memória do GSAP/Lenis
   const handleNavClick = (label: string) => {
-    if (label === "Orações") {
-      navigate("/prayers");
-    } else if (label === "Limpezas") {
-      navigate("/cleansing");
-    } else if (label === "Defesas") {
-      navigate("/defense");
-    } else if (label === "Oráculo") {
-      navigate("/oracle");
-    } else if (label === "YouTube") {
-      navigate("/youtube");
-    } else {
-      navigate("/");
-    }
     setNavOpen(false);
+
+    let path = "/";
+    if (label === "Orações") path = "/prayers";
+    else if (label === "Limpezas") path = "/cleansing";
+    else if (label === "Defesas") path = "/defense";
+    else if (label === "Oráculo") path = "/oracle";
+    else if (label === "YouTube") path = "/youtube";
+
+    window.location.href = path;
   };
 
   useEffect(() => {
@@ -78,9 +66,9 @@ export default function SiteNav() {
   return (
     <motion.nav
       initial={{ opacity: 0, y: -80 }}
-      animate={{ 
-        opacity: isVisible || navOpen ? 1 : 0, 
-        y: isVisible || navOpen ? 0 : -80 
+      animate={{
+        opacity: isVisible || navOpen ? 1 : 0,
+        y: isVisible || navOpen ? 0 : -80
       }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="fixed left-0 right-0 top-0 z-50 bg-transparent md:bg-gradient-to-b md:from-black/80 md:to-transparent md:backdrop-blur-[2px]"
@@ -102,7 +90,6 @@ export default function SiteNav() {
         </a>
 
         <div className="flex items-center gap-3">
-          {/* Desktop Nav */}
           <div className="hidden flex-wrap items-center justify-end gap-2 md:flex lg:gap-3">
             {NAV_LABELS.map((label) => (
               <button
@@ -121,12 +108,11 @@ export default function SiteNav() {
               >
                 {label}
                 {NAV_ICONS[label] ? (
-                  <img 
-                    src={`${NAV_ICONS[label]}?v=4`} 
-                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 md:h-4.5 md:w-4.5 ${
-                      label === "Defesas" || label === "Oráculo" ? "invert mix-blend-screen" : "brightness-0 invert"
-                    }`}
-                    alt="" 
+                  <img
+                    src={`${NAV_ICONS[label]}?v=4`}
+                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 md:h-4.5 md:w-4.5 ${label === "Defesas" || label === "Oráculo" ? "invert mix-blend-screen" : "brightness-0 invert"
+                      }`}
+                    alt=""
                   />
                 ) : (
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -194,12 +180,11 @@ export default function SiteNav() {
               >
                 {label}
                 {NAV_ICONS[label] ? (
-                  <img 
-                    src={`${NAV_ICONS[label]}?v=4`} 
-                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5 ${
-                      label === "Defesas" || label === "Oráculo" ? "invert mix-blend-screen" : "brightness-0 invert"
-                    }`}
-                    alt="" 
+                  <img
+                    src={`${NAV_ICONS[label]}?v=4`}
+                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5 ${label === "Defesas" || label === "Oráculo" ? "invert mix-blend-screen" : "brightness-0 invert"
+                      }`}
+                    alt=""
                   />
                 ) : (
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />

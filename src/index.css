@@ -10,6 +10,7 @@
 }
 
 @layer base {
+
   *,
   *::before,
   *::after {
@@ -32,7 +33,9 @@
     cursor: url('/logos/cursor.svg') 16 16, auto;
   }
 
-  a, button, [role="button"] {
+  a,
+  button,
+  [role="button"] {
     cursor: url('/logos/cursor.svg') 16 16, pointer;
   }
 
@@ -61,9 +64,121 @@
    objetos const dentro do próprio arquivo .tsx
    ===================================================== */
 @layer components {
-  .text-brand-blue        { color: #015b8b; }
-  .text-brand-blue-light  { color: #38bdf8; }
-  .text-brand-green       { color: #1c642c; }
-  .text-brand-teal        { color: #1c92d2; }
-  .text-brand-navy        { color: #032e4d; }
+  .text-brand-blue {
+    color: #015b8b;
+  }
+
+  .text-brand-blue-light {
+    color: #38bdf8;
+  }
+
+  .text-brand-green {
+    color: #1c642c;
+  }
+
+  .text-brand-teal {
+    color: #1c92d2;
+  }
+
+  .text-brand-navy {
+    color: #032e4d;
+  }
+
+  /* Animações CSS de loop para as flores e pássaros - alta performance */
+  .animate-float-slow {
+    animation: floatSlow 8s ease-in-out infinite;
+  }
+  
+  .animate-float-slower {
+    animation: floatSlower 10s ease-in-out infinite;
+  }
+
+  .animate-float-reverse {
+    animation: floatReverse 9s ease-in-out infinite;
+  }
+  
+  .animate-float-bird {
+    animation: floatBird 6s ease-in-out infinite;
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+}
+
+@keyframes floatSlower {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(-3deg); }
+}
+
+@keyframes floatBird {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-25px); }
+}
+
+/* ── Entrada das flores da Hero (CSS puro, sem GSAP) ── */
+@keyframes flowerEnterTop {
+  from { opacity: 0; transform: translate(-50%, -100px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes flowerEnterTopLeft {
+  from { opacity: 0; transform: translate(-100px, -100px); }
+  to { opacity: 1; transform: translate(0, 0); }
+}
+
+@keyframes flowerEnterTopRight {
+  from { opacity: 0; transform: translate(100px, -100px); }
+  to { opacity: 1; transform: translate(0, 0); }
+}
+
+@keyframes flowerEnterBottomLeft {
+  from { opacity: 0; transform: translate(0, 100px) rotate(-30deg); }
+  to { opacity: 1; transform: translate(0, 0) rotate(-15deg); }
+}
+
+@keyframes flowerEnterBottomRight {
+  from { opacity: 0; transform: translate(0, 100px) rotate(30deg); }
+  to { opacity: 1; transform: translate(0, 0) rotate(15deg); }
+}
+
+@keyframes flowerEnterBottom {
+  from { opacity: 0; transform: translate(-50%, 150px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.animate-flower-enter-top {
+  opacity: 0;
+  animation: flowerEnterTop 1s ease-out 0.3s forwards;
+}
+
+.animate-flower-enter-top-left {
+  opacity: 0;
+  animation: flowerEnterTopLeft 1s ease-out 0.3s forwards;
+}
+
+.animate-flower-enter-top-right {
+  opacity: 0;
+  animation: flowerEnterTopRight 1s ease-out 0.3s forwards;
+}
+
+.animate-flower-enter-bottom-left {
+  opacity: 0;
+  animation: flowerEnterBottomLeft 1s ease-out 0.45s forwards;
+}
+
+.animate-flower-enter-bottom-right {
+  opacity: 0;
+  animation: flowerEnterBottomRight 1s ease-out 0.45s forwards;
+}
+
+.animate-flower-enter-bottom {
+  opacity: 0;
+  animation: flowerEnterBottom 1s ease-out 0.45s forwards;
 }

@@ -1,4 +1,3 @@
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -9,10 +8,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function HomePage() {
   useEffect(() => {
+    // 1. Inicializa o Lenis
     const lenis = new Lenis({ autoRaf: true });
 
+    // 2. Sincroniza o Lenis com o ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
+    // 3. Sequestra o scroll global para o GSAP ler através do Lenis
     ScrollTrigger.scrollerProxy(document.documentElement, {
       scrollTop(value) {
         if (arguments.length && value !== undefined) {
@@ -31,18 +33,30 @@ export default function HomePage() {
       pinType: document.documentElement.style.transform ? "transform" : "fixed",
     });
 
-    ScrollTrigger.addEventListener("refresh", () => {
-      lenis.resize();
-    });
+    const handleRefresh = () => lenis.resize();
+    ScrollTrigger.addEventListener("refresh", handleRefresh);
+
     ScrollTrigger.refresh();
 
+    // ─── CLEANUP (Sem matar as timelines da próxima página!) ───
     return () => {
+      // a) Mata o Lenis
       lenis.destroy();
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+
+      // b) Remove o ouvinte
+      ScrollTrigger.removeEventListener("refresh", handleRefresh);
+
+      // c) Remove o proxy corretamente (sem aspas vazias "")
+      ScrollTrigger.scrollerProxy(document.documentElement);
+
+      // d) Limpa a memória de scroll
+      ScrollTrigger.clearScrollMemory();
+
+      // e) Remove qualquer trava de overflow deixada pelo Lenis
+      document.documentElement.style.removeProperty("overflow");
+      document.body.style.removeProperty("overflow");
     };
   }, []);
-
-  useGSAP(() => {}, []);
 
   return (
     <main className="bg-[#05070f]">
