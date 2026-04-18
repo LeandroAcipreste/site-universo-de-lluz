@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { BTN_PRIMARY } from "../../constants/btnPrimary";
 import HeroBackground from "./heroBackground";
 
@@ -41,7 +40,6 @@ const GRAD_TITULO_ORACAO: React.CSSProperties = {
 };
 
 export default function Hero() {
-  const navigate = useNavigate();
   return (
     <>
       <section
