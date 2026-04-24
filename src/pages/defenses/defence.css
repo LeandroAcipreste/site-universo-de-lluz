@@ -1,0 +1,370 @@
+/* =========================================
+   DEFENSE PAGE
+========================================= */
+
+.defense-section {
+    position: relative;
+    background: transparent;
+    color: #f2f2f2;
+    height: 100vh;
+}
+
+/* ── BOTÕES DE NAVEGAÇÃO ── */
+.defense-nav {
+    position: absolute;
+    bottom: 1rem;
+    left: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .defense-nav {
+        bottom: 3rem;
+        left: 3rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .defense-nav {
+        left: 5rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .defense-nav {
+        left: 6rem;
+    }
+}
+
+.defense-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.defense-nav-btn:hover:not(:disabled) {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+}
+
+.defense-nav-btn:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+}
+
+.defense-nav-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.defense-nav-counter {
+    font-family: monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+@media (min-width: 768px) {
+    .defense-nav-counter {
+        font-size: 10px;
+    }
+}
+
+.defense-sticky {
+    position: sticky;
+    top: 80px;
+    height: calc(100vh - 80px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .defense-sticky {
+        flex-direction: row;
+    }
+}
+
+/* ── PAINEL ESQUERDO ── */
+.defense-panel-left {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    height: 25%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    backdrop-filter: blur(2px);
+    transition: all 0.5s;
+}
+
+@media (min-width: 768px) {
+    .defense-panel-left {
+        height: 100%;
+        width: 50%;
+        padding: 3rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .defense-panel-left {
+        padding: 3rem 5rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .defense-panel-left {
+        padding: 3rem 6rem;
+    }
+}
+
+/* Category Tabs */
+.defense-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .defense-tabs {
+        margin-bottom: 2.5rem;
+    }
+}
+
+.defense-tab {
+    border-radius: 9999px;
+    border: 1px solid;
+    padding: 0.375rem 1rem;
+    font-family: monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: transparent;
+}
+
+@media (min-width: 768px) {
+    .defense-tab {
+        font-size: 11px;
+    }
+}
+
+.defense-tab--active {
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.defense-tab--inactive {
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.defense-tab--inactive:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Title area */
+.defense-title-area {
+    position: relative;
+    height: fit-content;
+    min-height: 60px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .defense-title-area {
+        min-height: 300px;
+    }
+}
+
+.defense-motion-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.defense-title {
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+    .defense-title {
+        margin-bottom: 1.5rem;
+    }
+}
+
+.defense-description {
+    display: none;
+    max-width: 28rem;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #a3a3a3;
+    font-weight: 300;
+}
+
+@media (min-width: 768px) {
+    .defense-description {
+        display: block;
+        font-size: 1.125rem;
+        margin-bottom: 2rem;
+    }
+}
+
+.defense-progress-track {
+    display: none;
+    margin-top: 1rem;
+    height: 2px;
+    width: 100%;
+    max-width: 20rem;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+    .defense-progress-track {
+        display: block;
+    }
+}
+
+.defense-progress-bar {
+    height: 100%;
+    background: white;
+    box-shadow: 0 0 8px #fff;
+}
+
+/* Scroll Indicator */
+.defense-scroll-indicator {
+    position: absolute;
+    bottom: 1rem;
+    left: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+@media (min-width: 768px) {
+    .defense-scroll-indicator {
+        bottom: 3rem;
+        left: 3rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .defense-scroll-indicator {
+        left: 5rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .defense-scroll-indicator {
+        left: 6rem;
+    }
+}
+
+.defense-scroll-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+@media (min-width: 768px) {
+    .defense-scroll-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+}
+
+.defense-scroll-text {
+    font-family: monospace;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+@media (min-width: 768px) {
+    .defense-scroll-text {
+        font-size: 10px;
+    }
+}
+
+/* ── PAINEL DIREITO: CARDS ── */
+.defense-panel-right {
+    position: relative;
+    height: 75%;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s;
+}
+
+@media (min-width: 768px) {
+    .defense-panel-right {
+        height: 100%;
+        width: 50%;
+        border-top: none;
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+    }
+}
+
+.defense-cards-viewport {
+    position: relative;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .defense-cards-viewport {
+        padding: 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .defense-cards-viewport {
+        padding: 3rem;
+    }
+}
+
+.defense-card-slot {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 10;
+}
+
+@media (min-width: 768px) {
+    .defense-card-slot {
+        padding: 3rem;
+    }
+}

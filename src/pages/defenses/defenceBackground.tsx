@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./defenceBackground.css";
 
 export default function DefenseBackground() {
   const [scale, setScale] = useState(0.45);
@@ -38,7 +39,7 @@ export default function DefenseBackground() {
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden mix-blend-screen opacity-90">
+    <div className="defense-bg">
       <div 
         key={scale}
         data-us-dpi="2" 
@@ -47,8 +48,8 @@ export default function DefenseBackground() {
         data-us-production="true" 
         data-us-project="WL20Cho3hr5Ge8Pk2QUl" 
         data-us-scale={scale}
-        style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }}
-      ></div>
+        className="defense-bg__canvas"
+      />
     </div>
   );
 }
