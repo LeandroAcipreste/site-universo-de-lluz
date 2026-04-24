@@ -40,27 +40,33 @@
 }
 
 /* =========================================
-   CABEÇALHO (HEADER)
+   CABEÇALHO (HEADER) - CORRIGIDO PARA CENTRALIZAR
 ========================================= */
 .v-header-container {
     width: 100%;
     padding: 0 1rem;
-    text-align: center;
     z-index: 30;
     margin-bottom: 3rem;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centraliza os títulos */
 }
 
 .v-main-title {
-    color: #032e4d;
-    font-size: clamp(2.25rem, 5vw, 4rem);
     font-family: 'Playfair Display', serif;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    font-variant-numeric: lining-nums;
+    font-weight: 500;
+    color: #276289;
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    margin-bottom: 0.5rem;
     -webkit-text-stroke: 1px #032e4d;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-    position: absolute;
+    position: relative;
+    /* Mudado de absolute para relative */
     z-index: 20;
+    text-align: center;
 }
 
 .v-subtitle {
@@ -69,8 +75,10 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     font-weight: 600;
-    position: absolute;
+    position: relative;
+    /* Mudado de absolute para relative */
     z-index: 20;
+    text-align: center;
 }
 
 .v-bird-decor {
@@ -86,6 +94,48 @@
     .v-bird-decor {
         left: 2.5rem;
         width: 260px;
+    }
+}
+
+/* =========================================
+   CONTAINER DA FOTO DA MÃE E FLOR (CLASSES NOVAS ADICIONADAS)
+========================================= */
+.rv-photo-container {
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    margin: 1rem auto 4rem auto;
+    /* Espaçamento ajustado */
+    z-index: 40;
+}
+
+.rv-main-photo {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 32px;
+    box-shadow: 0px 20px 40px rgba(3, 46, 77, 0.3);
+    border: 1px solid #38bdf8;
+}
+
+.rv-flower-decoration {
+    position: absolute;
+    top: -30px;
+    /* Subimos um pouco para não descer tanto na foto */
+    right: -20px;
+    z-index: 50;
+    width: 140px;
+    /* Reduzido drasticamente de 250px para 140px */
+    height: auto;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .rv-flower-decoration {
+        width: 110px;
+        /* Tamanho delicado no celular */
+        top: -15px;
+        right: -10px;
     }
 }
 
@@ -119,40 +169,6 @@
 /* =========================================
    ESTILOS DOS CARDS
 ========================================= */
-
-.v-card-featured {
-    width: 90%;
-    /* Quase total no mobile */
-    max-width: 500px;
-    /* Tamanho médio inicial */
-    margin: 2rem auto;
-    /* CENTRALIZADO NO MEIO DA TELA */
-    border-radius: 32px;
-    box-shadow: 0px 20px 40px rgba(3, 46, 77, 0.3);
-    border: 1px solid #38bdf8;
-    overflow: hidden;
-    display: flex;
-    z-index: 30;
-}
-
-@media (min-width: 1024px) {
-    .v-card-featured {
-        max-width: 50%;
-        /* EXATAMENTE METADE DA TELA NO DESKTOP */
-        grid-column: 1 / -1;
-        /* Garante que ocupe a linha toda para o margin: auto centralizar */
-    }
-}
-
-/* A Foto em si, respeitando a proporção real */
-.v-featured-img {
-    width: 100%;
-    height: auto;
-    /* Mantém a proporção real da foto */
-    display: block;
-    object-fit: contain;
-}
-
 .v-divider {
     text-align: center;
     margin: 1.5rem 0;
@@ -175,29 +191,31 @@
     margin-top: 0.25rem;
 }
 
-/* OS CARDS PEQUENOS (Agora com a imagem no CSS para limpar o TSX) */
 .v-card-standard {
     background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
     border-radius: 32px;
     box-shadow: 0px 25px 45px rgba(1, 91, 139, 0.1);
-    border: 1px solid #38bdf8;
+    border: 3px solid #1c642c;
     background-image: url("../imagens/background-card.svg");
     background-size: cover;
     background-position: center;
-    padding: 1.25rem;
+    padding: 1.5rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: center;
+    gap: 1.5rem;
+    max-width: 450px;
+    margin: 0 auto;
 }
 
 .v-card-centered {
-    max-width: 800px;
+    max-width: 450px;
     margin: 0 auto;
 }
 
 .v-card-text-box {
-    flex: 1;
+    /* Removido flex: 1 para o conteúdo ficar junto */
 }
 
 .text-right {
@@ -220,8 +238,12 @@
 }
 
 .v-card-img {
-    width: clamp(100px, 15vw, 140px);
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #1c642c;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
     flex-shrink: 0;
 }
 
@@ -241,7 +263,7 @@
     backdrop-filter: blur(12px);
     border-radius: 32px;
     box-shadow: 0px 25px 45px rgba(1, 91, 139, 0.2);
-    border: 1px solid #38bdf8;
+    border: 3px solid #1c642c;
     background-image: url("../imagens/background-card.svg");
     background-size: cover;
     background-position: center;
@@ -303,4 +325,52 @@
         right: 20px;
         width: 300px;
     }
+}
+
+/* =========================================
+   EFEITOS DE ROLAGEM (SCROLL)
+========================================= */
+.anim-header, .rv-photo-container, .anim-card, .anim-special {
+    opacity: 0;
+    will-change: opacity, transform;
+}
+
+.anim-header {
+    transform: translateY(30px);
+    transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+}
+.anim-header.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.rv-photo-container {
+    transform: translateY(40px) scale(0.95);
+    transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+}
+.rv-photo-container.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.2s, transform 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.2s;
+}
+
+.anim-card {
+    transform: translateY(50px);
+    transition: opacity 0.4s ease-in, transform 0.4s ease-in;
+}
+.anim-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.anim-special {
+    transform: translateY(50px) scale(0.95);
+    transition: opacity 0.5s ease-in, transform 0.5s ease-in;
+}
+.anim-special.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: opacity 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

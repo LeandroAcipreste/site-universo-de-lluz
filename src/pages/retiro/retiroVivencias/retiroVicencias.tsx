@@ -21,117 +21,89 @@ export default function RetiroVivencias({ children }: { children?: React.ReactNo
   const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(() => {
-    // 1. Título e Header (Aparece/Soma sozinho)
-    gsap.from(".anim-header", {
-      opacity: 0,
-      y: 40,
-      duration: 1,
-      scrollTrigger: {
-        trigger: ".anim-header",
-        start: "top 90%",
-        end: "bottom 10%",
-        toggleActions: "play reverse play reverse",
-      }
+    ScrollTrigger.create({
+      trigger: ".anim-header",
+      start: "top 90%",
+      end: "bottom 10%",
+      toggleClass: "is-visible",
     });
 
-    // 2. Animação Individual para cada Card e Divisor
-    // Isso garante que Ayahuasca, Cacau, Rapé e as Terapias funcionem de forma independente
-    const cards = gsap.utils.toArray<HTMLElement>(".anim-card");
+    ScrollTrigger.create({
+      trigger: ".rv-photo-container",
+      start: "top 90%",
+      end: "bottom 10%",
+      toggleClass: "is-visible",
+    });
 
+    const cards = gsap.utils.toArray<HTMLElement>(".anim-card");
     cards.forEach((card) => {
-      gsap.from(card, {
-        opacity: 0,
-        y: 60,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: card,           // O próprio card é o gatilho
-          start: "top 90%",        // Ativa quando o card entra por baixo
-          end: "bottom 10%",       // Reverte quando o card sai por cima
-          toggleActions: "play reverse play reverse",
-        }
+      ScrollTrigger.create({
+        trigger: card,
+        start: "top 90%",
+        end: "bottom 10%",
+        toggleClass: "is-visible",
       });
     });
 
-    // 3. Card Especial do Eduardo
-    gsap.from(".anim-special", {
-      opacity: 0,
-      scale: 0.95,
-      y: 50,
-      duration: 1,
-      ease: "back.out(1.2)",
-      scrollTrigger: {
-        trigger: ".anim-special",
-        start: "top 90%",
-        end: "bottom 10%",
-        toggleActions: "play reverse play reverse",
-      }
+    ScrollTrigger.create({
+      trigger: ".anim-special",
+      start: "top 90%",
+      end: "bottom 10%",
+      toggleClass: "is-visible",
     });
 
   }, { scope: containerRef });
 
   return (
     <section ref={containerRef} className="vivencias-section">
-
-      {/* BACKGROUND DA SESSÃO RESTAURADO */}
       <img src={backgroundSection} alt="" className="vivencias-bg" />
 
       {/* HEADER */}
       <div className="v-header-container anim-header">
         <h2 className="v-main-title">Nossas Vivências</h2>
         <p className="v-subtitle">O que você vai viver nessa jornada</p>
-        <img src={beijaFlorRosas} alt="" className="v-bird-decor" />
       </div>
 
+      {/* CONTAINER DA FOTO E DECORAÇÃO DA FLOR */}
+      <div className="rv-photo-container">
+        <img src={maeBeijaFlor} alt="Vivência" className="rv-main-photo" />
+        <img src={beijaFlorRosas} alt="Decoração Flor" className="rv-flower-decoration" />
+      </div>
 
+      {/* ABERTURA DO GRID DE CARDS */}
       <div className="v-grid-container">
 
-
-        <div className="v-card-featured v-col-span-2 anim-card">
-          <img
-            src={maeBeijaFlor}
-            alt="Mãe Beija Flor"
-            className="v-featured-img"
-          />
-        </div>
-
-        {/* Divisor 1 */}
         <div className="v-divider v-col-span-2 anim-card">
           <h3>Medicinas da Floresta</h3>
           <h4>A Expansão</h4>
         </div>
 
-        {/* Card Ayahuasca */}
         <div className="v-card-standard anim-card">
-          <div className="v-card-text-box text-left">
+          <div className="v-card-text-box text-right">
             <p className="v-card-desc"><strong className="uppercase">AYAHUASCA:</strong> 2 jornadas de consciência e autoconhecimento.</p>
           </div>
           <img src={ayahuascaImg} alt="Ayahuasca" className="v-card-img" />
         </div>
 
-        {/* Card Cacau */}
         <div className="v-card-standard anim-card">
           <img src={cacauImg} alt="Cacau" className="v-card-img" />
-          <div className="v-card-text-box text-right">
+          <div className="v-card-text-box text-left">
             <p className="v-card-desc"><strong className="uppercase">CACAU:</strong> facilita a conexão com o amor.</p>
           </div>
         </div>
 
-        {/* Card Rapé */}
         <div className="v-card-standard v-card-centered v-col-span-2 anim-card">
-          <div className="v-card-text-box text-left">
+          <div className="v-card-text-box text-right">
             <p className="v-card-desc"><strong className="uppercase">Rapé:</strong> alinhamento energético e silêncio interior.</p>
           </div>
           <img src={rapeImg} alt="Rapé" className="v-card-img" />
         </div>
 
-        {/* Divisor 2 */}
         <div className="v-divider v-col-span-2 anim-card">
           <h3>Atividades Terapêuticas</h3>
           <h4>A Integração</h4>
         </div>
 
-        {/* Card Respiração Somática */}
         <div className="v-card-standard anim-card">
           <img src={respiracaoSomaticaImg} alt="Respiração Somática" className="v-card-img" />
           <div className="v-card-text-box text-right">
@@ -139,7 +111,6 @@ export default function RetiroVivencias({ children }: { children?: React.ReactNo
           </div>
         </div>
 
-        {/* Card Terapias Meditativas */}
         <div className="v-card-standard anim-card">
           <div className="v-card-text-box text-left">
             <p className="v-card-desc"><strong className="uppercase">TERAPIAS MEDITATIVAS:</strong> Movimento e dança para quebrar couraças e silenciar a mente.</p>

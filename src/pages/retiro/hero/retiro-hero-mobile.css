@@ -59,11 +59,17 @@
 
 .m-main-title {
     font-family: 'Xarrovv', sans-serif;
-    color: #e0f2fe;
+    color: #38bdf8 !important;
+    /* Azul vibrante igual ao desktop */
     font-size: clamp(4rem, 18vw, 18rem);
     line-height: 0.8;
     text-transform: uppercase;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 1), 0 0 15px rgba(0, 0, 0, 0.8), 0 0 30px rgba(14, 165, 233, 0.5);
+    /* Sombras: 1ª preta para legibilidade, 2ª e 3ª para o brilho azulado */
+    text-shadow:
+        0 0 5px rgba(0, 0, 0, 1),
+        0 0 15px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(14, 165, 233, 0.6);
+    margin: 0;
 }
 
 .m-info-block {

@@ -66,15 +66,16 @@
     padding: 0 1rem;
     text-align: center;
     z-index: 30;
-    margin-top: 3rem;
+    margin-top: 1rem;
     margin-bottom: 2rem;
 }
 
 .local-title {
-    color: #032e4d;
-    font-size: clamp(2.25rem, 4vw, 3.5rem);
     font-family: 'Playfair Display', serif;
-    font-weight: 700;
+    font-variant-numeric: lining-nums;
+    font-weight: 500;
+    color: #276289;
+    font-size: clamp(2.25rem, 4vw, 3.5rem);
     margin-bottom: 1rem;
     -webkit-text-stroke: 1px #032e4d;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
@@ -144,6 +145,8 @@
 }
 
 .local-list-container {
+    position: relative;
+    z-index: 10;
     width: 100%;
     text-align: center;
 }
@@ -199,21 +202,23 @@
     }
 }
 
-.local-bird-bottom {
+.local-bird-center {
     position: absolute;
-    bottom: -4rem;
-    right: -1.25rem;
-    width: 160px;
-    z-index: 40;
+    bottom: calc(-5rem - 20px);
+    left: 20px;
+    width: 150px;
+    z-index: 35;
     pointer-events: none;
     opacity: 0.9;
-    transform: scaleX(-1);
+    transform: rotate(5deg);
 }
 
 @media (min-width: 1024px) {
-    .local-bird-bottom {
-        width: 220px;
-        right: -3rem;
+    .local-bird-center {
+        width: 200px;
+        left: calc(-10% + 20px);
+        bottom: calc(-7rem - 20px);
+        transform: rotate(0deg);
     }
 
     .local-image-box.last-box {
@@ -223,8 +228,56 @@
     }
 }
 
-.local-bird-bottom img {
+.local-bird-center img {
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.25));
+}
+
+/* =========================================
+   BEIJA FLOR DECORATIVO (DEBAIXO DA LISTA)
+========================================= */
+
+/* Adicionamos position relative ao container de texto para o pássaro se guiar por ele */
+.l-text-content {
+    position: relative;
+}
+
+.v-bird-decor {
+    position: absolute;
+    bottom: -4rem;
+    /* Posiciona abaixo da lista */
+    right: 0;
+    /* Alinha à direita do texto */
+    width: 130px;
+    /* Tamanho mais compacto para esta área */
+    pointer-events: none;
+    filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.1));
+    z-index: 5;
+    transform: rotate(10deg);
+    /* Uma leve inclinação para dar movimento */
+}
+
+@media (min-width: 1024px) {
+    .v-bird-decor {
+        bottom: -3rem;
+        right: -2rem;
+        width: 180px;
+    }
+}
+
+/* =========================================
+   EFEITOS DE ROLAGEM (SCROLL)
+========================================= */
+.local-anim-item {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.4s ease-in, transform 0.4s ease-in;
+    will-change: opacity, transform;
+}
+
+.local-anim-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }

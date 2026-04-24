@@ -25,21 +25,12 @@ export default function RetiroLocal({ children }: RetiroLocalProps) {
     const items = gsap.utils.toArray<HTMLElement>(".local-anim-item");
 
     items.forEach((item) => {
-      gsap.fromTo(item,
-        { opacity: 0, y: 32 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power2.out",
-          force3D: true,
-          scrollTrigger: {
-            trigger: item,
-            start: "top 90%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
+      ScrollTrigger.create({
+        trigger: item,
+        start: "top 90%",
+        end: "bottom 10%",
+        toggleClass: "is-visible",
+      });
     });
 
     gsap.to(".floating-bird", {
@@ -99,13 +90,14 @@ export default function RetiroLocal({ children }: RetiroLocalProps) {
               </span>
             </li>
           </ul>
+          
+          <div className="local-bird-center floating-bird">
+            <img src={beijaFlorGrande} alt="Beija-flor Grande" />
+          </div>
         </div>
 
         <div className="local-image-box last-box local-anim-item">
           <img src={pousada2} alt="Interior da Pousada Nosso Refúgio" className="local-image-main" />
-          <div className="local-bird-bottom floating-bird">
-            <img src={beijaFlorGrande} alt="Beija-flor Grande" />
-          </div>
         </div>
 
       </div>
