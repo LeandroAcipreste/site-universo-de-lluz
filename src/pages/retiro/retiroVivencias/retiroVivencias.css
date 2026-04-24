@@ -1,0 +1,306 @@
+/* =========================================
+   CONTAINER PRINCIPAL
+========================================= */
+.vivencias-section {
+    position: relative;
+    width: 100%;
+    z-index: 20;
+    padding-top: 10rem;
+    padding-bottom: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+@media (min-width: 768px) {
+    .vivencias-section {
+        padding-top: 14rem;
+        padding-bottom: 8rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .vivencias-section {
+        padding-top: 20rem;
+        padding-bottom: 10rem;
+    }
+}
+
+/* BACKGROUND DA SESSÃO RESTAURADO (Intacto) */
+.vivencias-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* =========================================
+   CABEÇALHO (HEADER)
+========================================= */
+.v-header-container {
+    width: 100%;
+    padding: 0 1rem;
+    text-align: center;
+    z-index: 30;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.v-main-title {
+    color: #032e4d;
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    -webkit-text-stroke: 1px #032e4d;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    z-index: 20;
+}
+
+.v-subtitle {
+    color: #1c642c;
+    font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 600;
+    position: absolute;
+    z-index: 20;
+}
+
+.v-bird-decor {
+    position: absolute;
+    bottom: -6rem;
+    left: -2.5rem;
+    width: 200px;
+    pointer-events: none;
+    filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15));
+}
+
+@media (min-width: 1024px) {
+    .v-bird-decor {
+        left: 2.5rem;
+        width: 260px;
+    }
+}
+
+/* =========================================
+   GRID DE CARDS
+========================================= */
+.v-grid-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 1.25rem;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+    .v-grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+}
+
+.v-col-span-2 {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+/* =========================================
+   ESTILOS DOS CARDS
+========================================= */
+
+.v-card-featured {
+    width: 90%;
+    /* Quase total no mobile */
+    max-width: 500px;
+    /* Tamanho médio inicial */
+    margin: 2rem auto;
+    /* CENTRALIZADO NO MEIO DA TELA */
+    border-radius: 32px;
+    box-shadow: 0px 20px 40px rgba(3, 46, 77, 0.3);
+    border: 1px solid #38bdf8;
+    overflow: hidden;
+    display: flex;
+    z-index: 30;
+}
+
+@media (min-width: 1024px) {
+    .v-card-featured {
+        max-width: 50%;
+        /* EXATAMENTE METADE DA TELA NO DESKTOP */
+        grid-column: 1 / -1;
+        /* Garante que ocupe a linha toda para o margin: auto centralizar */
+    }
+}
+
+/* A Foto em si, respeitando a proporção real */
+.v-featured-img {
+    width: 100%;
+    height: auto;
+    /* Mantém a proporção real da foto */
+    display: block;
+    object-fit: contain;
+}
+
+.v-divider {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.v-divider h3 {
+    color: #1c642c;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.v-divider h4 {
+    color: #032e4d;
+    font-size: 1.25rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+}
+
+/* OS CARDS PEQUENOS (Agora com a imagem no CSS para limpar o TSX) */
+.v-card-standard {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 32px;
+    box-shadow: 0px 25px 45px rgba(1, 91, 139, 0.1);
+    border: 1px solid #38bdf8;
+    background-image: url("../imagens/background-card.svg");
+    background-size: cover;
+    background-position: center;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.v-card-centered {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.v-card-text-box {
+    flex: 1;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.v-card-desc {
+    color: #011e36;
+    font-size: clamp(13px, 1.5vw, 15px);
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.v-card-desc strong {
+    font-weight: 700;
+}
+
+.v-card-img {
+    width: clamp(100px, 15vw, 140px);
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    flex-shrink: 0;
+}
+
+/* =========================================
+   CARD ESPECIAL (EDUARDO)
+========================================= */
+.v-card-special-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 1.25rem;
+    z-index: 30;
+    margin: 5rem auto 2.5rem auto;
+}
+
+.v-card-special-inner {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 32px;
+    box-shadow: 0px 25px 45px rgba(1, 91, 139, 0.2);
+    border: 1px solid #38bdf8;
+    background-image: url("../imagens/background-card.svg");
+    background-size: cover;
+    background-position: center;
+    padding: 1.5rem;
+    position: relative;
+}
+
+@media (min-width: 1024px) {
+    .v-card-special-inner {
+        padding: 2.5rem;
+    }
+}
+
+.vs-text-content {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+    .vs-text-content {
+        width: 60%;
+    }
+}
+
+.vs-name {
+    color: #032e4d;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: 'Playfair Display', serif;
+    line-height: 1.1;
+}
+
+.vs-name span {
+    display: block;
+    color: #1c642c;
+}
+
+.vs-bio {
+    color: #011e36;
+    font-size: clamp(13px, 1.5vw, 15px);
+    font-weight: 500;
+    line-height: 1.6;
+    margin-top: 1.5rem;
+}
+
+.vs-image-leaking {
+    position: absolute;
+    top: -100px;
+    right: -10px;
+    width: 180px;
+    filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.35));
+    pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+    .vs-image-leaking {
+        top: -150px;
+        right: 20px;
+        width: 300px;
+    }
+}

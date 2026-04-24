@@ -1,0 +1,85 @@
+/* BottomFlowers.css */
+.bottom-flowers-wrapper {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.flower-bottom-left,
+.flower-bottom-right,
+.flower-bottom-middle {
+    position: absolute;
+    user-select: none;
+    visibility: hidden;
+    /* O GSAP vai ligar isto */
+    will-change: transform, opacity;
+}
+
+/* FLOR ESQUERDA */
+.flower-bottom-left {
+    width: 260px;
+    bottom: -2.5rem;
+    left: -7rem;
+}
+
+@media (min-width: 768px) {
+    .flower-bottom-left {
+        width: 350px;
+        bottom: -10rem;
+        left: -5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .flower-bottom-left {
+        width: 650px;
+        bottom: -15rem;
+        left: -7rem;
+    }
+}
+
+/* FLOR DIREITA */
+.flower-bottom-right {
+    width: 320px;
+    bottom: -8rem;
+    right: -9rem;
+}
+
+@media (min-width: 768px) {
+    .flower-bottom-right {
+        width: 350px;
+        bottom: -13rem;
+        right: -5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .flower-bottom-right {
+        width: 650px;
+        bottom: -18rem;
+        right: -7rem;
+    }
+}
+
+/* FLOR DO MEIO */
+.flower-bottom-middle {
+    width: 280px;
+    bottom: -5rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@media (min-width: 768px) {
+    .flower-bottom-middle {
+        width: 400px;
+        bottom: -12rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .flower-bottom-middle {
+        width: 750px;
+        bottom: -16rem;
+    }
+}

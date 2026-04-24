@@ -5,7 +5,6 @@ import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
 
 import flowerImage from "../imagens/margarida-com-galho.png";
-
 import foto1 from "../imagens/imagens-redondas/mãe-foto-redonda.png";
 import foto2 from "../imagens/imagens-redondas/Group 13.png";
 import foto3 from "../imagens/imagens-redondas/cantor-foto- redonda.png";
@@ -15,36 +14,14 @@ import foto6 from "../imagens/imagens-redondas/Group 8.png";
 import foto7 from "../imagens/imagens-redondas/Group 7.png";
 
 import FlowerGarlandMobile from "./fowerGarlandMobile";
+import "./FlowerGarland.css";
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
-const DESKTOP_SVG_PATH = `M0.00610352 0.499939L1103.39 13.9738C1151.05 49.8544 1172.59 76.4801 1181.01 161.687C1170.52 284.15 1144.73 327.22 1084.11 385.254H102.481C35.8684 434.84 18.0522 477.535 19.2836 578.878C23.9459 665.133 35.7442 709.659 135.963 756.034L1072.95 756.034C1141.22 774.182 1164.28 808.933 1181.01 898.258C1170.08 961.313 1148.28 990.242 1084.11 1031.5L32.9808 1031.5`;
+const DESKTOP_SVG_PATH = `M1197.7 0.58C171.39 253.05 -50.35 308.36 10.37 446.19C71.11 584.02 1114.79 598.57 1114.79 775.27C1114.79 951.98 483.28 999.17 10.37 1049.3`;
 const DESKTOP_VIEWBOX_W = 1200;
 const DESKTOP_VIEWBOX_H = 1050;
 const DESKTOP_FLOWER_COUNT = 75;
-
-export const garlandStyles = {
-  textOverlay: {
-    position: "absolute",
-    right: "3%",
-    width: "65%",
-    zIndex: 10,
-    pointerEvents: "auto",
-  } as React.CSSProperties,
-  contentText: {
-    fontFamily: "'Montserrat', sans-serif",
-    fontSize: "clamp(0.85rem, 4vw, 1.2rem)",
-    fontWeight: 500,
-    lineHeight: 1.4,
-  } as React.CSSProperties,
-  contentTextSpaced: {
-    fontFamily: "'Montserrat', sans-serif",
-    fontSize: "clamp(0.85rem, 4vw, 1.2rem)",
-    fontWeight: 500,
-    lineHeight: 1.4,
-    marginBottom: "1rem",
-  } as React.CSSProperties,
-};
 
 interface Point {
   x: number;
@@ -56,8 +33,8 @@ interface Point {
 const posicoesDasFotosDesktop = [
   { florNumero: 20, imagem: foto1 }, { florNumero: 24, imagem: foto2 },
   { florNumero: 29, imagem: foto3 }, { florNumero: 34, imagem: foto4 },
-  { florNumero: 42, imagem: foto5 }, { florNumero: 47, imagem: foto6 },
-  { florNumero: 52, imagem: foto7 },
+  { florNumero: 40, imagem: foto5 }, { florNumero: 44, imagem: foto6 },
+  { florNumero: 48, imagem: foto7 },
 ];
 
 export function calcularPontos(path: SVGPathElement, count: number): Point[] {
@@ -76,6 +53,23 @@ export function calcularPontos(path: SVGPathElement, count: number): Point[] {
     return [];
   }
 }
+
+// Funções puras de posicionamento dinâmico
+const getDynamicItemStyle = (percentX: number, percentY: number, offsetX: number, offsetY: number, zIndexConfig: number): React.CSSProperties => ({
+  left: `${percentX}%`,
+  top: `${percentY}%`,
+  opacity: 0,
+  transform: `translate(${offsetX}%, ${offsetY}%) scale(0)`,
+  zIndex: zIndexConfig,
+});
+
+const getFlowerImageStyle = (angle: number): React.CSSProperties => ({
+  transform: `translate(-50%, -50%) rotate(${angle}deg)`
+});
+
+const getPhotoStyle = (): React.CSSProperties => ({
+  transform: `translate(-50%, -50%)`
+});
 
 export default function FlowerGarland() {
   const [isMobile, setIsMobile] = useState(false);
@@ -118,7 +112,7 @@ function FlowerGarlandDesktop() {
     if (items.length === 0) return;
 
     gsap.set(items, { opacity: 0, scale: 0 });
-    gsap.set("#desktop-jornada-text", { opacity: 0, y: 40 });
+    gsap.set(["#desktop-text-block-1", "#desktop-text-block-2"], { opacity: 0, y: 40 });
 
     gsap.to(items, {
       opacity: 1,
@@ -133,8 +127,7 @@ function FlowerGarlandDesktop() {
       },
     });
 
-    // Texto da jornada — aparece junto com as primeiras flores
-    gsap.to("#desktop-jornada-text", {
+    gsap.to("#desktop-text-block-1", {
       opacity: 1,
       y: 0,
       duration: 1,
@@ -147,35 +140,41 @@ function FlowerGarlandDesktop() {
       },
     });
 
+    gsap.to("#desktop-text-block-2", {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "center 60%",
+        end: "center 30%",
+        scrub: 1,
+      },
+    });
+
     const t = setTimeout(() => ScrollTrigger.refresh(), 200);
     return () => clearTimeout(t);
   }, { scope: containerRef, dependencies: [points] });
 
   return (
-    <section id="flower-garland-desktop" ref={containerRef} className="relative w-full h-full overflow-visible pointer-events-none min-h-[1000px]">
-      <svg aria-hidden="true" viewBox={`0 0 ${DESKTOP_VIEWBOX_W} ${DESKTOP_VIEWBOX_H}`} className="absolute inset-0 w-full h-full opacity-0 pointer-events-none" preserveAspectRatio="xMidYMid meet">
+    <section id="flower-garland-desktop" ref={containerRef} className="garland-section-desktop">
+      <svg aria-hidden="true" viewBox={`0 0 ${DESKTOP_VIEWBOX_W} ${DESKTOP_VIEWBOX_H}`} className="garland-svg" preserveAspectRatio="none">
         <path ref={pathRef} d={DESKTOP_SVG_PATH} fill="none" />
       </svg>
 
-      {/* Bloco de texto da Jornada - Desktop */}
-      <div id="desktop-jornada-text" className="absolute pointer-events-auto z-40" style={{ left: "8%", top: "8%", width: "35%", minWidth: "360px" }}>
-        <h3 className="text-brand-green uppercase tracking-[0.10em] leading-[1.1] mb-5 text-[1.4rem] lg:text-[1.8rem] pr-10">
-          O que você vai viver nessa jornada
-        </h3>
-        <div className="flex flex-col text-brand-blue space-y-2 lg:space-y-3" style={{...garlandStyles.contentText, fontSize: "clamp(0.95rem, 1.5vw, 1.25rem)"}}>
-          <span>02 Comunhões com Ayahuasca</span>
-          <span className="text-[0.85rem] lg:text-[1rem] italic font-normal text-brand-blue/80 !mt-0 !mb-3 leading-tight">
-            *mediante aprovação em consulta prévia<br className="hidden lg:block"/> com Olyvia
-          </span>
-          <span>Respiração Somática Integrada (BREATHWORK)</span>
-          <span>Limpezas energéticas</span>
-          <span>Cerimônia do Cacau</span>
-          <span>Meditação Ativa</span>
-          <span>Reiki coletivo</span>
-          <span>Rodas de Rapé</span>
-        </div>
-        <p className="text-brand-blue font-bold mt-6 text-[1.2rem] lg:text-[1.6rem] uppercase tracking-wider block" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-          E muito mais!
+      <div id="desktop-text-block-1" className="desktop-text-block-1">
+        <p className="garland-text-spaced-desktop">
+          O beija-flor nos ensina que a cura pode vir através da alegria, da leveza e da celebração.
+        </p>
+        <p className="garland-text-desktop">
+          Este retiro é um portal para dissolver fardos e despertar para uma vida mais fluida.
+        </p>
+      </div>
+
+      <div id="desktop-text-block-2" className="desktop-text-block-2">
+        <p className="garland-paragraph-desktop">
+          Deixe para trás o que é denso. Assim como o beija-flor, escolha a doçura de voar sem pesos. É hora de transmutar esforço em fluidez e cansaço em celebração.
         </p>
       </div>
 
@@ -189,24 +188,27 @@ function FlowerGarlandDesktop() {
         const isLeftSide = percentX < 15;
         const offsetX = isRightSide ? -65 : isLeftSide ? -35 : -50;
         const offsetY = isRightSide || isLeftSide ? -45 : -50;
+        const finalZIndex = photoSrc ? 50 : pt.index;
 
         return (
           <div
             key={pt.index}
-            className="garland-item absolute"
-            style={{
-              left: `${percentX}%`,
-              top: `${percentY}%`,
-              opacity: 0,
-              transform: `translate(${offsetX}%, ${offsetY}%) scale(0)`,
-              zIndex: photoSrc ? 1000 : pt.index,
-              width: "1px",
-              height: "1px",
-            }}
+            className="garland-item"
+            style={getDynamicItemStyle(percentX, percentY, offsetX, offsetY, finalZIndex)}
           >
-            <img src={flowerImage} alt="Margarida" className="absolute top-1/2 left-1/2 max-w-none w-[50px] md:w-[250px] object-contain pointer-events-none" style={{ transform: `translate(-50%, -50%) rotate(${pt.angle}deg)` }} />
+            <img
+              src={flowerImage}
+              alt="Margarida"
+              className="garland-flower-img garland-flower-img-desktop"
+              style={getFlowerImageStyle(pt.angle)}
+            />
             {photoSrc && (
-              <img src={photoSrc} alt="Foto circular do retiro" className="absolute top-1/2 left-1/2 max-w-none w-[100px] md:w-[150px] pointer-events-auto" style={{ transform: "translate(-50%, -50%)" }} />
+              <img
+                src={photoSrc}
+                alt="Foto circular do retiro"
+                className="garland-photo-img garland-photo-img-desktop"
+                style={getPhotoStyle()}
+              />
             )}
           </div>
         );

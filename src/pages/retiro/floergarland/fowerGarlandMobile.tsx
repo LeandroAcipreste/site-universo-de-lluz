@@ -5,7 +5,6 @@ import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { useRef, useState, useLayoutEffect } from "react";
 
 import flowerImage from "../imagens/margarida-com-galho.png";
-
 import foto1 from "../imagens/imagens-redondas/mãe-foto-redonda.png";
 import foto2 from "../imagens/imagens-redondas/Group 13.png";
 import foto3 from "../imagens/imagens-redondas/cantor-foto- redonda.png";
@@ -13,6 +12,9 @@ import foto4 from "../imagens/imagens-redondas/Group 10.png";
 import foto5 from "../imagens/imagens-redondas/Group 9.png";
 import foto6 from "../imagens/imagens-redondas/Group 8.png";
 import foto7 from "../imagens/imagens-redondas/Group 7.png";
+
+import { calcularPontos } from "./flowerGarland";
+import "./FlowerGarland.css";
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
@@ -24,29 +26,6 @@ const MOBILE_SVG_PATH =
 const MOBILE_VIEWBOX_W = 521;
 const MOBILE_VIEWBOX_H = 820;
 const MOBILE_FLOWER_COUNT = 80;
-
-const garlandStyles = {
-    textOverlay: {
-        position: "absolute",
-        right: "3%",
-        width: "65%",
-        zIndex: 10,
-        pointerEvents: "auto",
-    } as React.CSSProperties,
-    contentText: {
-        fontFamily: "'Montserrat', sans-serif",
-        fontSize: "clamp(0.85rem, 4vw, 1.2rem)",
-        fontWeight: 500,
-        lineHeight: 1.4,
-    } as React.CSSProperties,
-    contentTextSpaced: {
-        fontFamily: "'Montserrat', sans-serif",
-        fontSize: "clamp(0.85rem, 4vw, 1.2rem)",
-        fontWeight: 500,
-        lineHeight: 1.4,
-        marginBottom: "1rem",
-    } as React.CSSProperties,
-};
 
 interface Point {
     x: number;
@@ -62,22 +41,22 @@ const posicoesDasFotosMobile = [
     { florNumero: 70, imagem: foto7 },
 ];
 
-export function calcularPontos(path: SVGPathElement, count: number): Point[] {
-    try {
-        const pathLength = path.getTotalLength();
-        if (!pathLength || pathLength === 0) return [];
+// Funções puras de posicionamento dinâmico
+const getDynamicItemStyleMobile = (percentX: number, percentY: number, offsetX: number, offsetY: number, zIndexConfig: number): React.CSSProperties => ({
+    left: `${percentX}%`,
+    top: `${percentY}%`,
+    opacity: 0,
+    transform: `translate(${offsetX}%, ${offsetY}%) scale(0)`,
+    zIndex: zIndexConfig,
+});
 
-        return Array.from({ length: count }, (_, i) => {
-            const distance = (i / (count - 1)) * pathLength;
-            const point = path.getPointAtLength(distance);
-            const nextPoint = path.getPointAtLength(Math.min(distance + 1, pathLength));
-            const angle = Math.atan2(nextPoint.y - point.y, nextPoint.x - point.x) * (180 / Math.PI);
-            return { x: point.x, y: point.y, angle, index: i };
-        });
-    } catch (error) {
-        return [];
-    }
-}
+const getFlowerImageStyleMobile = (angle: number): React.CSSProperties => ({
+    transform: `translate(-50%, -50%) rotate(${angle}deg)`
+});
+
+const getPhotoStyleMobile = (): React.CSSProperties => ({
+    transform: `translate(-50%, -50%)`
+});
 
 export default function FlowerGarlandMobile() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -103,7 +82,7 @@ export default function FlowerGarlandMobile() {
 
     useGSAP(() => {
         if (points.length === 0) return;
-        const items = gsap.utils.toArray<Element>(".garland-item-mobile", containerRef.current);
+        const items = gsap.utils.toArray<Element>(".garland-item", containerRef.current);
         if (items.length === 0) return;
 
         gsap.set(items, { opacity: 0, scale: 0 });
@@ -112,17 +91,16 @@ export default function FlowerGarlandMobile() {
         gsap.to(items, {
             opacity: 1,
             scale: 1,
-            stagger: 0.05,
-            ease: "back.out(1.5)",
+            stagger: 0.02,
+            ease: "back.out(1.2)",
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top 95%",
+                start: "top 85%",
                 end: "bottom 20%",
-                scrub: 1.5,
+                scrub: 0.5,
             },
         });
 
-        // Texto 1 — aparece quando o vetor chega na primeira curva (~30%)
         gsap.to("#mobile-text-block", {
             opacity: 1,
             y: 0,
@@ -136,7 +114,6 @@ export default function FlowerGarlandMobile() {
             },
         });
 
-        // Texto 2 — aparece quando o vetor chega na segunda curva (~60%)
         gsap.to("#mobile-text-block-2", {
             opacity: 1,
             y: 0,
@@ -155,18 +132,18 @@ export default function FlowerGarlandMobile() {
     }, { scope: containerRef, dependencies: [points] });
 
     return (
-        <section id="flower-garland-mobile" ref={containerRef} className="relative w-full overflow-visible pointer-events-none" style={{ minHeight: "165vw" }}>
-            <svg aria-hidden="true" viewBox={`0 0 ${MOBILE_VIEWBOX_W} ${MOBILE_VIEWBOX_H}`} className="absolute inset-0 w-full h-full opacity-0 pointer-events-none" preserveAspectRatio="none" style={{ overflow: "visible" }}>
+        <section id="flower-garland-mobile" ref={containerRef} className="garland-section-mobile">
+            <svg aria-hidden="true" viewBox={`0 0 ${MOBILE_VIEWBOX_W} ${MOBILE_VIEWBOX_H}`} className="garland-svg" preserveAspectRatio="none">
                 <path ref={pathRef} d={MOBILE_SVG_PATH} fill="none" />
             </svg>
 
-            <div id="mobile-text-block" className="text-brand-blue" style={{ ...garlandStyles.textOverlay, top: "26%" }}>
-                <p style={garlandStyles.contentTextSpaced}>O beija-flor nos ensina que a cura pode vir através da alegria, da leveza e da celebração.</p>
-                <p style={garlandStyles.contentText}>Este retiro é um portal para dissolver fardos e despertar para uma vida mais fluida.</p>
+            <div id="mobile-text-block" className="mobile-text-block-1">
+                <p className="garland-text-spaced-mobile">O beija-flor nos ensina que a cura pode vir através da alegria, da leveza e da celebração.</p>
+                <p className="garland-text-mobile">Este retiro é um portal para dissolver fardos e despertar para uma vida mais fluida.</p>
             </div>
 
-            <div id="mobile-text-block-2" className="absolute pointer-events-auto text-brand-blue z-40" style={{ left: "4%", top: "60%", width: "52%", maxWidth: "200px" }}>
-                <p style={{ fontFamily: "'Montserrat', sans-serif", fontSize: "clamp(1rem, 3.2vw, 1rem)", fontWeight: 500, lineHeight: 1.35 }}>Deixe para trás o que é denso. Assim como o beija-flor, escolha a doçura de voar sem pesos. É hora de transmutar esforço em fluidez e cansaço em celebração.</p>
+            <div id="mobile-text-block-2" className="mobile-text-block-2">
+                <p className="garland-paragraph-mobile">Deixe para trás o que é denso. Assim como o beija-flor, escolha a doçura de voar sem pesos. É hora de transmutar esforço em fluidez e cansaço em celebração.</p>
             </div>
 
             {points.map((pt) => {
@@ -179,24 +156,27 @@ export default function FlowerGarlandMobile() {
                 const isLeftSide = percentX < 15;
                 const offsetX = isRightSide ? -80 : isLeftSide ? -20 : -50;
                 const offsetY = isRightSide || isLeftSide ? -45 : -50;
+                const finalZIndex = photoSrc ? 1000 : pt.index;
 
                 return (
                     <div
                         key={pt.index}
-                        className="garland-item-mobile absolute"
-                        style={{
-                            left: `${percentX}%`,
-                            top: `${percentY}%`,
-                            opacity: 0,
-                            transform: `translate(${offsetX}%, ${offsetY}%) scale(0)`,
-                            zIndex: photoSrc ? 1000 : pt.index,
-                            width: "1px",
-                            height: "1px",
-                        }}
+                        className="garland-item"
+                        style={getDynamicItemStyleMobile(percentX, percentY, offsetX, offsetY, finalZIndex)}
                     >
-                        <img src={flowerImage} alt="Margarida" className="absolute top-1/2 left-1/2 max-w-none object-contain pointer-events-none" style={{ width: "clamp(55px, 18vw, 100px)", transform: `translate(-50%, -50%) rotate(${pt.angle}deg)` }} />
+                        <img
+                            src={flowerImage}
+                            alt="Margarida"
+                            className="garland-flower-img garland-flower-img-mobile"
+                            style={getFlowerImageStyleMobile(pt.angle)}
+                        />
                         {photoSrc && (
-                            <img src={photoSrc} alt="Foto circular do retiro" className="absolute top-1/2 left-1/2 max-w-none pointer-events-auto" style={{ width: "clamp(50px, 14vw, 80px)", transform: "translate(-50%, -50%)" }} />
+                            <img
+                                src={photoSrc}
+                                alt="Foto circular do retiro"
+                                className="garland-photo-img garland-photo-img-mobile"
+                                style={getPhotoStyleMobile()}
+                            />
                         )}
                     </div>
                 );
