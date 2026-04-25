@@ -14,7 +14,7 @@ import foto6 from "../imagens/imagens-redondas/Group 8.png";
 import foto7 from "../imagens/imagens-redondas/Group 7.png";
 
 import FlowerGarlandMobile from "./fowerGarlandMobile";
-import "./FlowerGarland.css";
+import "./flowerGarland.css";
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
