@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Instagram } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import HeroBackground from "./heroBackground";
@@ -173,6 +173,18 @@ export default function Hero() {
                   </div>
                 </div>
               </div>
+
+              {/* Link do Instagram abaixo da oração */}
+              <a
+                href="https://www.instagram.com/grupouniversodeluz/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-instagram-link"
+                aria-label="Acessar Instagram do Grupo Universo de Luz"
+              >
+                <Instagram className="hero-instagram-link__icon" aria-hidden="true" />
+                <span className="hero-instagram-link__text">@grupouniversodeluz</span>
+              </a>
             </aside>
 
           </div>

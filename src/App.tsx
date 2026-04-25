@@ -37,7 +37,9 @@ function AppContent() {
         ) : (
           <motion.div
             key={location.pathname} // CHAVE DINÂMICA: Essencial para transições entre rotas
-            initial={{ opacity: 0 }}
+            // Na Home, remover a opacidade do pai é essencial. A Home já tem as animações próprias do Hero.
+            // Opacidade global + WebGL + Filtros de Blur causava um "composite thrashing" no navegador, gerando os travamentos.
+            initial={{ opacity: location.pathname === "/" ? 1 : 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.55, ease: "easeOut" }}

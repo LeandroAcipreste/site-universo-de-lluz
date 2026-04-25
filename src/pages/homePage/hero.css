@@ -75,14 +75,12 @@
     backdrop-filter: blur(4px);
     margin-bottom: clamp(0.75rem, 3vw, 2rem);
     
-    /* Configuração de entrada */
+    /* Configuração de entrada potente (Sem blur para máxima performance) */
     opacity: 0;
-    transform: translateY(16px);
-    filter: blur(8px);
+    transform: translateY(50px) scale(0.95);
     transition:
         opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
-        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
-        filter 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     transition-delay: 0.6s; /* Inicia após as letras do título começarem */
 }
 
@@ -105,12 +103,10 @@
 .hero-letter {
     display: inline-block;
     opacity: 0;
-    transform: translateY(16px);
-    filter: blur(8px);
+    transform: translateY(50px) scale(0.95);
     transition:
-        opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
-        transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
-        filter 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+        opacity 0.85s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .hero-title__gradient {
@@ -130,14 +126,12 @@
     line-height: 1.7;
     color: rgba(255,255,255,0.78);
     
-    /* Configuração de entrada */
+    /* Configuração de entrada potente (Sem blur para máxima performance) */
     opacity: 0;
-    transform: translateY(16px);
-    filter: blur(8px);
+    transform: translateY(50px) scale(0.95);
     transition:
         opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
-        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
-        filter 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     transition-delay: 1.0s;
 }
 
@@ -156,14 +150,12 @@
     gap: 0.75rem;
     margin-bottom: clamp(1rem, 4vw, 3rem);
     
-    /* Configuração de entrada */
+    /* Configuração de entrada potente (Sem blur para máxima performance) */
     opacity: 0;
-    transform: translateY(16px);
-    filter: blur(8px);
+    transform: translateY(50px) scale(0.95);
     transition:
         opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
-        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
-        filter 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     transition-delay: 1.4s;
 }
 
@@ -231,17 +223,17 @@
 ═══════════════════════════════════════════════════════════════ */
 .hero-col-right {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
     width: 100%;
     
-    /* Configuração de entrada */
+    /* Configuração de entrada: Mobile vem de BAIXO (mais potente e natural) */
     opacity: 0;
-    transform: translateX(100px); /* Surge da DIREITA para ESQUERDA */
-    filter: blur(8px);
+    transform: translateY(80px);
     transition:
-        opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1),
-        transform 1s cubic-bezier(0.2, 0.8, 0.2, 1),
-        filter 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
     transition-delay: 1.6s;
 }
 
@@ -253,7 +245,49 @@
         flex-direction: column;
         align-items: flex-end;
         justify-content: center;
+        /* No Desktop, a coluna desliza dramaticamente da DIREITA */
+        transform: translateX(120px) translateY(0);
     }
+}
+
+/* ── 11. Link Instagram ── */
+.hero-instagram-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-instagram-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.35);
+    transform: translateY(-2px);
+}
+
+.hero-instagram-link:active {
+    transform: translateY(1px);
+}
+
+.hero-instagram-link__icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    transition: transform 0.35s ease;
+}
+
+.hero-instagram-link:hover .hero-instagram-link__icon {
+    transform: scale(1.15) rotate(5deg);
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -484,21 +518,14 @@
    TODOS os filhos disparam juntos, respeitando seus transition-delays.
 ═══════════════════════════════════════════════════════════════ */
 
-/* 1. Elementos Verticais (sobem de baixo para cima) */
+/* Reúne todos os elementos num único end-state perfeito */
 .hero-section.is-visible .hero-badge,
 .hero-section.is-visible .hero-letter,
 .hero-section.is-visible .hero-desc,
-.hero-section.is-visible .hero-btns {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0px);
-}
-
-/* 2. Elemento Horizontal (desliza da direita para esquerda) */
+.hero-section.is-visible .hero-btns,
 .hero-section.is-visible .hero-col-right {
     opacity: 1;
-    transform: translateX(0); /* Finaliza movimento em 0px horizontal */
-    filter: blur(0px);
+    transform: translate(0, 0) scale(1); /* Zera qualquer translação (X ou Y) e escala */
 }
 
 
