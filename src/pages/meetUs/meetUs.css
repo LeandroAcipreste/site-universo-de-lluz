@@ -167,7 +167,7 @@
 
 .meetus-title-gradient {
     display: block;
-    background: linear-gradient(to right, #ffffff, rgba(255,255,255,0.7));
+    background-image: linear-gradient(90deg, #67e8f9 0%, #818cf8 50%, #f0abfc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
