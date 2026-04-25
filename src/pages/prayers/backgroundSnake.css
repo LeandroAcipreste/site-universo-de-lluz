@@ -1,0 +1,33 @@
+/* =========================================
+   BACKGROUND SNAKE
+========================================= */
+.snake-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.snake-bg__grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image:
+        linear-gradient(#fff 1px, transparent 1px),
+        linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.snake-bg__snakes {
+    position: absolute;
+    inset: 0;
+    mix-blend-mode: screen;
+    opacity: 1;
+}
+
+.snake-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    mix-blend-mode: screen;
+}

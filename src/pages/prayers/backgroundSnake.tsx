@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { motion } from 'motion/react';
+import "./backgroundSnake.css";
 
 const COLORS = ['#6d28d9', '#a21caf', '#7c3aed', '#4f46e5'];
 const GRID_SIZE = 40;
@@ -15,7 +16,7 @@ interface SnakeProps {
 }
 
 function Snake({ color, isHorizontal, startPos, duration, delay, size, reverse }: SnakeProps) {
-  const gradientDirection = isHorizontal 
+  const gradientDirection = isHorizontal
     ? (reverse ? '270deg' : '90deg')
     : (reverse ? '360deg' : '180deg');
 
@@ -33,7 +34,7 @@ function Snake({ color, isHorizontal, startPos, duration, delay, size, reverse }
 
   return (
     <motion.div
-      className="absolute top-0 left-0 mix-blend-screen"
+      className="snake-item"
       style={{
         width: isHorizontal ? size : 2,
         height: isHorizontal ? 2 : size,
@@ -61,27 +62,27 @@ export default function BackgroundSnake() {
   const snakes = useMemo(() => {
     const NUM_SNAKES = 30;
     const generated = [];
-    
-    const MAX_LINES = 50; 
+
+    const MAX_LINES = 50;
 
     for (let i = 0; i < NUM_SNAKES; i++) {
       const isHorizontal = Math.random() > 0.5;
       const reverse = Math.random() > 0.5;
       const startPos = Math.floor(Math.random() * MAX_LINES);
       const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-      
-      const duration = 25 + Math.random() * 25; // Duração muito maior para movimento mais lento
+
+      const duration = 25 + Math.random() * 25;
       const delay = Math.random() * 20;
       const size = 150 + Math.random() * 200;
-      
+
       generated.push(
-        <Snake 
-          key={i} 
-          isHorizontal={isHorizontal} 
+        <Snake
+          key={i}
+          isHorizontal={isHorizontal}
           reverse={reverse}
-          startPos={startPos} 
-          color={color} 
-          duration={duration} 
+          startPos={startPos}
+          color={color}
+          duration={duration}
           delay={delay}
           size={size}
         />
@@ -91,16 +92,14 @@ export default function BackgroundSnake() {
   }, []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <div 
-        className="absolute inset-0 opacity-[0.03]" 
-        style={{ 
-          backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
+    <div className="snake-bg">
+      <div
+        className="snake-bg__grid"
+        style={{
           backgroundSize: `${GRID_SIZE}px ${GRID_SIZE}px`
         }}
       />
-      
-      <div className="absolute inset-0 mix-blend-screen opacity-100">
+      <div className="snake-bg__snakes">
         {snakes}
       </div>
     </div>

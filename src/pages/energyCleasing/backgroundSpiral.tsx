@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import "./backgroundSpiral.css";
 
 export default function BackgroundSpiral() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -89,9 +90,8 @@ export default function BackgroundSpiral() {
 
     function resizeCanvas() {
       if (!canvas || !gl) return;
-      const displayWidth = window.innerWidth; // Usar window para garantir preenchimento
+      const displayWidth = window.innerWidth;
       const displayHeight = window.innerHeight;
-      
       canvas.width = displayWidth;
       canvas.height = displayHeight;
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -121,11 +121,11 @@ export default function BackgroundSpiral() {
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-      <canvas 
-        ref={canvasRef} 
-        className="absolute inset-0 w-full h-full object-cover" 
-        style={{ mixBlendMode: 'screen' }}
+    <div className="spiral-bg">
+      <canvas
+        ref={canvasRef}
+        className="spiral-bg__canvas"
+        style={{ mixBlendMode: "screen" }}
       />
     </div>
   );
