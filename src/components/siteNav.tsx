@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, Menu, X, Youtube } from "lucide-react";
 import { BTN_PRIMARY } from "../constants/btnPrimary";
 
@@ -18,6 +18,7 @@ const NAV_BTN_CLASS =
 export default function SiteNav() {
   const [navOpen, setNavOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const isHomePage = window.location.pathname === "/";
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -64,6 +65,7 @@ export default function SiteNav() {
   }, [navOpen]);
 
   return (
+    <>
     <motion.nav
       initial={{ opacity: 0, y: -80 }}
       animate={{
@@ -211,5 +213,25 @@ export default function SiteNav() {
         </div>
       </div>
     </motion.nav>
+
+    {/* Hint (Dica) visual apenas para a Home Page, pedindo para o usuário aproximar o mouse do topo */}
+    <AnimatePresence>
+      {isHomePage && !isVisible && !navOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.2 } }}
+          transition={{ duration: 0.8, delay: 2.5 }} // Aparece suavemente após a home carregar
+          className="fixed top-5 left-1/2 -translate-x-1/2 z-[40] hidden md:flex flex-col items-center gap-1.5 pointer-events-none"
+        >
+          {/* Triângulo apontando para cima (Chevron) */}
+          <div className="w-3 h-3 border-t-[2px] border-l-[2px] border-white/60 rotate-45 animate-bounce" />
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60 drop-shadow-md text-center">
+            Aproxime para o menu
+          </span>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 }

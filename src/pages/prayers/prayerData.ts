@@ -90,16 +90,22 @@ export const PRAYERS_DB: Record<CategoryType, PrayerData[]> = {
     xamanicas: [
         {
             tag: "XAMA_01",
-            title: "Oração ao Grande Espírito",
-            description: "Conexão com a fonte primordial e alinhamento com os elementos da natureza.",
+            title: "Prece Sioux",
+            description: "Prece de conexão e reverência aos espíritos das direções e da natureza.",
             cardLines: [
-                "Grande Espírito,",
-                "fonte de toda vida, presença que habita em todas as coisas, visíveis e invisíveis,",
-                "Eu me conecto contigo neste momento, com respeito e humildade.",
-                "Peço que limpes meu caminho, que retires as energias que não me pertencem, e que fortaleças minha essência.",
-                "Que eu caminhe em equilíbrio com a Terra, em harmonia com o céu, e em verdade com o meu coração.",
-                "Que meus pensamentos sejam claros, minhas palavras sejam justas, e minhas ações sejam guiadas pela luz.",
-                "Honro meus ancestrais, honro a natureza, honro a vida que pulsa em mim."
+                "Nosso pai, o Céu nos ouça",
+                "E nos faça fortes",
+                "Nossa Mãe Terra, nos ouça",
+                "E nos dê sustentação",
+                "Ó espírito do Leste",
+                "Que você envie sua sabedoria",
+                "Ó espírito do Sul",
+                "Que possamos sempre trilhar nosso caminho do coração",
+                "Ó espírito do Oeste",
+                "Que possamos sempre estar prontos para a longa viagem",
+                "Ó espírito do Norte",
+                "Que seus ventos possam limpar nossa alma",
+                "Aho!"
             ]
         }
     ],
@@ -129,27 +135,48 @@ export const PRAYERS_DB: Record<CategoryType, PrayerData[]> = {
         },
         {
             tag: "ANJO_03",
-            title: "Oração ao Arcanjo Rafael",
-            description: "Súplica pela saúde do corpo, da mente e do espírito.",
+            title: "Oração a Rafael",
+            description: "Prece de cura e ação corretora da inteligência suprema.",
             cardLines: [
-                "Glorioso São Rafael, grande príncipe da corte celeste, fiel guia dos que vos invocam, eu vos saúdo.",
-                "Vós que sois cheio de graça e poder diante de Deus, ajudai-me em todas as minhas necessidades.",
-                "Curai-me de todas as doenças do corpo e da alma, e afastai de mim todo mal.",
-                "Iluminai meus caminhos, conduzi meus passos e protegei-me sempre.",
-                "São Rafael, Arcanjo da cura, rogai por mim."
+                "Amado Arcanjo Rafael,",
+                "Eu (fale seu nome de batismo completo), apresento-me diante de sua dadivosa luz verde para conclamar a força da verdade de Deus para curar a mim e as feridas de toda humanidade.",
+                "Que a ação corretora da inteligência suprema aja com amorosa firmeza, educando o ego dos homens até que sejamos revelados legítimos herdeiros de Deus!",
+                "Amém, amém e amém!"
             ]
         },
         {
             tag: "ANJO_04",
-            title: "Oração ao Arcanjo Gabriel",
-            description: "Clareza mental e acolhimento da vontade divina.",
+            title: "Oração a Gabriel",
+            description: "Prece por criatividade, bom ânimo e verdadeira alegria.",
             cardLines: [
-                "Glorioso São Gabriel, mensageiro fiel de Deus, eu vos saúdo e vos invoco.",
-                "Vós que fostes escolhido para anunciar os mistérios divinos,",
-                "ajudai-me a compreender a vontade de Deus em minha vida.",
-                "Iluminai minha mente e meu coração, para que eu saiba ouvir e acolher a Palavra do Senhor.",
-                "Afastai de mim toda dúvida, medo e confusão, e fortalecei minha fé.",
-                "São Gabriel Arcanjo, rogai por mim."
+                "Amado Arcanjo Gabriel,",
+                "Eu (nome de batismo completo), repouso minha presença em seu magnânimo olhar para rogar por sua intervenção despertando em mim a criatividade, o bom ânimo e a verdadeira alegria.",
+                "Que meu corpo seja um jarro puro e perfumado para receber do Criador as bênçãos de amor e vida que estão a se precipitar em meu ser.",
+                "E então, que sua luz de alvíssima pureza clarifique em mim o caminho da correção rumo à ascensão!",
+                "Amém, amém e amém!"
+            ]
+        },
+        {
+            tag: "ANJO_05",
+            title: "Oração a Jophiel",
+            description: "Pedido de iluminação, clareza e Sabedoria Divina.",
+            cardLines: [
+                "Amado Arcanjo Jophiel,",
+                "Eu (fala seu nome de batismo completo), venho até o altar de seu coração para pedir-lhe iluminação, clareza, entendimento e a verdadeira compreensão do que que preciso saber.",
+                "Que a luz dourada da Sabedoria Divina seja o farol guiando minhas escolhas, caminhos e projetos!",
+                "E que então, a chama amarela de seu corpo celestial expanda sobre mim, a Divina Luz do Saber!",
+                "Amém, amém e amém!"
+            ]
+        },
+        {
+            tag: "ANJO_06",
+            title: "Oração a Raziel",
+            description: "Invocação para despertar a intuição, vidência e purificação dos pensamentos.",
+            cardLines: [
+                "Amado Arcanjo Raziel,",
+                "Eu (fale seu nome de batismo completo), invoco seu santo nome para que o som de sua voz desperte minha intuição e vidência e assim munido desses preciosos dons, dedique-os em favor do Bem, da Paz e do Amor Universal.",
+                "Oh, guardião dos mistérios de Deus, rogo-lhe que as verdades do meu Eu interior sejam desveladas sob sua luz azul índigo purificando pensamentos e elevando vibrações!",
+                "Amém, amém e amém!"
             ]
         }
     ]
