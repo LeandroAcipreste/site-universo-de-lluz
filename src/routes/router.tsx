@@ -6,6 +6,7 @@ import Defense from "../pages/defenses/defence";
 import Oracle from "../pages/oracle/oracle";
 import YoutubePage from "../pages/youtube/youtube";
 import Retiro from "../pages/retiro/retiro";
+import MeetUs from "../pages/meetUs/meetUs";
 
 export function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ export function AppRoutes() {
       <Route path="/oracle" element={<Oracle />} />
       <Route path="/youtube" element={<YoutubePage />} />
       <Route path="/retiro" element={<Retiro />} />
+      <Route path="/meet-us" element={<MeetUs />} />
     </Routes>
   );
 }

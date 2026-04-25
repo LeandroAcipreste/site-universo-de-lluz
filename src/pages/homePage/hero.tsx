@@ -119,6 +119,7 @@ export default function Hero() {
 
                 <button
                   className="hero-btn"
+                  onClick={() => { window.location.href = "/meet-us"; }}
                   aria-label="Conhecer o Universo de Luz"
                 >
                   <span className="hero-btn__label">Conheça o Universo</span>

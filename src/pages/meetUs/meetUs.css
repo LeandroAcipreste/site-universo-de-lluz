@@ -1,0 +1,282 @@
+/* src/pages/meetUs/meetUs.css */
+
+.meetus-root {
+    position: relative;
+    min-height: 100svh;
+    background-color: #050505;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Background image */
+.meetus-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4; /* Escurece bastante a original */
+}
+
+/* Película escura adicional (Dark Film) */
+.meetus-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(5, 5, 8, 0.8) 0%, rgba(15, 5, 20, 0.6) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Decorative grid lines from the design system */
+.meetus-grid-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.meetus-grid-line-v {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.05), transparent);
+}
+.meetus-grid-line-v:nth-child(1) { left: 12.5%; }
+.meetus-grid-line-v:nth-child(2) { left: 25%; }
+.meetus-grid-line-v:nth-child(3) { left: 37.5%; }
+.meetus-grid-line-v:nth-child(4) { left: 50%; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.08), transparent); }
+.meetus-grid-line-v:nth-child(5) { left: 62.5%; }
+.meetus-grid-line-v:nth-child(6) { left: 75%; }
+.meetus-grid-line-v:nth-child(7) { left: 87.5%; }
+
+.meetus-grid-line-h {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent);
+}
+.meetus-grid-line-h:nth-child(8) { top: 20%; }
+.meetus-grid-line-h:nth-child(9) { top: 40%; }
+.meetus-grid-line-h:nth-child(10) { top: 60%; }
+.meetus-grid-line-h:nth-child(11) { top: 80%; }
+
+/* Particles Canvas */
+.meetus-particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: auto; /* Para capturar o mouse hover */
+    mix-blend-mode: screen;
+}
+
+/* Content Container */
+.meetus-content {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    min-height: 100svh;
+    align-items: center;
+    padding: 6rem 2rem 4rem 2rem;
+}
+
+.meetus-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Grid para Hero (Texto na esquerda, Imagem na direita) */
+.meetus-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .meetus-hero-grid {
+        grid-template-columns: 1.2fr 0.8fr;
+    }
+}
+
+/* Imagem em Arco Neon */
+.meetus-hero-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    aspect-ratio: 3/4;
+    border-radius: 999px 999px 24px 24px; /* Formato exato do Arco de Luz */
+    padding: 3px; /* Borda luminosa interna */
+    background: linear-gradient(180deg, rgba(216, 180, 254, 1), rgba(168, 85, 247, 0.3) 50%, transparent);
+    
+    /* Brilho Neon Lilás Extremo */
+    box-shadow: 
+        0 -20px 60px rgba(168, 85, 247, 0.6),
+        0 0 100px rgba(139, 92, 246, 0.3),
+        inset 0 15px 30px rgba(255, 255, 255, 0.5);
+    
+    transform: rotate(2deg); /* Charme artístico */
+    animation: floatArch 6s ease-in-out infinite alternate;
+}
+
+@keyframes floatArch {
+    0% { transform: translateY(0px) rotate(2deg); }
+    100% { transform: translateY(-20px) rotate(0deg); }
+}
+
+.meetus-hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 996px 996px 20px 20px;
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+.meetus-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    margin-bottom: 1.5rem;
+}
+
+.meetus-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    max-width: 45rem;
+}
+
+.meetus-title-gradient {
+    display: block;
+    background: linear-gradient(to right, #ffffff, rgba(255,255,255,0.7));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.meetus-desc {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    max-width: 35rem;
+    margin-bottom: 4rem;
+}
+
+/* Grids e Cartões Flutuantes */
+.meetus-floating-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.meetus-card {
+    position: relative;
+    background: rgba(10, 10, 10, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.meetus-card:hover {
+    background: rgba(17, 17, 17, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+}
+
+.meetus-card-glow {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: rgba(139, 92, 246, 0.15);
+    filter: blur(40px);
+    border-radius: 50%;
+    transition: background 0.5s ease;
+}
+
+.meetus-card:nth-child(2) .meetus-card-glow {
+    background: rgba(59, 130, 246, 0.15); /* Blue */
+}
+
+.meetus-card:nth-child(3) .meetus-card-glow {
+    background: rgba(16, 185, 129, 0.15); /* Emerald */
+}
+
+.meetus-card:hover .meetus-card-glow {
+    background: rgba(139, 92, 246, 0.3);
+}
+
+.meetus-card:nth-child(2):hover .meetus-card-glow {
+    background: rgba(59, 130, 246, 0.3);
+}
+
+.meetus-card:nth-child(3):hover .meetus-card-glow {
+    background: rgba(16, 185, 129, 0.3);
+}
+
+
+.meetus-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+    color: white;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.meetus-card:hover .meetus-card-icon {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.meetus-card-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: white;
+    letter-spacing: -0.01em;
+}
+
+.meetus-card-text {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.6;
+}
+
+/* GSAP Start States */
+.meetus-anim {
+    opacity: 0;
+    transform: translateY(40px);
+}
