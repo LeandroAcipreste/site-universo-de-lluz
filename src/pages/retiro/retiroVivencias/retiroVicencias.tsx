@@ -13,7 +13,7 @@ import respiracaoSomaticaImg from "../imagens/expansao/repirtacao-somatica.png";
 import terapiasMeditativasImg from "../imagens/expansao/terapias meditativas.png";
 import eduardoImg from "../imagens/expansao/Eduardo.png";
 
-import "./RetiroVivencias.css";
+import "./retiroVivencias.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
