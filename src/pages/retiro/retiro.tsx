@@ -24,11 +24,26 @@ export default function Retiro() {
   }, []);
 
   useEffect(() => {
-    const handleLoad = () => {
-      ScrollTrigger.refresh();
-    };
+    // Refresh imediato: captura layout inicial
+    let rAF1: number;
+    let rAF2: number;
+    rAF1 = requestAnimationFrame(() => {
+      rAF2 = requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
+
+    // Refresh após a timeline da hero mobile (~3.2s) para recalcular
+    // posições dos ScrollTriggers que dependem do layout final
+    const t = setTimeout(() => ScrollTrigger.refresh(), 3600);
+
+    const handleLoad = () => ScrollTrigger.refresh();
     window.addEventListener("load", handleLoad);
-    return () => window.removeEventListener("load", handleLoad);
+
+    return () => {
+      cancelAnimationFrame(rAF1);
+      cancelAnimationFrame(rAF2);
+      clearTimeout(t);
+      window.removeEventListener("load", handleLoad);
+    };
   }, []);
 
   useGSAP(() => {

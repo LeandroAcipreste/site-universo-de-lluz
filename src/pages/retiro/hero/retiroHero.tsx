@@ -11,11 +11,13 @@ import hummingbird from "../imagens/beija flor grande.svg";
 import "./retiro-hero.css";
 
 export default function RetiroHero() {
-  const [isMobile, setIsMobile] = useState(false);
+  // Inicialização síncrona: evita montar o desktop antes de detectar mobile
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth <= 768 : false
+  );
 
   useEffect(() => {
     const checkBreakpoint = () => setIsMobile(window.innerWidth <= 768);
-    checkBreakpoint();
     window.addEventListener("resize", checkBreakpoint);
     return () => window.removeEventListener("resize", checkBreakpoint);
   }, []);

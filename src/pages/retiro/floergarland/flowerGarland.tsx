@@ -72,11 +72,13 @@ const getPhotoStyle = (): React.CSSProperties => ({
 });
 
 export default function FlowerGarland() {
-  const [isMobile, setIsMobile] = useState(false);
+  // Inicialização síncrona evita o flash desktop→mobile e o delay no mobile
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth <= 768 : false
+  );
 
   useEffect(() => {
     const checkBreakpoint = () => setIsMobile(window.innerWidth <= 768);
-    checkBreakpoint();
     window.addEventListener("resize", checkBreakpoint);
     return () => window.removeEventListener("resize", checkBreakpoint);
   }, []);

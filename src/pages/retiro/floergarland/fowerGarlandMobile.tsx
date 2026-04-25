@@ -93,11 +93,16 @@ export default function FlowerGarlandMobile() {
             scale: 1,
             stagger: 0.02,
             ease: "back.out(1.2)",
+            immediateRender: false,
             scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top 85%",
+                start: "top 95%",
                 end: "bottom 20%",
                 scrub: 0.5,
+                onRefresh(self) {
+                    // Garante que o estado inicial seja reaplicado após refresh
+                    if (self.progress === 0) gsap.set(items, { opacity: 0, scale: 0 });
+                },
             },
         });
 
@@ -106,6 +111,7 @@ export default function FlowerGarlandMobile() {
             y: 0,
             duration: 1,
             ease: "power2.out",
+            immediateRender: false,
             scrollTrigger: {
                 trigger: containerRef.current,
                 start: "top 40%",
@@ -119,6 +125,7 @@ export default function FlowerGarlandMobile() {
             y: 0,
             duration: 1,
             ease: "power2.out",
+            immediateRender: false,
             scrollTrigger: {
                 trigger: containerRef.current,
                 start: "center 60%",
@@ -127,8 +134,18 @@ export default function FlowerGarlandMobile() {
             },
         });
 
-        const t = setTimeout(() => ScrollTrigger.refresh(), 200);
-        return () => clearTimeout(t);
+        // Duplo rAF: garante que o layout esteja completamente estabilizado
+        // antes de recalcular posições do ScrollTrigger
+        let rAF1: number;
+        let rAF2: number;
+        rAF1 = requestAnimationFrame(() => {
+            rAF2 = requestAnimationFrame(() => ScrollTrigger.refresh());
+        });
+
+        return () => {
+            cancelAnimationFrame(rAF1);
+            cancelAnimationFrame(rAF2);
+        };
     }, { scope: containerRef, dependencies: [points] });
 
     return (
