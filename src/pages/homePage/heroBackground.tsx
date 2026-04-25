@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
+import "./heroBackground.css";
 
 /*
   Hero Background — Universo de Luz
   ────────────────────────────────
-  Camada de fundo extraída de hero.tsx para carregamento assíncrono.
-  Contém:
-    - UnicornStudio WebGL (Galáxia)
-    - Padrão de Estrelas (Stars)
-    - Glows de nebulosa (Indigo/Fuchsia)
+  Estratégia anti-tela-preta em 3 camadas:
+
+  Camada -1: .hero-bg__placeholder — gradiente CSS puro que imita a galáxia.
+             Visível IMEDIATAMENTE, sem nenhum JS, zero latência.
+
+  Camada 0: .hero-bg__unicorn — WebGL do UnicornStudio.
+             Começa com opacity:0, sobe para 1 quando pronto.
+             O placeholder some ao mesmo tempo (cross-fade perfeito).
+
+  Camada 2: Estrelas + glows — sempre visíveis, independentes do WebGL.
 */
 
 declare global {
@@ -16,13 +22,17 @@ declare global {
   }
 }
 
-export default function HeroBackground() {
+interface Props {
+  onReady?: () => void;
+}
+
+export default function HeroBackground({ onReady }: Props = {}) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Fallback para garantir visibilidade se o script falhar
+    // Fallback: força "ready" após 4s se o script não responder
     const fallback = setTimeout(() => setReady(true), 4000);
 
     if (window.UnicornStudio?.isInitialized) {
@@ -34,13 +44,15 @@ export default function HeroBackground() {
     window.UnicornStudio = { isInitialized: false, init: () => {} };
     const s = document.createElement("script");
     s.src = "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.34/dist/unicornStudio.umd.js";
+    // async: não bloqueia o render principal da página
     s.async = true;
     s.onload = () => {
       if (window.UnicornStudio && !window.UnicornStudio.isInitialized) {
         window.UnicornStudio.init();
         window.UnicornStudio.isInitialized = true;
       }
-      // Aguarda o frame de renderização
+      // Duplo rAF: garante que o WebGL pintou pelo menos 1 frame real
+      // antes de fazer o cross-fade do placeholder → WebGL
       requestAnimationFrame(() =>
         requestAnimationFrame(() => {
           clearTimeout(fallback);
@@ -53,41 +65,38 @@ export default function HeroBackground() {
     return () => clearTimeout(fallback);
   }, []);
 
+  // Chama o callback quando estiver pronto
+  useEffect(() => {
+    if (ready) {
+      onReady?.();
+    }
+  }, [ready, onReady]);
+
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* ── Camada 0: UnicornStudio WebGL (Galáxia) ── */}
+    <div className="hero-bg">
+      {/* ── Camada -1: Placeholder estático (CSS puro, zero latência) ──
+          Imita a galáxia congelada enquanto o WebGL não está pronto.
+          Quando ready=true, faz cross-fade com o WebGL real. */}
       <div
-        className="absolute inset-0 z-0"
-        style={{
-          filter: "hue-rotate(220deg) saturate(1.4) brightness(1.05)",
-          opacity: ready ? 1 : 0,
-          transition: "opacity 1.2s ease-in-out",
-        }}
+        className={`hero-bg__placeholder ${ready ? "hero-bg__placeholder--hidden" : ""}`}
+        aria-hidden="true"
+      />
+
+      {/* ── Camada 0: UnicornStudio WebGL (Galáxia animada) ── */}
+      <div
+        className={`hero-bg__unicorn ${ready ? "hero-bg__unicorn--ready" : ""}`}
       >
         <div
-          className="absolute inset-0"
+          className="hero-bg__unicorn-canvas"
           data-us-project="AhqzKk9mZE0EnlENMQDi"
         />
       </div>
 
-      {/* ── Camada 1: Stars + glows de nebulosa ── */}
-      <div className="absolute inset-0 z-1">
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: [
-              "radial-gradient(1px 1px at 20px 30px,#fff,rgba(0,0,0,0))",
-              "radial-gradient(1px 1px at 40px 70px,#fff,rgba(0,0,0,0))",
-              "radial-gradient(1px 1px at 50px 160px,#fff,rgba(0,0,0,0))",
-              "radial-gradient(1.5px 1.5px at 90px 40px,#fff,rgba(0,0,0,0))",
-              "radial-gradient(1px 1px at 130px 80px,#fff,rgba(0,0,0,0))",
-            ].join(","),
-            backgroundSize: "200px 200px",
-          }}
-        />
-        {/* Glows */}
-        <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-blue-900/20 blur-[120px]" />
-        <div className="absolute bottom-0 right-0 h-[600px] w-[600px] rounded-full bg-fuchsia-900/20 blur-[100px]" />
+      {/* ── Camada 2: Stars + Glows — sempre visíveis ── */}
+      <div className="hero-bg__stars-layer" aria-hidden="true">
+        <div className="hero-bg__stars" />
+        <div className="hero-bg__glow-top" />
+        <div className="hero-bg__glow-bottom" />
       </div>
     </div>
   );

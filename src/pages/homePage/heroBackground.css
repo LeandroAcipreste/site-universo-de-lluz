@@ -1,0 +1,119 @@
+/* =========================================
+   HERO BACKGROUND — UnicornStudio + Stars
+   Estratégia anti-tela-preta:
+   - .hero-bg__unicorn--loading mostra gradiente estático que imita
+     a galáxia congelada (visível IMEDIATAMENTE, zero delay)
+   - Quando o WebGL estiver pronto, transição suave para a animação real
+========================================= */
+
+/* Camada raiz absoluta que cobre tudo */
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* ── Camada -1: Placeholder estático (sempre visível, sem JS) ──
+   Simula o frame congelado da galáxia com gradientes CSS puros.
+   É o que o usuário vê ANTES do WebGL inicializar. */
+.hero-bg__placeholder {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    /* Galáxia simulada: nebulosa azul-arroxeada centralizada */
+    background:
+        /* Núcleo da nebulosa — brilho central */
+        radial-gradient(ellipse 60% 40% at 50% 45%,
+            rgba(99, 102, 241, 0.25) 0%,
+            rgba(139, 92, 246, 0.15) 35%,
+            transparent 70%),
+        /* Braço esquerdo da galáxia */
+        radial-gradient(ellipse 80% 30% at 20% 60%,
+            rgba(56, 189, 248, 0.12) 0%,
+            transparent 60%),
+        /* Braço direito / fúcsia */
+        radial-gradient(ellipse 70% 35% at 80% 40%,
+            rgba(232, 121, 249, 0.12) 0%,
+            transparent 55%),
+        /* Base escura do cosmos */
+        linear-gradient(135deg, #060818 0%, #0a0d24 40%, #08071c 70%, #050505 100%);
+    /* Sai de cena quando WebGL estiver pronto */
+    opacity: 1;
+    transition: opacity 1.4s ease-in-out;
+}
+
+/* Quando o WebGL está pronto, o placeholder some graciosamente */
+.hero-bg__placeholder--hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ── Camada 0: WebGL UnicornStudio ── */
+.hero-bg__unicorn {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    filter: hue-rotate(220deg) saturate(1.4) brightness(1.05);
+    /* Começa invisível — o placeholder cobre enquanto o WebGL carrega */
+    opacity: 0;
+    transition: opacity 1.4s ease-in-out;
+}
+
+/* Quando o WebGL está pronto, surge sobre o placeholder */
+.hero-bg__unicorn--ready {
+    opacity: 1;
+}
+
+.hero-bg__unicorn-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ── Camada 2: Stars pattern — visíveis desde o primeiro frame ── */
+.hero-bg__stars-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
+
+.hero-bg__stars {
+    position: absolute;
+    inset: 0;
+    opacity: 0.25;
+    background-image:
+        radial-gradient(1px 1px at 20px 30px,   #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 40px 70px,   #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 50px 160px,  #fff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 90px 40px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 130px 80px,  #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 170px 120px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 60px 190px, #fff, rgba(0,0,0,0));
+    background-size: 200px 200px;
+}
+
+/* ── Glows de nebulosa — visíveis desde o primeiro frame ── */
+.hero-bg__glow-top {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 500px;
+    width: 800px;
+    border-radius: 9999px;
+    background: rgba(30, 58, 138, 0.22);
+    filter: blur(120px);
+}
+
+.hero-bg__glow-bottom {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 600px;
+    width: 600px;
+    border-radius: 9999px;
+    background: rgba(112, 26, 117, 0.22);
+    filter: blur(100px);
+}

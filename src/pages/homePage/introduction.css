@@ -1,0 +1,45 @@
+/* =========================================
+   INTRODUCTION — Animação do Logo SVG
+========================================= */
+
+/* Seção container */
+.intro-section {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-height: 100svh;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-image:
+        linear-gradient(180deg, rgba(5,7,16,.44) 0%, rgba(6,8,18,.72) 54%, rgba(4,6,14,.88) 100%),
+        url('/logos/photo-1528722828814-77b9b83aafb2-e1574333496357.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+/* Radial glow sutil no centro */
+.intro-glow {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 42% at 50% 45%, rgba(255,255,255,0.07), transparent);
+}
+
+/* SVG do logo */
+.intro-svg {
+    position: relative;
+    width: 273px;
+}
+
+@media (min-width: 640px) {
+    .intro-svg {
+        width: 270px;
+    }
+}
+
+@media (min-width: 768px) {
+    .intro-svg {
+        width: 330px;
+    }
+}

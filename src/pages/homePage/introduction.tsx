@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
+import "./introduction.css";
 
 interface Props {
   onComplete?: () => void;
@@ -9,6 +10,10 @@ interface Props {
 /*
   iOS Safari não propaga animações GSAP de <path> em <defs> para <use> clones.
   Solução: 3 <path> diretos com refs individuais, sem <use href="#arm-shape">.
+
+  GSAP é necessário aqui porque anima strokeDashoffset/fillOpacity em SVG,
+  propriedades que CSS transitions não suportam com a mesma fidelidade cross-browser.
+  Todo o resto (layout, fundo) vive no introduction.css.
 */
 const ARM_D    = "M 250 121.0 L 361.7 314.5 L 410.2 314.5 L 274.2 79.0 A 28 28 0 0 0 225.8 79.0 Z";
 const SHADOW_D = "M 225.8 79.0 L 250 121.0 L 244.0 131.4 L 219.8 89.4 Z";
@@ -80,7 +85,6 @@ export default function Introduction({ onComplete }: Props) {
         .to(shadowGRef.current, { opacity: 1, duration: 0.8, ease: "power2.out" }, 2.1);
 
       // Fase 3 (3.1 → 5.3 s): construção do texto
-      // autoAlpha: 1 retira o visibility:hidden antes de qualquer frame do texto
       tl.to(textRef.current, { autoAlpha: 1, duration: 0.01 }, 3.1)
         .to(textNameRef.current, { strokeOpacity: 1, duration: 0.2 }, 3.1)
         .to(textNameRef.current, { strokeDashoffset: 0, duration: 1.8, ease: "power2.inOut" }, 3.1)
@@ -92,24 +96,13 @@ export default function Introduction({ onComplete }: Props) {
   );
 
   return (
-    <section
-      ref={rootRef}
-      className="relative isolate flex min-h-screen items-center justify-center overflow-hidden"
-      style={{
-        backgroundImage: [
-          "linear-gradient(180deg,rgba(5,7,16,.44) 0%,rgba(6,8,18,.72) 54%,rgba(4,6,14,.88) 100%)",
-          "url('/logos/photo-1528722828814-77b9b83aafb2-e1574333496357.jpg')",
-        ].join(","),
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-      }}
-    >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_42%_at_50%_45%,rgba(255,255,255,0.07),transparent)]" />
+    <section ref={rootRef} className="intro-section">
+      <div className="intro-glow" aria-hidden="true" />
 
       <svg
         ref={svgRef}
         viewBox="0 0 500 640"
-        className="relative w-[273px] sm:w-[270px] md:w-[330px]"
+        className="intro-svg"
         aria-labelledby="ul-logo-title"
         role="img"
         style={{ visibility: "hidden" }}

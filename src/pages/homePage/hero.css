@@ -1,0 +1,504 @@
+/* =========================================
+   HERO SECTION — Universo de Luz
+   Layout responsivo inteligente.
+   Card da Oração: CSS Container Queries com cascade em.
+   Animações: CSS-first, uma única classe `.is-visible` no .hero-section
+   desperta a coreografia de toda a página.
+========================================= */
+
+/* ── 1. Section wrapper ── */
+.hero-section {
+    position: relative;
+    min-height: 100svh;
+    /* clip no X mantém glows contidos; Y livre para o card crescer no mobile */
+    overflow-x: clip;
+    overflow-y: visible;
+    color: white;
+    background-color: #050505;
+}
+
+/* ── 2. Content wrapper ── */
+.hero-content {
+    position: relative;
+    z-index: 10;
+    padding-top: 4.5rem;
+}
+
+/* ── 3. Grid principal ── */
+.hero-grid {
+    position: relative;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: flex-start;
+    gap: 1.5rem;
+    max-width: 80rem;
+    padding: clamp(1rem, 4vw, 3rem) clamp(1rem, 5vw, 1.5rem) clamp(1.5rem, 5vw, 5rem);
+}
+
+@media (min-width: 768px) {
+    .hero-grid { gap: 2rem; }
+}
+
+@media (min-width: 1024px) {
+    .hero-grid {
+        grid-template-columns: 7fr 5fr;
+        align-items: stretch;
+        gap: 2.5rem;
+        padding-top: clamp(2rem, 4vw, 4rem);
+    }
+}
+
+/* ── 4. Coluna esquerda ── */
+.hero-col-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 0;
+}
+
+@media (min-width: 1024px) {
+    .hero-col-left { height: 100%; }
+}
+
+/* ── 5. Badge ── */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    padding: 0.3rem 0.75rem;
+    font-size: clamp(0.65rem, 1.5vw, 0.75rem);
+    color: #d4d4d4;
+    backdrop-filter: blur(4px);
+    margin-bottom: clamp(0.75rem, 3vw, 2rem);
+    
+    /* Configuração de entrada */
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(8px);
+    transition:
+        opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+        filter 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition-delay: 0.6s; /* Inicia após as letras do título começarem */
+}
+
+.hero-badge__logo {
+    height: clamp(11px, 2vw, 14px);
+    width: clamp(11px, 2vw, 14px);
+    flex-shrink: 0;
+}
+
+/* ── 6. Título principal ── */
+.hero-title {
+    margin-bottom: clamp(0.75rem, 3vw, 1.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+    font-size: clamp(2rem, 9vw, 4.75rem);
+}
+
+.hero-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(8px);
+    transition:
+        opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+        filter 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-title__gradient {
+    background-image: linear-gradient(90deg, #67e8f9 0%, #818cf8 50%, #f0abfc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-title__cyan { color: #67e8f9; }
+
+/* ── 7. Parágrafo descritivo ── */
+.hero-desc {
+    margin-bottom: clamp(1rem, 4vw, 2.5rem);
+    max-width: 36rem;
+    font-size: clamp(0.85rem, 2.5vw, 1.125rem);
+    line-height: 1.7;
+    color: rgba(255,255,255,0.78);
+    
+    /* Configuração de entrada */
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(8px);
+    transition:
+        opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+        filter 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition-delay: 1.0s;
+}
+
+/* ── 8. Espaçador flexível (desktop only) ── */
+.hero-spacer { display: none; flex: 1; min-height: 0; }
+
+@media (min-width: 1024px) {
+    .hero-spacer { display: block; }
+}
+
+/* ── 9. Grupo de botões ── */
+.hero-btns {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: clamp(1rem, 4vw, 3rem);
+    
+    /* Configuração de entrada */
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(8px);
+    transition:
+        opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+        filter 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition-delay: 1.4s;
+}
+
+@media (min-width: 480px) {
+    .hero-btns { flex-direction: row; flex-wrap: wrap; align-items: center; }
+}
+
+@media (min-width: 1024px) {
+    .hero-btns { margin-bottom: 0; }
+}
+
+/* ── 10. Botão CTA ── */
+.hero-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    border-radius: 9999px;
+    padding: clamp(0.65rem, 2vw, 0.875rem) clamp(1rem, 3vw, 2rem);
+    font-size: clamp(0.82rem, 2.2vw, 1.125rem);
+    font-weight: 500;
+    color: white;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 0 40px -5px rgba(139,92,246,0.6);
+    background: linear-gradient(to top, #a5f3fc, #3b82f6, #7c3aed);
+    transition:
+        transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.25s ease;
+}
+
+@media (min-width: 480px) {
+    .hero-btn { width: auto; }
+}
+
+.hero-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 60px -5px rgba(139,92,246,0.85);
+}
+
+.hero-btn:active { transform: scale(0.95); }
+
+.hero-btn__icon {
+    width: clamp(0.85rem, 2vw, 1rem);
+    height: clamp(0.85rem, 2vw, 1rem);
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+}
+
+.hero-btn:hover .hero-btn__icon { transform: translateX(4px); }
+
+.hero-btn__label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COLUNA DIREITA — Card da Oração
+   Mobile: coluna única abaixo dos botões
+   Desktop: sticky, lado direito
+═══════════════════════════════════════════════════════════════ */
+.hero-col-right {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    
+    /* Configuração de entrada */
+    opacity: 0;
+    transform: translateX(100px); /* Surge da DIREITA para ESQUERDA */
+    filter: blur(8px);
+    transition:
+        opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 1s cubic-bezier(0.2, 0.8, 0.2, 1),
+        filter 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition-delay: 1.6s;
+}
+
+@media (min-width: 1024px) {
+    .hero-col-right {
+        position: sticky;
+        top: 6rem;
+        height: calc(100vh - 140px);
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CARD DA ORAÇÃO — Arquitetura Container Query
+   ───────────────────────────────────────────────────────────────
+   O card declara `container-type: inline-size`.
+   .oracao-card-inner tem um `font-size` BASE que controla tudo.
+   Todos os filhos usam `em` — padding, gap, fontes, ícones.
+   @container queries ajustam apenas o font-size base.
+   Resultado: cascade perfeita. A oração SEMPRE cabe inteira.
+═══════════════════════════════════════════════════════════════ */
+
+/* Wrapper externo: container de referência */
+.oracao-card-outer {
+    position: relative;
+    width: 100%;
+    max-width: min(30rem, 100%);
+    overflow: hidden;
+    border-radius: 1.75rem;
+    background: #1a1a2e;
+    padding: 2px;
+    box-shadow:
+        0 0 30px rgba(139,92,246,0.35),
+        inset 0 0 24px rgba(139,92,246,0.12);
+    transition: box-shadow 0.7s ease;
+
+    /* ← A chave de tudo: declara este elemento como container */
+    container-type: inline-size;
+    container-name: oracao;
+}
+
+/* Glow da borda */
+.oracao-card-border-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: linear-gradient(to bottom, #c4b5fd, #8b5cf6, transparent);
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+/* ── FONT-SIZE BASE: muda aqui, tudo dentro escala junto via `em` ── */
+.oracao-card-inner {
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+    border-radius: calc(1.75rem - 2px);
+    background-color: #090b18;
+    font-family: 'Exo 2', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+
+    /* Base default (card largo ≥ 480px) */
+    font-size: 1rem;
+    padding: 2.25em 2em;
+}
+
+/* ── Container Queries: escala baseada na largura REAL do card ── */
+
+/* Muito pequeno: card ≤ 300px (iPhone SE landscape estreito) */
+@container oracao (max-width: 300px) {
+    .oracao-card-inner {
+        font-size: 0.68rem;
+        padding: 1.4em 1.2em;
+    }
+}
+
+/* Pequeno: 301–360px (mobile padrão) */
+@container oracao (min-width: 301px) and (max-width: 360px) {
+    .oracao-card-inner {
+        font-size: 0.76rem;
+        padding: 1.6em 1.35em;
+    }
+}
+
+/* Médio: 361–430px (mobile grande / iPhone Pro Max portrait) */
+@container oracao (min-width: 361px) and (max-width: 430px) {
+    .oracao-card-inner {
+        font-size: 0.84rem;
+        padding: 1.8em 1.55em;
+    }
+}
+
+/* Médio-grande: 431–480px (tablet pequeno / grande landscape) */
+@container oracao (min-width: 431px) and (max-width: 480px) {
+    .oracao-card-inner {
+        font-size: 0.91rem;
+        padding: 2em 1.75em;
+    }
+}
+
+/* Grande: > 480px — font-size base default (declarado acima) */
+
+/* ── Glow decorativo no topo — em para escalar com o font-size ── */
+.oracao-card-top-glow {
+    pointer-events: none;
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 7em; /* escala com a base */
+    background: linear-gradient(to bottom, rgba(139,92,246,0.12), transparent);
+}
+
+/* ── Flex container do conteúdo — gap em `em` ── */
+.oracao-card-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1em; /* 1× o font-size base: gap proporcional garantido */
+}
+
+/* ── Badge "Oração do Universo de Luz" ── */
+.oracao-badge {
+    display: inline-flex;
+    max-width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    border-radius: 9999px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(15, 23, 42, 0.55);
+    padding: 0.38em 1em;
+    backdrop-filter: blur(8px);
+}
+
+.oracao-badge__logo {
+    height: 0.9em; /* proporcional à base */
+    width:  0.9em;
+    flex-shrink: 0;
+    opacity: 0.95;
+}
+
+.oracao-badge__text {
+    text-align: center;
+    font-size: 0.68em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    color: #e2e8f0;
+}
+
+/* ── Título "Divino Criador," ── */
+.oracao-title {
+    font-size: 1.65em;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    /* Permite que o título quebre normalmente, mas não em palavras */
+    word-break: keep-all;
+    background-image: linear-gradient(90deg, #ffffff 0%, #c4b5fd 45%, #e879f9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ── Corpo — as 6 linhas da oração ── */
+.oracao-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.42em;
+    border-left: 1px solid rgba(139,92,246,0.3);
+    padding-left: 0.95em;
+}
+
+.oracao-line {
+    font-size: 0.88em;
+    font-weight: 500;
+    line-height: 1.48;
+    letter-spacing: 0.005em;
+    color: white;
+}
+
+/* ── Fecho "Que assim seja..." ── */
+.oracao-fecho {
+    text-align: center;
+    font-size: 0.85em;
+    font-weight: 500;
+    font-style: italic;
+    line-height: 1.4;
+    color: rgba(255,255,255,0.88);
+}
+
+/* ── Amens em linha ── */
+.oracao-amens {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em 1.1em;
+}
+
+.oracao-amen {
+    font-size: 0.76em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    background-image: linear-gradient(90deg, #e9d5ff, #a78bfa, #f0abfc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ── Rodapé do card ── */
+.oracao-footer {
+    position: relative;
+    display: flex;
+    height: 1px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, transparent, rgba(139,92,246,0.45), transparent);
+}
+
+.oracao-footer__label {
+    padding: 0 0.75em;
+    font-size: 0.58em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #737373;
+    background-color: #090b18;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   GATILHO DE ANIMAÇÃO — Orquestração CSS-First Absoluta
+   Quando a classe .is-visible entra no .hero-section (via GSAP),
+   TODOS os filhos disparam juntos, respeitando seus transition-delays.
+═══════════════════════════════════════════════════════════════ */
+
+/* 1. Elementos Verticais (sobem de baixo para cima) */
+.hero-section.is-visible .hero-badge,
+.hero-section.is-visible .hero-letter,
+.hero-section.is-visible .hero-desc,
+.hero-section.is-visible .hero-btns {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+}
+
+/* 2. Elemento Horizontal (desliza da direita para esquerda) */
+.hero-section.is-visible .hero-col-right {
+    opacity: 1;
+    transform: translateX(0); /* Finaliza movimento em 0px horizontal */
+    filter: blur(0px);
+}
+
+
