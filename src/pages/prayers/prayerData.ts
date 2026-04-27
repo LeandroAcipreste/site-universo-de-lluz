@@ -122,6 +122,18 @@ export const PRAYERS_DB: Record<CategoryType, PrayerData[]> = {
         },
         {
             tag: "ANJO_02",
+            title: "Oração a Miguel",
+            description: "Prece de proteção para cortar medos e quebrar bloqueios com a espada flamejante.",
+            cardLines: [
+                "Amado Arcanjo Miguel,",
+                "Eu (fala seu nome de batismo completo), rogo a tua perfeita proteção para livrar-me das armadilhas do inimigo, mesmo quando o engano estiver dentro de mim.",
+                "Que a tua poderosa espada azul flamejante corte os medos que ainda me espreitam, despedaçando bloqueios ao meu progresso na luz.",
+                "E que o estrondo de tua imbatível Presença estremeça os impuros, convocando a todos para a conversão do amor a Deus!",
+                "Amém, amém e amém!"
+            ]
+        },
+        {
+            tag: "ANJO_02",
             title: "Prece para proteção de Arcanjo Miguel ao sair de casa",
             description: "Círculo de proteção azul e presença do Arcanjo Miguel.",
             cardLines: [
