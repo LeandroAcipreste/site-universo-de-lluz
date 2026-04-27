@@ -299,6 +299,39 @@ export default function MeetUs() {
               </ul>
             </div>
           </div>
+
+          {/* ── SEÇÃO AYAHUASCA ── */}
+          <div className="meetus-ayahuasca meetus-anim">
+            <h2 className="meetus-ayahuasca-title">
+              Sobre a Sagrada Medicina{" "}
+              <span className="meetus-title-gradient">Ayahuasca</span>
+            </h2>
+
+            <div className="meetus-ayahuasca-card">
+              <div className="meetus-card-glow" />
+              <div className="meetus-ayahuasca-body">
+                <p>
+                  A ayahuasca atua como uma chave para o subconsciente, permitindo o acesso a traumas e bloqueios emocionais para que sejam amorosamente ressignificados.
+                </p>
+                <p>
+                  Espiritualmente, a bebida é considerada uma sagrada <em>"medicina da alma"</em> que expande a consciência e facilita o reencontro do indivíduo com sua essência divina.
+                </p>
+                <p>
+                  A purgação, muito comum durante os rituais, transcende o físico e atua como uma limpeza profunda, liberando e dissipando energias e pensamentos densos.
+                </p>
+                <p>
+                  A experiência sob a força do chá promove a dissolução do ego, ajudando a cultivar o perdão, a empatia e um sentimento de unidade com o todo.
+                </p>
+                <p>
+                  Terapeuticamente, essa vivência oferece novas perspectivas e clareza mental, impulsionando um processo poderoso de autocura e profundo despertar pessoal.
+                </p>
+                <p className="meetus-ayahuasca-cta">
+                  Para viver essa experiência transformadora em nossa casa, é necessário passar por uma consulta com a dirigente{" "}
+                  <a href="https://www.instagram.com/olyvialiborio/" target="_blank" rel="noopener noreferrer" className="meetus-ig-link">Olyvia Libório</a>.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>

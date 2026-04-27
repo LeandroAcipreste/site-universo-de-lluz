@@ -326,3 +326,78 @@
     opacity: 0;
     transform: translateY(40px);
 }
+
+/* ── SEÇÃO AYAHUASCA ── */
+.meetus-ayahuasca {
+    margin-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.meetus-ayahuasca-title {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: white;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+}
+
+.meetus-ayahuasca-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    padding: 2rem 2.5rem;
+}
+
+@media (min-width: 768px) {
+    .meetus-ayahuasca-card {
+        padding: 2.5rem 3.5rem;
+    }
+}
+
+.meetus-ayahuasca-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.meetus-ayahuasca-body p {
+    font-size: clamp(0.88rem, 1.5vw + 0.3rem, 1rem);
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 300;
+}
+
+.meetus-ayahuasca-body em {
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+}
+
+/* Linha decorativa à esquerda no card */
+.meetus-ayahuasca-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    width: 3px;
+    background: linear-gradient(to bottom, #67e8f9, #818cf8, #f0abfc);
+    border-radius: 0 3px 3px 0;
+    opacity: 0.6;
+}
+
+/* Parágrafo CTA — destaque sutil no encerramento */
+.meetus-ayahuasca-cta {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1rem;
+    margin-top: 0.25rem;
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-style: italic;
+}
