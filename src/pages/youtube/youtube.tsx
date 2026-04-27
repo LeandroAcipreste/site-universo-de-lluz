@@ -14,7 +14,7 @@ export default function YoutubePage() {
 
       {/* ── CONTEÚDO PRINCIPAL ── */}
       <div className="relative z-10 mx-auto flex min-h-screen flex-col items-center px-5 text-center pt-[max(8rem,15vh)] pb-20 justify-start lg:justify-center">
-        
+
         <motion.h1
           initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -44,12 +44,12 @@ export default function YoutubePage() {
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.7, delay: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
           className="mb-8 font-light tracking-[0.15em] text-white/70 uppercase"
-          style={{ 
+          style={{
             fontFamily: "'Optima','Zapf Humanist','Tenor Sans',sans-serif",
             fontSize: 'clamp(0.9rem, 1.5vw + 0.4rem, 1.25rem)'
           }}
         >
-          VÍDEO NOVO TODA QUARTA-FEIRA 19HS
+          VÍDEO NOVO TODA QUARTA-FEIRA 19H
         </motion.p>
 
         <motion.div
@@ -95,7 +95,7 @@ export default function YoutubePage() {
                 { label: "Arcanjos", videoId: "DfKC6x_hVH0", link: "https://www.youtube.com/watch?v=DfKC6x_hVH0&list=PLlwyMNQ7JxCiBy5ouT07Vy4Ev2GyVb0l1" },
                 { label: "Xamanismo", videoId: "UGyswblXraM", link: "https://www.youtube.com/watch?v=UGyswblXraM&list=PLlwyMNQ7JxCit-UNiczPf236wMoLokcQu" }
               ].map((playlist, idx) => (
-                <a 
+                <a
                   key={idx}
                   href={playlist.link}
                   target="_blank"
@@ -103,19 +103,19 @@ export default function YoutubePage() {
                   className="group relative flex w-full flex-col overflow-hidden rounded-[20px] border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.1)]"
                 >
                   <div className="relative aspect-video w-full overflow-hidden bg-black/40">
-                    <img 
-                      src={`https://img.youtube.com/vi/${playlist.videoId}/hqdefault.jpg`} 
+                    <img
+                      src={`https://img.youtube.com/vi/${playlist.videoId}/hqdefault.jpg`}
                       alt={playlist.label}
                       loading="lazy"
                       className="absolute inset-0 h-full w-full object-cover opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/20 to-transparent" />
-                    
+
                     <div className="absolute bottom-4 right-4 flex h-10 w-10 shrink-0 scale-95 items-center justify-center rounded-full bg-red-600/90 text-white shadow-[0_0_15px_rgba(220,38,38,0.5)] backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:bg-red-500">
                       <YoutubeIcon className="h-5 w-5" />
                     </div>
                   </div>
-                  
+
                   <div className="relative flex flex-col p-6">
                     <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-red-400">
                       Playlist
