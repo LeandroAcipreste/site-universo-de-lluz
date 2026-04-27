@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Sparkles, Heart, Star } from "lucide-react";
+import { Sparkles, Star, FileEdit, TrendingUp } from "lucide-react";
 import "./meetUs.css";
 
 export default function MeetUs() {
@@ -27,10 +27,16 @@ export default function MeetUs() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const dpr = window.devicePixelRatio || 1;
     let width = window.innerWidth;
     let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
+    
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    
+    ctx.scale(dpr, dpr);
 
     const particles: Particle[] = [];
     const particleCount = Math.floor((width * height) / 12000); // Quantidade responsiva
@@ -150,8 +156,14 @@ export default function MeetUs() {
     const handleResize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
+      
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      
+      ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform before scale
+      ctx.scale(dpr, dpr);
     };
 
     window.addEventListener("resize", handleResize);
@@ -198,7 +210,7 @@ export default function MeetUs() {
             <div>
               {/* Header */}
               <div className="meetus-badge meetus-anim">
-                <Sparkles size={14} />
+                <img src="/logos/logo.svg" alt="Logo" className="meetus-badge-logo" />
                 <span>UNIVERSO DE LUZ • NOSSA ESSÊNCIA</span>
               </div>
               
@@ -212,6 +224,22 @@ export default function MeetUs() {
                 <br /><br />
                 <strong>NOSSA MISSÃO É</strong> Promover consciência e fé inteligente, acolhendo de forma integral todos os seres, a começar pela consciência do autocuidado. Comprometidos com amor e alegria, gentileza e zelo, multiplicando fraternidade em total prosperidade e harmonia por todos os mundos.
               </p>
+
+              <div className="meetus-dirigente meetus-anim">
+                <h2 className="meetus-dirigente-title">
+                  Conheça nossa dirigente Olyvia Libório
+                </h2>
+                <p className="meetus-dirigente-desc">
+                  <strong>Olyvia Libório </strong>
+                  <a href="https://www.instagram.com/olyvialiborio/" target="_blank" rel="noopener noreferrer" className="meetus-ig-link">
+                    @olyvialiborio
+                  </a>
+                  <br />
+                  fundadora do Universo de Luz e responsável pela sustentação energética do grupo.
+                  <br /><br />
+                  Com olhar firme e condução zelosa, ela garante a segurança espiritual e a integridade de cada processo, ancorando a luz e a ordem nas cerimônias.
+                </p>
+              </div>
             </div>
 
             {/* Direita: Imagem da Olyvia no Arco Neon */}
@@ -226,43 +254,49 @@ export default function MeetUs() {
 
           {/* Floating Feature Cards */}
           <div className="meetus-floating-cards">
-            {/* Card 1 */}
+            {/* Card 1: MISSÃO */}
             <div className="meetus-card meetus-anim">
               <div className="meetus-card-glow" />
               <div className="meetus-card-icon">
-                <Heart size={20} />
+                <FileEdit size={20} />
               </div>
-              <h3 className="meetus-card-title">Cura Interior</h3>
+              <h3 className="meetus-card-title">MISSÃO</h3>
               <p className="meetus-card-text">
-                Processos terapêuticos e energéticos focados em transmutar bloqueios e 
-                liberar o seu potencial adormecido, trazendo clareza e paz de espírito.
+                Auxiliar no despertar espiritual coletivo para vivenciarmos o AMOR de Deus e a transição planetária de maneira consciente, plena e saudável.
               </p>
             </div>
 
-            {/* Card 2 */}
+            {/* Card 2: VISÃO */}
+            <div className="meetus-card meetus-anim">
+              <div className="meetus-card-glow" />
+              <div className="meetus-card-icon">
+                <TrendingUp size={20} />
+              </div>
+              <h3 className="meetus-card-title">VISÃO</h3>
+              <p className="meetus-card-text">
+                Tornar-se uma comunidade holística auto-sustentável capaz de acolher àqueles que buscam o despertar espiritual e comungam dos propósitos divinos.
+              </p>
+            </div>
+
+            {/* Card 3: VALORES */}
             <div className="meetus-card meetus-anim">
               <div className="meetus-card-glow" />
               <div className="meetus-card-icon">
                 <Star size={20} />
               </div>
-              <h3 className="meetus-card-title">Jornadas Imersivas</h3>
-              <p className="meetus-card-text">
-                Retiros e vivências que conectam você com a natureza e o divino, 
-                através de práticas profundas como a Cura do Beija-Flor.
-              </p>
-            </div>
-
-            {/* Card 3 */}
-            <div className="meetus-card meetus-anim">
-              <div className="meetus-card-glow" />
-              <div className="meetus-card-icon">
-                <Sparkles size={20} />
-              </div>
-              <h3 className="meetus-card-title">Expansão de Luz</h3>
-              <p className="meetus-card-text">
-                Comunidade e ensinamentos que sustentam a sua caminhada espiritual 
-                no dia a dia, mantendo a sua frequência sempre elevada em ressonância.
-              </p>
+              <h3 className="meetus-card-title">VALORES</h3>
+              <ul className="meetus-card-text" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.25rem 1rem', listStyle: 'none', margin: 0, padding: 0 }}>
+                <li>• Fé em Deus</li>
+                <li>• Firmeza</li>
+                <li>• Harmonia</li>
+                <li>• Amor</li>
+                <li>• Respeito</li>
+                <li>• Verdade</li>
+                <li>• Fraternidade</li>
+                <li>• Humildade</li>
+                <li>• Alegria</li>
+                <li>• União</li>
+              </ul>
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@
 
 /* Background image */
 .meetus-bg {
-    position: absolute;
+    position: fixed;
     inset: 0;
     width: 100%;
     height: 100%;
@@ -22,7 +22,7 @@
 
 /* Película escura adicional (Dark Film) */
 .meetus-overlay {
-    position: absolute;
+    position: fixed;
     inset: 0;
     background: linear-gradient(135deg, rgba(5, 5, 8, 0.8) 0%, rgba(15, 5, 20, 0.6) 100%);
     z-index: 1;
@@ -31,7 +31,7 @@
 
 /* Decorative grid lines from the design system */
 .meetus-grid-lines {
-    position: absolute;
+    position: fixed;
     inset: 0;
     z-index: 2;
     pointer-events: none;
@@ -66,7 +66,7 @@
 
 /* Particles Canvas */
 .meetus-particles {
-    position: absolute;
+    position: fixed;
     inset: 0;
     width: 100%;
     height: 100%;
@@ -156,6 +156,13 @@
     margin-bottom: 1.5rem;
 }
 
+.meetus-badge-logo {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
 .meetus-title {
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 500;
@@ -178,7 +185,46 @@
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
     max-width: 35rem;
+}
+
+/* Dirigente Section */
+.meetus-dirigente {
+    margin-top: 2rem;
+    padding-top: 2rem;
     margin-bottom: 4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meetus-dirigente-title {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 500;
+    color: white;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+}
+
+.meetus-dirigente-desc {
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    max-width: 35rem;
+}
+
+.meetus-dirigente-desc strong {
+    color: white;
+    font-weight: 600;
+}
+
+.meetus-ig-link {
+    color: #c084fc;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.meetus-ig-link:hover {
+    color: #e879f9;
+    text-decoration: underline;
 }
 
 /* Grids e Cartões Flutuantes */

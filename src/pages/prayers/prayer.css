@@ -135,7 +135,10 @@
     margin-bottom: 0.5rem;
     font-family: var(--font-headline, sans-serif);
     font-weight: 700;
-    color: white;
+    color: transparent;
+    background-image: linear-gradient(90deg, #67e8f9 0%, #818cf8 50%, #f0abfc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
     text-transform: uppercase;
     letter-spacing: -0.02em;
     line-height: 1.1;

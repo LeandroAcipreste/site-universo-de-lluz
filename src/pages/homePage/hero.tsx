@@ -17,11 +17,11 @@ import "./hero.css";
 const ORACAO = {
   titulo: "Divino Criador,",
   estrofes: [
-    "Dai-me o vislumbre da Tua presença,",
+    "Dai-me o deslumbre da Tua presença,",
     "Dai-me o silêncio para escutar a música das estrelas,",
     "Dai-me a força da fé para atravessar as tempestades,",
     "Dai-me a sabedoria de aceitar a tudo e a todos como são,",
-    "Dai-me luz para manter-me em um bom caminho,",
+    "Dai-me luz para manter-me num bom caminho,",
     "Dai-me amor para testemunhar a Tua criação.",
   ],
   fecho: "Que assim seja hoje, sempre e eternamente",

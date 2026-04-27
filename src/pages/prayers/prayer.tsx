@@ -6,6 +6,7 @@ import { PRAYERS_DB } from "./prayerData";
 import type { CategoryType } from "./prayerData";
 import Background from "../../components/background";
 import BackgroundSnake from "./backgroundSnake.tsx";
+import MobileScrollFactory from "../../layouts/MobileScrollFactory";
 import "./prayer.css";
 
 const CATEGORIES: { key: CategoryType; label: string }[] = [
@@ -18,9 +19,7 @@ export default function Prayer() {
     const [selectedCategory, setSelectedCategory] = useState<CategoryType>("catolicas");
     const [activeIndex, setActiveIndex] = useState(0);
     const [direction, setDirection] = useState<1 | -1>(1);
-    const sectionRef = useRef<HTMLElement>(null);
     const cooldown = useRef(false);
-    const touchStartY = useRef(0);
 
     const currentPrayers = PRAYERS_DB[selectedCategory];
     const total = currentPrayers.length;
@@ -33,46 +32,6 @@ export default function Prayer() {
         setActiveIndex(i => Math.min(Math.max(i + delta, 0), total - 1));
     };
 
-    // Desktop: wheel scroll
-    useEffect(() => {
-        const el = sectionRef.current;
-        if (!el) return;
-
-        const onWheel = (e: WheelEvent) => {
-            const rect = el.getBoundingClientRect();
-            const inView = rect.top <= 80 && rect.bottom >= window.innerHeight * 0.5;
-            if (!inView) return;
-            e.preventDefault();
-            navigate(e.deltaY > 0 ? 1 : -1);
-        };
-
-        el.addEventListener("wheel", onWheel, { passive: false });
-        return () => el.removeEventListener("wheel", onWheel);
-    }, [total]);
-
-    // Mobile: touch swipe
-    useEffect(() => {
-        const el = sectionRef.current;
-        if (!el) return;
-
-        const onTouchStart = (e: TouchEvent) => {
-            touchStartY.current = e.touches[0].clientY;
-        };
-
-        const onTouchEnd = (e: TouchEvent) => {
-            const delta = touchStartY.current - e.changedTouches[0].clientY;
-            if (Math.abs(delta) < 30) return;
-            navigate(delta > 0 ? 1 : -1);
-        };
-
-        el.addEventListener("touchstart", onTouchStart, { passive: true });
-        el.addEventListener("touchend", onTouchEnd, { passive: true });
-        return () => {
-            el.removeEventListener("touchstart", onTouchStart);
-            el.removeEventListener("touchend", onTouchEnd);
-        };
-    }, [total]);
-
     const handleCategoryChange = (cat: CategoryType) => {
         setSelectedCategory(cat);
         setActiveIndex(0);
@@ -82,7 +41,11 @@ export default function Prayer() {
     const progressPercent = total > 1 ? (activeIndex / (total - 1)) * 100 : 100;
 
     return (
-        <section ref={sectionRef} className="prayer-section">
+        <MobileScrollFactory 
+            className="prayer-section" 
+            onSwipeUp={() => navigate(1)} 
+            onSwipeDown={() => navigate(-1)}
+        >
             <Background />
 
             <div className="prayer-sticky">
@@ -190,6 +153,6 @@ export default function Prayer() {
                     </div>
                 </div>
             </div>
-        </section>
+        </MobileScrollFactory>
     );
 }
