@@ -83,10 +83,15 @@ export default function SiteNav() {
       role="navigation"
       aria-label="Principal"
     >
-      <div className="mx-auto relative flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8 md:py-5"
-        style={{ pointerEvents: "auto" }}
+      <div
+        className="mx-auto relative flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8 md:py-5"
+        style={{ pointerEvents: "none" }}
       >
-        <a href="/" className="hidden md:flex shrink-0 items-center gap-2.5 outline-none ring-offset-2 ring-offset-transparent focus-visible:ring-2 focus-visible:ring-violet-400 active:scale-95 transition-transform">
+        <a
+          href="/"
+          className="hidden md:flex shrink-0 items-center gap-2.5 outline-none ring-offset-2 ring-offset-transparent focus-visible:ring-2 focus-visible:ring-violet-400 active:scale-95 transition-transform"
+          style={{ pointerEvents: "auto" }}
+        >
           <img
             src="/logos/logo.svg"
             aria-hidden={true}
@@ -99,7 +104,7 @@ export default function SiteNav() {
           />
         </a>
 
-        <div className="flex ml-auto md:ml-0 items-center gap-3">
+        <div className="flex ml-auto md:ml-0 items-center gap-3" style={{ pointerEvents: "auto" }}>
           <div className="hidden flex-wrap items-center justify-end gap-2 md:flex lg:gap-3">
             {NAV_LABELS.map((label) => (
               <button
@@ -171,6 +176,7 @@ export default function SiteNav() {
         <div
           id="site-nav-mobile"
           className={`${navOpen ? "flex" : "hidden"} absolute left-0 right-0 top-full flex-col items-end px-4 pt-2 pb-4 sm:hidden`}
+          style={{ pointerEvents: "auto" }}
         >
           <div className="flex w-fit flex-col gap-2">
             <button
