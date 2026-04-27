@@ -13,13 +13,16 @@ import { useEffect, useState } from "react";
  *   edgeColor = vec3(0.25, 0.05, 0.55) → rgb(64, 13, 140)  — Índigo profundo
  *   glowColor = vec3(0.90, 0.85, 1.0) → rgb(230, 217, 255) — Brilho central
  */
-export default function OracleBackground() {
+export default function OracleBackground({ onReady }: { onReady?: () => void }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const fallback = setTimeout(() => setReady(true), 3500);
+    const fallback = setTimeout(() => {
+      setReady(true);
+      if (onReady) onReady();
+    }, 3500);
     const scriptId = "unicorn-studio-script";
     let script = document.getElementById(scriptId) as HTMLScriptElement;
 
@@ -29,6 +32,7 @@ export default function OracleBackground() {
         requestAnimationFrame(() =>
           requestAnimationFrame(() => {
             setReady(true);
+            if (onReady) onReady();
             clearTimeout(fallback);
           })
         );
