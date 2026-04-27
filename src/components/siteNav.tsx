@@ -51,6 +51,7 @@ export default function SiteNav() {
     else if (label === "Defesas") path = "/defense";
     else if (label === "Oráculo") path = "/oracle";
     else if (label === "YouTube") path = "/youtube";
+    else if (label === "Página Inicial") path = "/";
 
     window.location.href = path;
   };
@@ -78,7 +79,7 @@ export default function SiteNav() {
       aria-label="Principal"
     >
       <div className="mx-auto relative flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8 md:py-5">
-        <a href="/" className="flex shrink-0 items-center gap-2.5 outline-none ring-offset-2 ring-offset-transparent focus-visible:ring-2 focus-visible:ring-violet-400 active:scale-95 transition-transform">
+        <a href="/" className="hidden md:flex shrink-0 items-center gap-2.5 outline-none ring-offset-2 ring-offset-transparent focus-visible:ring-2 focus-visible:ring-violet-400 active:scale-95 transition-transform">
           <img
             src="/logos/logo.svg"
             aria-hidden={true}
@@ -91,7 +92,7 @@ export default function SiteNav() {
           />
         </a>
 
-        <div className="flex items-center gap-3">
+        <div className="flex ml-auto md:ml-0 items-center gap-3">
           <div className="hidden flex-wrap items-center justify-end gap-2 md:flex lg:gap-3">
             {NAV_LABELS.map((label) => (
               <button
@@ -165,6 +166,22 @@ export default function SiteNav() {
           className={`${navOpen ? "flex" : "hidden"} absolute left-0 right-0 top-full flex-col items-end px-4 pt-2 pb-4 sm:hidden`}
         >
           <div className="flex w-fit flex-col gap-2">
+            <button
+              type="button"
+              className={`${NAV_BTN_CLASS} w-full`}
+              style={BTN_PRIMARY}
+              onClick={() => handleNavClick("Página Inicial")}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                  "0 0 40px -8px rgba(139,92,246,0.75)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
+              }}
+            >
+              Página Inicial
+              <img src="/logos/logo.svg" className="h-4 w-4 object-contain" alt="" />
+            </button>
             {NAV_LABELS.map((label) => (
               <button
                 key={label}
