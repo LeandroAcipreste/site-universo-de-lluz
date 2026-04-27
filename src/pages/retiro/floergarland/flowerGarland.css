@@ -52,6 +52,28 @@
     min-width: 360px;
 }
 
+.desktop-text-block-1 {
+    position: absolute;
+    pointer-events: auto;
+    color: #032e4d;
+    z-index: 20;
+    right: 8%;
+    top: 32%;
+    width: 40%;
+    min-width: 360px;
+}
+
+.desktop-text-block-2 {
+    position: absolute;
+    pointer-events: auto;
+    color: #032e4d;
+    z-index: 40;
+    left: 8%;
+    top: 63%;
+    width: 40%;
+    min-width: 360px;
+}
+
 .garland-text-spaced-desktop {
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(1.1rem, 2vw, 1.4rem);
@@ -97,6 +119,8 @@
     width: 52%;
     max-width: 200px;
 }
+
+
 
 .garland-text-spaced-mobile {
     font-family: 'Montserrat', sans-serif;

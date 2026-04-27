@@ -31,21 +31,15 @@ function RetiroHeroDesktop() {
   const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(() => {
-    // Revela os elementos escondidos no CSS antes da animação
-    gsap.set([
-      ".d-fl-mid", ".d-fl-left", ".d-fl-right-wrap",
-      ".title-container", ".d-bird-r", ".d-bird-l", ".scroll-indicator"
-    ], { visibility: "visible" });
+    // Adiciona a classe is-visible com um pequeno delay para acionar as transições do CSS
+    const timer = setTimeout(() => {
+      containerRef.current?.classList.add("is-visible");
+    }, 50);
 
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-    tl.from(".d-fl", { y: -200, opacity: 0, duration: 1.2, stagger: 0.1 }, 0.1)
-      .from(".title-container", { scale: 0.95, y: 40, opacity: 0, duration: 1.5 }, "-=0.8")
-      .from(".d-bird-r", { x: -100, opacity: 0, duration: 1 }, "-=1")
-      .from(".d-bird-l", { x: 100, opacity: 0, duration: 1 }, "-=1")
-      .from(".scroll-indicator", { opacity: 0, duration: 0.6 }, "-=0.5");
-
+    // O loop do scroll (setinha) continua no GSAP
     gsap.to(".scroll-arrow", { y: 15, repeat: -1, yoyo: true, duration: 1.2, ease: "sine.inOut" });
+
+    return () => clearTimeout(timer);
   }, { scope: containerRef });
 
   return (

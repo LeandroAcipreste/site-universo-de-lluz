@@ -26,6 +26,14 @@
     z-index: 20;
     padding-top: 55vh;
     visibility: hidden;
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+    transition: opacity 1.5s ease-out 0.3s, transform 1.5s ease-out 0.3s;
+}
+.hero-section.is-visible .title-container {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
 
 .text-group {
@@ -171,14 +179,23 @@
     overflow: hidden;
 }
 
+.flower-layer img.d-fl {
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
 .d-fl-mid {
     position: absolute;
     top: -240px;
     left: 50%;
-    transform: translateX(-50%);
     width: 750px;
     visibility: hidden;
     z-index: 20;
+    transform: translateX(-50%) translateY(-200px);
+    transition-delay: 0.1s;
+}
+.hero-section.is-visible .d-fl-mid {
+    visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0);
 }
 
 .d-fl-left {
@@ -187,6 +204,11 @@
     left: -60px;
     width: 650px;
     visibility: hidden;
+    transform: translateY(-200px);
+    transition-delay: 0.2s;
+}
+.hero-section.is-visible .d-fl-left {
+    visibility: visible; opacity: 1; transform: translateY(0);
 }
 
 .d-fl-right-wrap {
@@ -194,8 +216,12 @@
     top: -280px;
     right: -80px;
     width: 650px;
-    transform: rotate(60deg);
     visibility: hidden;
+    transform: rotate(60deg) translateY(-200px);
+    transition-delay: 0.3s;
+}
+.hero-section.is-visible .d-fl-right-wrap {
+    visibility: visible; opacity: 1; transform: rotate(60deg) translateY(0);
 }
 
 
@@ -205,10 +231,15 @@
     right: 18%;
     width: 18%;
     max-width: 260px;
-    transform: rotate(-12deg);
     filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15));
     visibility: hidden;
     z-index: 30;
+    opacity: 0;
+    transform: rotate(-12deg) translateX(-100px);
+    transition: opacity 1s ease-out 0.8s, transform 1s ease-out 0.8s;
+}
+.hero-section.is-visible .d-bird-r {
+    visibility: visible; opacity: 1; transform: rotate(-12deg) translateX(0);
 }
 
 .d-bird-l {
@@ -220,18 +251,29 @@
     filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15));
     visibility: hidden;
     z-index: 30;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: opacity 1s ease-out 0.8s, transform 1s ease-out 0.8s;
+}
+.hero-section.is-visible .d-bird-l {
+    visibility: visible; opacity: 1; transform: translateX(0);
 }
 
 .scroll-indicator {
     position: absolute;
     bottom: 2rem;
     left: 50%;
-    transform: translateX(-50%);
     z-index: 50;
     display: flex;
     flex-direction: column;
     align-items: center;
     visibility: hidden;
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+    transition: opacity 0.6s ease-out 1.3s, transform 0.6s ease-out 1.3s;
+}
+.hero-section.is-visible .scroll-indicator {
+    visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0);
 }
 
 .scroll-arrow {

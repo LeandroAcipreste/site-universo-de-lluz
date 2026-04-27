@@ -61,6 +61,7 @@ const getDynamicItemStyle = (percentX: number, percentY: number, offsetX: number
   opacity: 0,
   transform: `translate(${offsetX}%, ${offsetY}%) scale(0)`,
   zIndex: zIndexConfig,
+  willChange: "transform, opacity"
 });
 
 const getFlowerImageStyle = (angle: number): React.CSSProperties => ({
@@ -92,20 +93,20 @@ function FlowerGarlandDesktop() {
   const [points, setPoints] = useState<Point[]>([]);
 
   useLayoutEffect(() => {
-    let rAF: number;
+    let timer: ReturnType<typeof setTimeout>;
     const tentarCalcular = () => {
       if (!pathRef.current) return;
       const pts = calcularPontos(pathRef.current, DESKTOP_FLOWER_COUNT);
 
       if (pts.length === 0) {
-        rAF = requestAnimationFrame(tentarCalcular);
+        timer = setTimeout(tentarCalcular, 100);
         return;
       }
       setPoints(pts);
     };
 
     tentarCalcular();
-    return () => cancelAnimationFrame(rAF);
+    return () => clearTimeout(timer);
   }, []);
 
   useGSAP(() => {

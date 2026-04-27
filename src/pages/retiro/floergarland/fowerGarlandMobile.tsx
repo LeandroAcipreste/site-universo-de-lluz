@@ -41,13 +41,13 @@ const posicoesDasFotosMobile = [
     { florNumero: 70, imagem: foto7 },
 ];
 
-// Funções puras de posicionamento dinâmico
 const getDynamicItemStyleMobile = (percentX: number, percentY: number, offsetX: number, offsetY: number, zIndexConfig: number): React.CSSProperties => ({
     left: `${percentX}%`,
     top: `${percentY}%`,
     opacity: 0,
     transform: `translate(${offsetX}%, ${offsetY}%) scale(0)`,
     zIndex: zIndexConfig,
+    willChange: "transform, opacity"
 });
 
 const getFlowerImageStyleMobile = (angle: number): React.CSSProperties => ({
@@ -64,20 +64,22 @@ export default function FlowerGarlandMobile() {
     const [points, setPoints] = useState<Point[]>([]);
 
     useLayoutEffect(() => {
-        let rAF: number;
+        let timer: ReturnType<typeof setTimeout>;
         const tentarCalcular = () => {
             if (!pathRef.current) return;
             const pts = calcularPontos(pathRef.current, MOBILE_FLOWER_COUNT);
 
             if (pts.length === 0) {
-                rAF = requestAnimationFrame(tentarCalcular);
+                // Ao invés de rAF que pode rodar 60x por segundo e travar o scroll,
+                // usa um setTimeout suave de 100ms para aguardar o SVG
+                timer = setTimeout(tentarCalcular, 100);
                 return;
             }
             setPoints(pts);
         };
 
         tentarCalcular();
-        return () => cancelAnimationFrame(rAF);
+        return () => clearTimeout(timer);
     }, []);
 
     useGSAP(() => {
@@ -93,16 +95,11 @@ export default function FlowerGarlandMobile() {
             scale: 1,
             stagger: 0.02,
             ease: "back.out(1.2)",
-            immediateRender: false,
             scrollTrigger: {
                 trigger: containerRef.current,
                 start: "top 95%",
                 end: "bottom 20%",
-                scrub: 0.5,
-                onRefresh(self) {
-                    // Garante que o estado inicial seja reaplicado após refresh
-                    if (self.progress === 0) gsap.set(items, { opacity: 0, scale: 0 });
-                },
+                scrub: 1, // suavizado para melhorar a performance
             },
         });
 
@@ -111,7 +108,6 @@ export default function FlowerGarlandMobile() {
             y: 0,
             duration: 1,
             ease: "power2.out",
-            immediateRender: false,
             scrollTrigger: {
                 trigger: containerRef.current,
                 start: "top 40%",
@@ -125,7 +121,6 @@ export default function FlowerGarlandMobile() {
             y: 0,
             duration: 1,
             ease: "power2.out",
-            immediateRender: false,
             scrollTrigger: {
                 trigger: containerRef.current,
                 start: "center 60%",

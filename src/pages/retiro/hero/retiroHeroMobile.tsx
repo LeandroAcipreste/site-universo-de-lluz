@@ -16,27 +16,15 @@ export default function RetiroHeroMobile() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useGSAP(() => {
-    // 1. Removemos o visibility: hidden do CSS antes de animar
-    gsap.set([
-      ".m-fl-top-mid", ".m-fl-top-left", ".m-fl-bot-left", ".m-fl-bot-right", ".m-fl-mid",
-      ".m-fl-top-right-wrapper", ".m-title-container", ".m-bird-right", ".m-bird-left", ".m-scroll-indicator"
-    ], { visibility: "visible" });
+    // Apenas coordenar o CSS, adicionando a classe após um pequeno delay
+    const timer = setTimeout(() => {
+      sectionRef.current?.classList.add("is-visible");
+    }, 50);
 
-    const tl = gsap.timeline({ defaults: { force3D: true } });
-
-    tl.from(".m-fl-top-mid, .m-fl-top-left, .m-fl-bot-left, .m-fl-bot-right, .m-fl-mid, .m-fl-top-right-wrapper", {
-      y: (i) => i < 3 ? -60 : 60,
-      opacity: 0,
-      scale: 0.9,
-      duration: 1.2,
-      stagger: 0.1,
-      ease: "expo.out"
-    }, 0.2)
-      .from(".m-title-container", { scale: 0.85, y: 25, opacity: 0, duration: 1.2 }, 1.1)
-      .from(".m-bird-right, .m-bird-left", { x: (i) => i === 0 ? -300 : 300, opacity: 0, duration: 1.8 }, 1.8)
-      .from(".m-scroll-indicator", { opacity: 0, y: 20, duration: 0.8 }, 3.2);
-
+    // GSAP cuida apenas da animação contínua (loop)
     gsap.to(".m-scroll-line", { y: 10, repeat: -1, yoyo: true, duration: 1.5 });
+
+    return () => clearTimeout(timer);
   }, { scope: sectionRef });
 
   return (
