@@ -75,10 +75,17 @@ export default function SiteNav() {
       }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className="fixed left-0 right-0 top-0 z-50 bg-transparent md:bg-gradient-to-b md:from-black/80 md:to-transparent md:backdrop-blur-[2px]"
+      style={{
+        // O wrapper ocupa toda a largura mas NÃO deve capturar eventos
+        // Somente o div filho com conteúdo real recebe pointer-events
+        pointerEvents: "none"
+      }}
       role="navigation"
       aria-label="Principal"
     >
-      <div className="mx-auto relative flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8 md:py-5">
+      <div className="mx-auto relative flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8 md:py-5"
+        style={{ pointerEvents: "auto" }}
+      >
         <a href="/" className="hidden md:flex shrink-0 items-center gap-2.5 outline-none ring-offset-2 ring-offset-transparent focus-visible:ring-2 focus-visible:ring-violet-400 active:scale-95 transition-transform">
           <img
             src="/logos/logo.svg"
