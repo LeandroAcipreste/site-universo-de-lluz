@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Sparkles, Star, FileEdit, TrendingUp } from "lucide-react";
+import { Star, FileEdit, TrendingUp } from "lucide-react";
 import "./meetUs.css";
 
 export default function MeetUs() {
