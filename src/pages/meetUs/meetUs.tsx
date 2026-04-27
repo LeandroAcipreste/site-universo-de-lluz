@@ -30,17 +30,17 @@ export default function MeetUs() {
     const dpr = window.devicePixelRatio || 1;
     let width = window.innerWidth;
     let height = window.innerHeight;
-    
+
     canvas.width = width * dpr;
     canvas.height = height * dpr;
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
-    
+
     ctx.scale(dpr, dpr);
 
     const particles: Particle[] = [];
     const particleCount = Math.floor((width * height) / 12000); // Quantidade responsiva
-    
+
     // Paleta de cores APENAS Neon Lilás / Roxo (Conforme solicitado)
     const galaxyPalette = [
       "168, 85, 247",   // Purple 500
@@ -141,7 +141,7 @@ export default function MeetUs() {
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(mouse.x, mouse.y);
           ctx.stroke();
-          
+
           // Efeito de gravidade/repulsão bem suave (como poeira cósmica)
           particles[i].x -= mdx * 0.015;
           particles[i].y -= mdy * 0.015;
@@ -156,12 +156,12 @@ export default function MeetUs() {
     const handleResize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
-      
+
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
-      
+
       ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform before scale
       ctx.scale(dpr, dpr);
     };
@@ -179,7 +179,7 @@ export default function MeetUs() {
     <main className="meetus-root" ref={containerRef}>
       {/* Background Layer */}
       <img src="/logos/photo-1528722828814-77b9b83aafb2-e1574333496357.jpg" alt="Background Universo" className="meetus-bg" />
-      
+
       {/* Dark Film Overlay */}
       <div className="meetus-overlay" />
 
@@ -204,7 +204,7 @@ export default function MeetUs() {
       {/* Content Layer */}
       <div className="meetus-content">
         <div className="meetus-container">
-          
+
           <div className="meetus-hero-grid">
             {/* Esquerda: Textos */}
             <div>
@@ -213,14 +213,14 @@ export default function MeetUs() {
                 <img src="/logos/logo.svg" alt="Logo" className="meetus-badge-logo" />
                 <span>UNIVERSO DE LUZ • NOSSA ESSÊNCIA</span>
               </div>
-              
+
               <h1 className="meetus-title meetus-anim">
                 Despertando Consciências,
                 <span className="meetus-title-gradient"> Elevando Vibrações</span>
               </h1>
-              
+
               <p className="meetus-desc meetus-anim">
-                Sobre o Universo de Luz somos um grupo universalista e ayahuasqueiro, fundado em 2014.
+                Somos um grupo universalista e ayahuasqueiro, fundado em 2014.
                 <br /><br />
                 <strong>NOSSA MISSÃO É</strong> Promover consciência e fé inteligente, acolhendo de forma integral todos os seres, a começar pela consciência do autocuidado. Comprometidos com amor e alegria, gentileza e zelo, multiplicando fraternidade em total prosperidade e harmonia por todos os mundos.
               </p>
@@ -244,9 +244,9 @@ export default function MeetUs() {
 
             {/* Direita: Imagem da Olyvia no Arco Neon */}
             <div className="meetus-hero-image-wrapper meetus-anim">
-              <img 
-                src="/images/olyvia-pagina-conhecamos.jpg" 
-                alt="Olyvia - Universo de Luz" 
+              <img
+                src="/images/olyvia-pagina-conhecamos.jpg"
+                alt="Olyvia - Universo de Luz"
                 className="meetus-hero-image"
               />
             </div>
