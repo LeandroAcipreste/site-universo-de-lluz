@@ -49,7 +49,7 @@ export default function YoutubePage() {
             fontSize: 'clamp(0.9rem, 1.5vw + 0.4rem, 1.25rem)'
           }}
         >
-          VÍDEO NOVO TODA QUARTA-FEIRA 19H
+          VÍDEO NOVO TODA QUARTA-FEIRA ÀS 19H
         </motion.p>
 
         <motion.div
