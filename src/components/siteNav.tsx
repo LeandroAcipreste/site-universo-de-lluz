@@ -17,29 +17,8 @@ const NAV_BTN_CLASS =
 
 export default function SiteNav() {
   const [navOpen, setNavOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible] = useState(true); // Menu fixado permanentemente no desktop e mobile
   const isHomePage = window.location.pathname === "/";
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (e.clientY < 80 || navOpen) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    const isDesktop = window.matchMedia("(hover: hover)").matches;
-    if (isDesktop) {
-      window.addEventListener("mousemove", handleMouseMove);
-    } else {
-      setIsVisible(true);
-    }
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [navOpen]);
 
   // ─── O SEGREDO: Roteamento nativo limpa o lixo de memória do GSAP/Lenis
   const handleNavClick = (label: string) => {
