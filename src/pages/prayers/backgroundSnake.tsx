@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { motion } from 'motion/react';
 import "./backgroundSnake.css";
 
-const COLORS = ['#F8F9FA', '#DDE0E3', '#9BA1A6', '#C0C4C7', '#FFFFFF'];
 const GRID_SIZE = 40;
 
 interface SnakeProps {
@@ -78,7 +77,6 @@ export default function BackgroundSnake() {
       const isHorizontal = Math.random() > 0.5;
       const reverse = Math.random() > 0.5;
       const startPos = Math.floor(Math.random() * MAX_LINES);
-      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
 
       const duration = 25 + Math.random() * 25;
       const delay = Math.random() * 20;
@@ -90,7 +88,6 @@ export default function BackgroundSnake() {
           isHorizontal={isHorizontal}
           reverse={reverse}
           startPos={startPos}
-          color={color}
           duration={duration}
           delay={delay}
           size={size}
