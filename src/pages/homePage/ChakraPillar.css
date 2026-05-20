@@ -1,0 +1,78 @@
+.chakra-pillar {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    /* Reduz a altura para encaixar bem no viewport (de cima a baixo) com um respiro nas margens */
+    padding: 10vh 0;
+}
+
+.chakra-symbol-container {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Leve animação de flutuação e brilho sincronizado */
+    animation: chakra-pulse 4s ease-in-out infinite alternate;
+}
+
+/* Opcional: Atraso na animação para criar uma "onda" de baixo para cima (ou cima para baixo) */
+.chakra-symbol-container:nth-child(1) { animation-delay: 0.0s; } /* Coronário */
+.chakra-symbol-container:nth-child(2) { animation-delay: 0.3s; }
+.chakra-symbol-container:nth-child(3) { animation-delay: 0.6s; }
+.chakra-symbol-container:nth-child(4) { animation-delay: 0.9s; }
+.chakra-symbol-container:nth-child(5) { animation-delay: 1.2s; }
+.chakra-symbol-container:nth-child(6) { animation-delay: 1.5s; }
+.chakra-symbol-container:nth-child(7) { animation-delay: 1.8s; } /* Básico */
+
+.chakra-symbol-glow {
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    background: var(--chakra-color);
+    filter: blur(15px);
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.chakra-symbol-icon {
+    position: relative;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    color: var(--chakra-color);
+    filter: drop-shadow(0 0 8px var(--chakra-color));
+    opacity: 0.9;
+}
+
+@keyframes chakra-pulse {
+    0% {
+        transform: scale(0.9) translateY(0px);
+        filter: brightness(0.9);
+    }
+    100% {
+        transform: scale(1.1) translateY(-5px);
+        filter: brightness(1.2);
+    }
+}
+
+/* Responsividade Mobile: Reduz os ícones para caberem sem sobrepor o texto demais */
+@media (max-width: 768px) {
+    .chakra-pillar {
+        padding: 5vh 0;
+    }
+    .chakra-symbol-container {
+        width: 45px;
+        height: 45px;
+    }
+    .chakra-symbol-icon {
+        width: 30px;
+        height: 30px;
+    }
+}

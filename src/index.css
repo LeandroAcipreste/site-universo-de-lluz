@@ -31,7 +31,6 @@
     min-height: 100dvh;
     width: 100%;
     overflow-x: hidden;
-    cursor: url('/logos/cursor.svg') 16 16, auto;
     touch-action: manipulation;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -40,7 +39,7 @@
   a,
   button,
   [role="button"] {
-    cursor: url('/logos/cursor.svg') 16 16, pointer;
+    cursor: pointer;
   }
 
   #root {

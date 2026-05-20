@@ -98,6 +98,8 @@
     letter-spacing: -0.02em;
     font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
     font-size: clamp(2rem, 9vw, 4.75rem);
+    /* Filtro de sombra de alta definição para contraste perfeito no mobile sobre o feixe de luz */
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.95)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.8));
 }
 
 .hero-letter {
@@ -124,7 +126,14 @@
     max-width: 36rem;
     font-size: clamp(0.85rem, 2.5vw, 1.125rem);
     line-height: 1.7;
-    color: rgba(255,255,255,0.78);
+    
+    /* Gradiente idêntico ao título para legibilidade e impacto supremo */
+    background-image: linear-gradient(90deg, #67e8f9 0%, #818cf8 50%, #f0abfc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 600;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.95)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.75));
     
     /* Configuração de entrada potente (Sem blur para máxima performance) */
     opacity: 0;
@@ -178,13 +187,13 @@
     border-radius: 9999px;
     padding: clamp(0.65rem, 2vw, 0.875rem) clamp(1rem, 3vw, 2rem);
     font-size: clamp(0.82rem, 2.2vw, 1.125rem);
-    font-weight: 500;
-    color: white;
+    font-weight: 600;
+    color: #1e0b36;
     border: none;
     cursor: pointer;
     outline: none;
-    box-shadow: 0 0 40px -5px rgba(139,92,246,0.6);
-    background: linear-gradient(to top, #a5f3fc, #3b82f6, #7c3aed);
+    box-shadow: 0 0 40px -5px rgba(139,92,246,0.5);
+    background: linear-gradient(135deg, #e9d5ff, #a78bfa, #f0abfc);
     transition:
         transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
         box-shadow 0.25s ease;
@@ -257,9 +266,9 @@
     gap: 0.5rem;
     padding: 0.65rem 1.25rem;
     border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    color: rgba(255, 255, 255, 0.65);
+    background: linear-gradient(135deg, rgba(233, 213, 255, 0.08), rgba(167, 139, 250, 0.08), rgba(240, 171, 252, 0.08));
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    color: rgba(233, 213, 255, 0.85);
     font-size: 0.8rem;
     font-weight: 500;
     letter-spacing: 0.02em;
@@ -270,9 +279,9 @@
 
 .hero-instagram-link:hover {
     color: white;
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(139, 92, 246, 0.4);
-    box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.35);
+    background: linear-gradient(135deg, rgba(233, 213, 255, 0.16), rgba(167, 139, 250, 0.16), rgba(240, 171, 252, 0.16));
+    border-color: rgba(240, 171, 252, 0.45);
+    box-shadow: 0 0 25px -5px rgba(167, 139, 250, 0.4);
     transform: translateY(-2px);
 }
 

@@ -3,6 +3,7 @@ import { ArrowRight, Instagram } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import HeroBackground from "./heroBackground";
+import { ChakraPillar } from "./ChakraPillar";
 import "./hero.css";
 
 /*
@@ -68,6 +69,7 @@ export default function Hero() {
     <>
       <section className="hero-section" ref={containerRef}>
         <HeroBackground onReady={() => setBgReady(true)} />
+        <ChakraPillar />
 
         {/* ── Conteúdo (independente do fundo) ── */}
         <div className="hero-content">
@@ -89,12 +91,11 @@ export default function Hero() {
 
               {/* Título: Efeito letra por letra controlado por CSS */}
               <h1 className="hero-title">
-                {renderLetters("DESPERTE")}
+                {renderLetters("DESPERTE", "hero-title__gradient")}
                 <br />
-                {renderLetters("SUA LU", "hero-title__gradient")}
-                {renderLetters("Z", "hero-title__cyan")}
+                {renderLetters("SUA LUZ", "hero-title__gradient")}
                 <br />
-                {renderLetters("INTERIOR")}
+                {renderLetters("INTERIOR", "hero-title__gradient")}
               </h1>
 
               {/* Descrição */}

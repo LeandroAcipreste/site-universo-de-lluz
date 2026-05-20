@@ -38,9 +38,8 @@
             transparent 55%),
         /* Base escura do cosmos */
         linear-gradient(135deg, #060818 0%, #0a0d24 40%, #08071c 70%, #050505 100%);
-    /* Sai de cena quando WebGL estiver pronto */
-    opacity: 1;
-    transition: opacity 1.4s ease-in-out;
+    /* Tons de cinza/prata metálica brilhante para combinar com a logo */
+    filter: grayscale(1) brightness(1.6) contrast(1.15);
 }
 
 /* Quando o WebGL está pronto, o placeholder some graciosamente */
@@ -54,7 +53,12 @@
     position: absolute;
     inset: 0;
     z-index: 1;
-    filter: hue-rotate(220deg) saturate(1.4) brightness(1.05);
+    /* 
+       Filtro Metálico de Prata/Cromo (Cores da Logo):
+       - grayscale(1): Remove todas as cores (lilas/azul).
+       - brightness(1.8) + contrast(1.25): Transforma em um brilho branco-prateado de alta intensidade.
+    */
+    filter: grayscale(1) brightness(1.8) contrast(1.25);
     /* Começa invisível — o placeholder cobre enquanto o WebGL carrega */
     opacity: 0;
     transition: opacity 1.4s ease-in-out;
