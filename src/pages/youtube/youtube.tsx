@@ -30,7 +30,7 @@ export default function YoutubePage() {
           <span
             className="text-transparent"
             style={{
-              backgroundImage: "linear-gradient(90deg,#67e8f9 0%,#818cf8 50%,#f0abfc 100%)",
+          backgroundImage: "linear-gradient(90deg, #F8F9FA 0%, #DDE0E3 50%, #9BA1A6 100%)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
             }}
@@ -62,11 +62,11 @@ export default function YoutubePage() {
             href="https://www.youtube.com/universodeluz"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative mb-[clamp(3rem,8vw,5rem)] flex items-center justify-center gap-3 rounded-full px-8 py-3.5 text-base md:px-10 md:py-4 md:text-lg font-medium text-white transition-all duration-300 hover:scale-105 active:scale-95"
+            className="group relative mb-[clamp(3rem,8vw,5rem)] flex items-center justify-center gap-3 rounded-full px-8 py-3.5 text-base md:px-10 md:py-4 md:text-lg font-medium btn-silver-snake transition-all duration-300 hover:scale-105 active:scale-95"
             style={BTN_PRIMARY}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLAnchorElement).style.boxShadow =
-                "0 0 60px -5px rgba(139,92,246,0.8)";
+                "0 4px 20px -5px rgba(155, 161, 166, 0.4)";
             }}
             onMouseLeave={(e) => {
               (e.currentTarget as HTMLAnchorElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
