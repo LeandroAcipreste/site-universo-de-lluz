@@ -120,17 +120,9 @@
 
 .hero-title__cyan { color: #67e8f9; }
 
-/* ── 7. Parágrafo descritivo ── */
+/* ── 7. Parágrafo descritivo (Split-container no mobile) ── */
 .hero-desc {
-    margin-bottom: clamp(1rem, 4vw, 2.5rem);
-    max-width: 36rem;
-    font-size: clamp(0.85rem, 2.5vw, 1.125rem);
-    line-height: 1.7;
-    
-    /* Azul ciano (#67e8f9) puro e sólido para legibilidade e destaque supremo */
-    color: #67e8f9; 
-    font-weight: 700; /* Letra em negrito/bold */
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75); /* Sombra suave para leitura perfeita sobre qualquer luz */
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
     
     /* Configuração de entrada potente (Sem blur para máxima performance) */
     opacity: 0;
@@ -139,6 +131,51 @@
         opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
         transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     transition-delay: 1.0s;
+}
+
+.hero-desc-container {
+    display: flex;
+    flex-direction: row; /* Parte 1 (Vivências...) na esquerda, Parte 2 (reconectam...) na direita */
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 16%; /* Espaço livre no centro exato para o feixe WebGL e chakras */
+}
+
+.hero-desc-part {
+    width: 42%; /* Garante simetria perfeita nas duas laterais */
+    color: #67e8f9; /* Azul ciano */
+    font-weight: 700; /* Bold */
+    font-size: clamp(0.75rem, 2.5vw, 0.95rem);
+    line-height: 1.5;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+}
+
+.hero-desc-part1 {
+    text-align: left;
+}
+
+.hero-desc-part2 {
+    text-align: right;
+}
+
+@media (min-width: 1024px) {
+    .hero-desc-container {
+        display: block;
+        max-width: 36rem;
+    }
+    
+    .hero-desc-part {
+        display: inline;
+        width: auto;
+        font-size: clamp(0.85rem, 2.5vw, 1.125rem);
+        line-height: 1.7;
+        text-align: left;
+    }
+    
+    .hero-desc-part1 {
+        margin-right: 0.25rem;
+    }
 }
 
 /* ── 8. Espaçador flexível (desktop only) ── */
@@ -152,9 +189,11 @@
 .hero-btns {
     display: flex;
     width: 100%;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: clamp(1rem, 4vw, 3rem);
+    flex-direction: row; /* Lado a lado no mobile */
+    justify-content: space-between;
+    align-items: center;
+    gap: 16%; /* Mesmo canal livre no meio para os chakras */
+    margin-bottom: clamp(1.5rem, 4vw, 3rem);
     
     /* Configuração de entrada potente (Sem blur para máxima performance) */
     opacity: 0;
@@ -165,8 +204,13 @@
     transition-delay: 1.4s;
 }
 
-@media (min-width: 480px) {
-    .hero-btns { flex-direction: row; flex-wrap: wrap; align-items: center; }
+@media (min-width: 768px) {
+    .hero-btns {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 1.25rem;
+        margin-bottom: clamp(1rem, 4vw, 3rem);
+    }
 }
 
 @media (min-width: 1024px) {
@@ -179,11 +223,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
+    gap: 0.35rem;
+    width: 42%; /* Ocupa 42% no mobile, alinhado às margens */
     border-radius: 9999px;
-    padding: clamp(0.65rem, 2vw, 0.875rem) clamp(1rem, 3vw, 2rem);
-    font-size: clamp(0.82rem, 2.2vw, 1.125rem);
+    padding: 0.6rem 0.5rem; /* Padding anatômico para telas estreitas */
+    font-size: clamp(0.62rem, 1.8vw, 0.78rem); /* Font compacta para mobile */
     font-weight: 600;
     color: #1e0b36;
     border: none;
@@ -196,8 +240,13 @@
         box-shadow 0.25s ease;
 }
 
-@media (min-width: 480px) {
-    .hero-btn { width: auto; }
+@media (min-width: 768px) {
+    .hero-btn {
+        width: auto;
+        padding: clamp(0.65rem, 2vw, 0.875rem) clamp(1rem, 3vw, 2rem);
+        font-size: clamp(0.82rem, 2.2vw, 1.125rem);
+        gap: 0.5rem;
+    }
 }
 
 .hero-btn:hover {
@@ -208,8 +257,8 @@
 .hero-btn:active { transform: scale(0.95); }
 
 .hero-btn__icon {
-    width: clamp(0.85rem, 2vw, 1rem);
-    height: clamp(0.85rem, 2vw, 1rem);
+    width: clamp(0.75rem, 2vw, 1rem);
+    height: clamp(0.75rem, 2vw, 1rem);
     flex-shrink: 0;
     transition: transform 0.25s ease;
 }
@@ -217,9 +266,15 @@
 .hero-btn:hover .hero-btn__icon { transform: translateX(4px); }
 
 .hero-btn__label {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal; /* Permite quebra sutil de linha no mobile se faltar espaço */
+    text-align: center;
+    line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+    .hero-btn__label {
+        white-space: nowrap;
+    }
 }
 
 /* ═══════════════════════════════════════════════════════════════

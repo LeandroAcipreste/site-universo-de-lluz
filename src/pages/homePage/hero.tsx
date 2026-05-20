@@ -98,11 +98,15 @@ export default function Hero() {
                 {renderLetters("INTERIOR", "hero-title__gradient")}
               </h1>
 
-              {/* Descrição */}
-              <p className="hero-desc">
-                Vivências transformadoras que expandem a consciência,
-                reconectam com o sagrado e promovem cura profunda do ser.
-              </p>
+              {/* Descrição dividida de forma ultra-elegante no mobile */}
+              <div className="hero-desc hero-desc-container">
+                <span className="hero-desc-part hero-desc-part1">
+                  Vivências transformadoras que expandem a consciência,
+                </span>
+                <span className="hero-desc-part hero-desc-part2">
+                  reconectam com o sagrado e promovem cura profunda do ser.
+                </span>
+              </div>
 
               {/* Espaçador (desktop) */}
               <div className="hero-spacer" aria-hidden />
