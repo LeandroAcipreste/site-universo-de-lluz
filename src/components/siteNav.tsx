@@ -125,8 +125,10 @@ export default function SiteNav() {
                 {NAV_ICONS[label] ? (
                   <img
                     src={`${NAV_ICONS[label]}?v=4`}
-                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 md:h-4.5 md:w-4.5 ${label === "Defesas" || label === "Oráculo" ? "invert mix-blend-screen" : "brightness-0 invert"
-                      }`}
+                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 md:h-4.5 md:w-4.5 ${
+                      label === "Defesas" ? "mix-blend-multiply" : ""
+                    }`}
+                    style={label === "Defesas" ? {} : { filter: "brightness(0) sepia(1) saturate(5) hue-rotate(245deg) brightness(0.2)" }}
                     alt=""
                   />
                 ) : (
@@ -148,7 +150,7 @@ export default function SiteNav() {
               }}
             >
               YouTube
-              <Youtube className="h-4 w-4 text-white transition-transform group-hover:scale-110 md:h-4.5 md:w-4.5" />
+              <Youtube className="h-4 w-4 transition-transform group-hover:scale-110 md:h-4.5 md:w-4.5" />
             </button>
           </div>
 
@@ -161,7 +163,7 @@ export default function SiteNav() {
             </div>
             <button
               type="button"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white ring-1 ring-inset ring-white/40 transition-all hover:brightness-110 active:scale-90"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full ring-1 ring-inset ring-white/40 transition-all hover:brightness-110 active:scale-90"
               style={BTN_PRIMARY}
               aria-expanded={navOpen}
               aria-controls="site-nav-mobile"
@@ -214,8 +216,10 @@ export default function SiteNav() {
                 {NAV_ICONS[label] ? (
                   <img
                     src={`${NAV_ICONS[label]}?v=4`}
-                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5 ${label === "Defesas" || label === "Oráculo" ? "invert mix-blend-screen" : "brightness-0 invert"
-                      }`}
+                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5 ${
+                      label === "Defesas" ? "mix-blend-multiply" : ""
+                    }`}
+                    style={label === "Defesas" ? {} : { filter: "brightness(0) sepia(1) saturate(5) hue-rotate(245deg) brightness(0.2)" }}
                     alt=""
                   />
                 ) : (
@@ -237,7 +241,7 @@ export default function SiteNav() {
               }}
             >
               YouTube
-              <Youtube className="h-4.5 w-4.5 text-white transition-transform group-hover:scale-110" />
+              <Youtube className="h-4.5 w-4.5 transition-transform group-hover:scale-110" />
             </button>
           </div>
         </div>
