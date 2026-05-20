@@ -9,6 +9,8 @@
     overflow: hidden;
     mix-blend-mode: screen;
     opacity: 0.9;
+    /* Transforma o roxo/lilás em prata metálica */
+    filter: grayscale(1) brightness(1.6) contrast(1.1);
 }
 
 .defense-bg__canvas {

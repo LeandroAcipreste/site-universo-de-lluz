@@ -28,21 +28,22 @@ const sizes: Record<Size, string> = {
 
 const variants: Record<Variant, { className: string; style?: React.CSSProperties }> = {
     primary: {
-        className: "ring-1 ring-inset ring-white/40 hover:scale-105 hover:brightness-110",
+        className: "btn-silver-snake hover:scale-105 hover:brightness-110",
         style: {
-            background: "linear-gradient(to top, #a5b4fc, #7c3aed, #6d28d9)",
-            color: "#0c0720",
-            boxShadow: "0 0 40px -5px rgba(139,92,246,0.6)",
+            background: "linear-gradient(135deg, #F8F9FA 0%, #DDE0E3 20%, #9BA1A6 60%, #5B6166 100%)",
+            color: "#050505",
+            boxShadow: "0 4px 15px -3px rgba(155, 161, 166, 0.3)",
         },
     },
     secondary: {
         className: "bg-white text-black hover:bg-neutral-200",
     },
     tertiary: {
-        className: "border-t border-white/20 text-white hover:brightness-110",
+        className: "border-t border-white/20 hover:brightness-110",
         style: {
-            background: "linear-gradient(90deg, #4f46e5, #7c3aed, #a21caf)",
-            boxShadow: "0 4px 15px rgba(139,92,246,0.4)",
+            background: "linear-gradient(90deg, #F8F9FA, #9BA1A6, #5B6166)",
+            boxShadow: "0 4px 15px rgba(155, 161, 166, 0.4)",
+            color: "#050505"
         },
     },
     ghost: {

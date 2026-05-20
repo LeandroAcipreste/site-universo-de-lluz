@@ -105,6 +105,45 @@
     animation: floatBird 6s ease-in-out infinite;
     will-change: transform;
   }
+
+  .btn-silver-snake {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    background: transparent !important;
+  }
+  
+  .btn-silver-snake::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 250%;
+    aspect-ratio: 1;
+    background: conic-gradient(
+      transparent, 
+      transparent 35%, 
+      #9BA1A6 45%, 
+      #ffffff 50%, 
+      transparent 50%, 
+      transparent 85%, 
+      #9BA1A6 95%, 
+      #ffffff 100%
+    );
+    transform-origin: center;
+    animation: spin-snake 6s linear infinite;
+    transform: translate(-50%, -50%) rotate(0deg);
+    z-index: -2;
+  }
+  
+  .btn-silver-snake::after {
+    content: '';
+    position: absolute;
+    inset: 1.5px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #F8F9FA 0%, #DDE0E3 20%, #9BA1A6 60%, #5B6166 100%);
+    z-index: -1;
+  }
 }
 
 @keyframes floatSlow {
@@ -125,6 +164,11 @@
 @keyframes floatBird {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-25px); }
+}
+
+@keyframes spin-snake {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* =====================================================

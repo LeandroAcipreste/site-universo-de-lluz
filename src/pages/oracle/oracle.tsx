@@ -119,11 +119,11 @@ export default function Oracle() {
                 href="https://wa.me/5571996612421"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="oracle-btn"
+                className="oracle-btn btn-silver-snake"
                 style={BTN_PRIMARY}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLAnchorElement).style.boxShadow =
-                    "0 0 40px -5px rgba(139,92,246,0.75)";
+                    "0 4px 20px -5px rgba(155, 161, 166, 0.4)";
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLAnchorElement).style.boxShadow =

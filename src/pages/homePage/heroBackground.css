@@ -38,8 +38,6 @@
             transparent 55%),
         /* Base escura do cosmos */
         linear-gradient(135deg, #060818 0%, #0a0d24 40%, #08071c 70%, #050505 100%);
-    /* Tons de cinza/prata metálica brilhante para combinar com a logo */
-    filter: grayscale(1) brightness(1.6) contrast(1.15);
 }
 
 /* Quando o WebGL está pronto, o placeholder some graciosamente */

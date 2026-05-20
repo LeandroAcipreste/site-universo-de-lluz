@@ -114,7 +114,7 @@ export default function Hero() {
               {/* Botões */}
               <div className="hero-btns">
                 <button
-                  className="hero-btn"
+                  className="hero-btn btn-silver-snake"
                   onClick={() => { window.location.href = "/retiro"; }}
                   aria-label="Ir para Retiro Cura do Beija-Flor"
                 >
@@ -123,7 +123,7 @@ export default function Hero() {
                 </button>
 
                 <button
-                  className="hero-btn"
+                  className="hero-btn btn-silver-snake"
                   onClick={() => { window.location.href = "/meet-us"; }}
                   aria-label="Conhecer o Universo de Luz"
                 >

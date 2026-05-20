@@ -9,10 +9,10 @@
     max-width: 550px;
     flex-direction: column;
     border-radius: 2rem;
-    border: 1px solid rgba(49, 46, 129, 0.4);
+    border: 1px solid rgba(155, 161, 166, 0.25);
     background-color: #0a0a14;
     padding: 2rem 1.5rem;
-    box-shadow: 0 0 80px -20px rgba(40, 20, 80, 0.5);
+    box-shadow: 0 4px 40px -10px rgba(155, 161, 166, 0.3);
     backdrop-filter: blur(48px);
     pointer-events: auto;
     max-height: 80svh;
@@ -47,7 +47,7 @@
     transform: translateX(-50%);
     width: 120%;
     height: 120%;
-    background: radial-gradient(ellipse at top, rgba(55, 48, 163, 0.2), transparent 60%);
+    background: radial-gradient(ellipse at top, rgba(155, 161, 166, 0.12), transparent 60%);
     opacity: 0.8;
     mix-blend-mode: screen;
 }
@@ -115,6 +115,6 @@
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.15em;
-    color: rgba(147, 197, 253, 0.6);
+    color: rgba(155, 161, 166, 0.6);
     text-transform: uppercase;
 }

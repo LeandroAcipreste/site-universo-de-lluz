@@ -13,7 +13,7 @@ const NAV_ICONS: Record<string, string> = {
 };
 
 const NAV_BTN_CLASS =
-  "group relative flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-medium text-white ring-1 ring-inset ring-white/40 transition-all duration-300 hover:scale-[1.02] hover:brightness-110 sm:py-2 sm:px-5 sm:text-sm";
+  "group relative flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-medium text-white btn-silver-snake transition-all duration-300 hover:scale-[1.02] hover:brightness-110 sm:py-2 sm:px-5 sm:text-sm";
 
 export default function SiteNav() {
   const [navOpen, setNavOpen] = useState(false);
@@ -102,7 +102,7 @@ export default function SiteNav() {
                 onClick={() => handleNavClick(label)}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLButtonElement).style.boxShadow =
-                    "0 0 40px -8px rgba(139,92,246,0.75)";
+                    "0 4px 20px -5px rgba(155, 161, 166, 0.4)";
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
@@ -130,7 +130,7 @@ export default function SiteNav() {
               onClick={() => handleNavClick("YouTube")}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.boxShadow =
-                  "0 0 40px -8px rgba(139,92,246,0.75)";
+                  "0 4px 20px -5px rgba(155, 161, 166, 0.4)";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
@@ -175,7 +175,7 @@ export default function SiteNav() {
               onClick={() => handleNavClick("Página Inicial")}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.boxShadow =
-                  "0 0 40px -8px rgba(139,92,246,0.75)";
+                  "0 4px 20px -5px rgba(155, 161, 166, 0.4)";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
@@ -192,7 +192,7 @@ export default function SiteNav() {
                 style={BTN_PRIMARY}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLButtonElement).style.boxShadow =
-                    "0 0 40px -8px rgba(139,92,246,0.75)";
+                    "0 4px 20px -5px rgba(155, 161, 166, 0.4)";
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
@@ -221,7 +221,7 @@ export default function SiteNav() {
               onClick={() => handleNavClick("YouTube")}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.boxShadow =
-                  "0 0 40px -8px rgba(139,92,246,0.75)";
+                  "0 4px 20px -5px rgba(155, 161, 166, 0.4)";
               }}
               onMouseLeave={(e) => {
                 (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
