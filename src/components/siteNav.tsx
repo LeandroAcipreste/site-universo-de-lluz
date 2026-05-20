@@ -67,8 +67,16 @@ export default function SiteNav() {
 
   return (
     <>
-    <motion.nav
-      initial={{ opacity: 0, y: -80 }}
+      {/* Backdrop de fundo escuro com blur para dar foco e contraste nos botões do menu mobile */}
+      <div
+        className={`fixed inset-0 z-40 bg-black/75 backdrop-blur-[3px] transition-all duration-300 md:hidden ${
+          navOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setNavOpen(false)}
+      />
+
+      <motion.nav
+        initial={{ opacity: 0, y: -80 }}
       animate={{
         opacity: isVisible || navOpen ? 1 : 0,
         y: isVisible || navOpen ? 0 : -80
