@@ -6,7 +6,6 @@ const COLORS = ['#F8F9FA', '#DDE0E3', '#9BA1A6', '#C0C4C7', '#FFFFFF'];
 const GRID_SIZE = 40;
 
 interface SnakeProps {
-  color: string;
   isHorizontal: boolean;
   startPos: number;
   duration: number;
@@ -15,7 +14,7 @@ interface SnakeProps {
   reverse: boolean;
 }
 
-function Snake({ color, isHorizontal, startPos, duration, delay, size, reverse }: SnakeProps) {
+function Snake({ isHorizontal, startPos, duration, delay, size, reverse }: SnakeProps) {
   // O gradiente desenha as bordas prateadas e o centro preto (só prata e o centro preto)
   const gradient = isHorizontal
     ? `linear-gradient(to bottom, #DDE0E3 0%, #DDE0E3 25%, #000000 25%, #000000 75%, #DDE0E3 75%, #DDE0E3 100%)`
