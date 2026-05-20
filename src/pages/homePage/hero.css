@@ -143,6 +143,7 @@
 }
 
 .hero-desc-part {
+    display: block; /* Garante que a largura (42%) e o alinhamento de texto sejam aplicados perfeitamente no mobile */
     width: 42%; /* Garante simetria perfeita nas duas laterais */
     color: #67e8f9; /* Azul ciano */
     font-weight: 700; /* Bold */
@@ -152,11 +153,11 @@
 }
 
 .hero-desc-part1 {
-    text-align: left;
+    text-align: left !important;
 }
 
 .hero-desc-part2 {
-    text-align: right;
+    text-align: right !important;
 }
 
 @media (min-width: 1024px) {

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { motion } from 'motion/react';
 import "./backgroundSnake.css";
 
-const COLORS = ['#6d28d9', '#a21caf', '#7c3aed', '#4f46e5'];
+const COLORS = ['#F8F9FA', '#DDE0E3', '#9BA1A6', '#C0C4C7', '#FFFFFF'];
 const GRID_SIZE = 40;
 
 interface SnakeProps {
@@ -16,11 +16,19 @@ interface SnakeProps {
 }
 
 function Snake({ color, isHorizontal, startPos, duration, delay, size, reverse }: SnakeProps) {
-  const gradientDirection = isHorizontal
-    ? (reverse ? '270deg' : '90deg')
-    : (reverse ? '360deg' : '180deg');
+  // O gradiente desenha as bordas prateadas e o centro preto (só prata e o centro preto)
+  const gradient = isHorizontal
+    ? `linear-gradient(to bottom, #DDE0E3 0%, #DDE0E3 25%, #000000 25%, #000000 75%, #DDE0E3 75%, #DDE0E3 100%)`
+    : `linear-gradient(to right, #DDE0E3 0%, #DDE0E3 25%, #000000 25%, #000000 75%, #DDE0E3 75%, #DDE0E3 100%)`;
 
-  const gradient = `linear-gradient(${gradientDirection}, transparent 0%, ${color} 40%, ${color} 60%, transparent 100%)`;
+  // A máscara garante o fade-out suave nas duas extremidades (cabeça/cauda da cobrinha)
+  const mask = isHorizontal
+    ? (reverse
+        ? 'linear-gradient(270deg, transparent 0%, black 20%, black 80%, transparent 100%)'
+        : 'linear-gradient(90deg, transparent 0%, black 20%, black 80%, transparent 100%)')
+    : (reverse
+        ? 'linear-gradient(360deg, transparent 0%, black 20%, black 80%, transparent 100%)'
+        : 'linear-gradient(180deg, transparent 0%, black 20%, black 80%, transparent 100%)');
 
   const initial = {
     x: isHorizontal ? (reverse ? '100vw' : `-${size}px`) : `${startPos * GRID_SIZE}px`,
@@ -36,13 +44,15 @@ function Snake({ color, isHorizontal, startPos, duration, delay, size, reverse }
     <motion.div
       className="snake-item"
       style={{
-        width: isHorizontal ? size : 2,
-        height: isHorizontal ? 2 : size,
+        width: isHorizontal ? size : 6,
+        height: isHorizontal ? 6 : size,
         background: gradient,
-        boxShadow: `0 0 15px 2px ${color}80, 0 0 4px 1px ${color}`,
+        WebkitMaskImage: mask,
+        maskImage: mask,
+        boxShadow: `0 0 12px 1px rgba(255, 255, 255, 0.45)`,
         x: initial.x,
         y: initial.y,
-        opacity: 0.9
+        opacity: 0.85
       }}
       animate={{
         x: [initial.x, animate.x],

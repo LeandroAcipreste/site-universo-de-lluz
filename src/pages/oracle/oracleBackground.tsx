@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
  * ─────────────────────────────────────────
  * Estratégia definitiva:
  *  - UnicornStudio (sajpUiTp7MIKdX6daDCu) fornece a GEOMETRIA PRECISA das cortinas
- *  - Camada de cor com mix-blend-mode:"color" aplica EXATAMENTE a paleta Lilás/Índigo
- *    do backgroundSpiral.tsx sem distorcer a estrutura do efeito
+ *  - Camada de cor com mix-blend-mode:"color" aplica EXATAMENTE a paleta de Prata e Platina
+ *    do logotipo (logo.svg) sem distorcer a estrutura do efeito
  *
- * Cores alvos extraídas de backgroundSpiral.tsx:
- *   coreColor = vec3(0.85, 0.60, 1.0) → rgb(217, 153, 255) — Lilás vibrante
- *   edgeColor = vec3(0.25, 0.05, 0.55) → rgb(64, 13, 140)  — Índigo profundo
- *   glowColor = vec3(0.90, 0.85, 1.0) → rgb(230, 217, 255) — Brilho central
+ * Cores alvos extraídas de logo.svg:
+ *   platinaBrilhante = rgb(240, 240, 245) — Platina vibrante (#DDE0E3)
+ *   prataMedia = rgb(170, 175, 180)  — Prata escovada (#9BA1A6)
+ *   cromoEscuro = rgb(74, 80, 85) — Cromo escuro (#4A5055)
  */
 export default function OracleBackground({ onReady }: { onReady?: () => void }) {
   const [ready, setReady] = useState(false);
@@ -77,18 +77,18 @@ export default function OracleBackground({ onReady }: { onReady?: () => void }) 
         mix-blend-mode:"color" aplica a cor desta camada mas preserva a
         luminosidade da camada de baixo (= a geometria das cortinas).
         Resultado: mesmas cortinas precisas, noutra paleta de cor.
-        Cores = exatamente o gradiente do backgroundSpiral.tsx
+        Cores = exatamente a paleta de prata e platina do logotipo
       ──*/}
       <div
         className="absolute inset-0 z-10"
         style={{
           background: [
-            /* Centro lilás vibrante → extremos índigo → bordas preto */
+            /* Centro platina brilhante → extremos cromo escuro → bordas preto */
             "radial-gradient(ellipse 60% 100% at 50% 50%,",
-            "  rgb(217,153,255) 0%,",   /* coreColor do Spiral */
-            "  rgb(130,40,200)  35%,",  /* transição suave     */
-            "  rgb(64,13,140)   65%,",  /* edgeColor do Spiral */
-            "  rgb(10,0,30)     100%)", /* borda preta profunda */
+            "  rgb(240,240,245) 0%,",    /* platina brilhante */
+            "  rgb(170,175,180) 35%,",   /* prata intermediária */
+            "  rgb(74,80,85)    65%,",   /* cromo escuro (#4A5055) */
+            "  rgb(5,5,8)       100%)",  /* preto absoluto */
           ].join(""),
           mixBlendMode: "color" as React.CSSProperties["mixBlendMode"],
         }}

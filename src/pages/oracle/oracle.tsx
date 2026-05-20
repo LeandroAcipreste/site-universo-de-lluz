@@ -72,17 +72,14 @@ export default function Oracle() {
         {/* ── COLUNA ESQUERDA: Título ── */}
         <div className="oracle-title-col">
           <h1 className="oracle-title" ref={titleRef}>
-            {/* Linha 1 — branco */}
-            {renderLetters(LINE1)}
+            {/* Linha 1 — prata gradiente */}
+            {renderLetters(LINE1, "oracle-letter--gradient")}
             <br />
-            {/* Linha 2 — só "Oráculo" com gradiente */}
+            {/* Linha 2 — prata gradiente */}
             {renderLetters(LINE2, "oracle-letter--gradient")}
             <br />
-            {/* Linha 3 — "com " gradiente + "Ol" branco + "y" ciano + "via" branco */}
-            {renderLetters(LINE3A, "oracle-letter--gradient")}
-            {renderLetters(LINE3B_PREFIX)}
-            {renderLetters(LINE3B_CYAN, "oracle-letter--cyan")}
-            {renderLetters(LINE3B_SUFFIX)}
+            {/* Linha 3 — prata gradiente */}
+            {renderLetters(LINE3A + LINE3B_PREFIX + LINE3B_CYAN + LINE3B_SUFFIX, "oracle-letter--gradient")}
           </h1>
         </div>
 
