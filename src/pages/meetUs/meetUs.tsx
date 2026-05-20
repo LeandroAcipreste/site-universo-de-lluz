@@ -41,12 +41,12 @@ export default function MeetUs() {
     const particles: Particle[] = [];
     const particleCount = Math.floor((width * height) / 12000); // Quantidade responsiva
 
-    // Paleta de cores APENAS Neon Lilás / Roxo (Conforme solicitado)
+    // Paleta de cores Prata Metálica (Cores da Logo)
     const galaxyPalette = [
-      "168, 85, 247",   // Purple 500
-      "139, 92, 246",   // Violet 500
-      "192, 132, 252",  // Purple 400
-      "216, 180, 254"   // Purple 300
+      "248, 249, 250",   // #F8F9FA — Branco Platina
+      "221, 224, 227",   // #DDE0E3 — Prata Claro
+      "155, 161, 166",   // #9BA1A6 — Prata Médio
+      "91, 97, 102"      // #5B6166 — Prata Escuro
     ];
 
     // Interação do mouse (Geração de linhas ao passar por perto)
