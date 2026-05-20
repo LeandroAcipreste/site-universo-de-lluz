@@ -127,13 +127,10 @@
     font-size: clamp(0.85rem, 2.5vw, 1.125rem);
     line-height: 1.7;
     
-    /* Gradiente idêntico ao título para legibilidade e impacto supremo */
-    background-image: linear-gradient(90deg, #67e8f9 0%, #818cf8 50%, #f0abfc 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-weight: 600;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.95)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.75));
+    /* Azul ciano (#67e8f9) puro e sólido para legibilidade e destaque supremo */
+    color: #67e8f9; 
+    font-weight: 400; /* Letra sem negrito/bold */
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.75); /* Sombra suave para leitura perfeita sobre qualquer luz */
     
     /* Configuração de entrada potente (Sem blur para máxima performance) */
     opacity: 0;
