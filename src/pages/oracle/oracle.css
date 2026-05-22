@@ -40,6 +40,7 @@
 
 /* ── Colunas ── */
 .oracle-title-col {
+    position: relative;
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -189,5 +190,80 @@
 
 .oracle-btn:hover  { transform: scale(1.05); }
 .oracle-btn:active { transform: scale(0.95); }
+
+/* ── Oxum Watermark (Marca d'água mística) ── */
+.oracle-oxum-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(280px, 45vw, 520px);
+    height: clamp(280px, 45vw, 520px);
+    z-index: -1;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 1024px) {
+    .oracle-oxum-container {
+        left: 45%;
+        top: 45%;
+    }
+}
+
+/* Imagem mística com máscara radial líquida */
+.oracle-oxum-watermark {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.15;
+    mix-blend-mode: screen;
+    
+    /* Efeito de bronze/ouro divino envelhecido que emerge das estrelas prata */
+    filter: grayscale(0.3) sepia(0.85) hue-rotate(330deg) brightness(0.9) contrast(1.1) drop-shadow(0 0 25px rgba(253, 224, 71, 0.15));
+    
+    -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0.65) 55%, transparent 75%);
+    mask-image: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0.65) 55%, transparent 75%);
+    
+    /* Pulsação lenta simulando a presença da divindade */
+    animation: cosmicBreath 16s ease-in-out infinite alternate;
+}
+
+/* Aura dourada divina de Oxum */
+.oracle-oxum-glow {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, rgba(234, 179, 8, 0.14) 0%, rgba(139, 92, 246, 0.03) 50%, transparent 70%);
+    filter: blur(45px);
+    border-radius: 50%;
+    mix-blend-mode: color-dodge;
+    animation: glowPulse 12s ease-in-out infinite alternate;
+}
+
+@keyframes cosmicBreath {
+    0% {
+        transform: scale(0.95) rotate(-1.5deg);
+        filter: grayscale(0.4) sepia(0.8) hue-rotate(330deg) brightness(0.8) contrast(1) drop-shadow(0 0 20px rgba(253, 224, 71, 0.1));
+    }
+    100% {
+        transform: scale(1.05) rotate(1.5deg);
+        filter: grayscale(0.2) sepia(0.9) hue-rotate(345deg) brightness(0.95) contrast(1.25) drop-shadow(0 0 40px rgba(253, 224, 71, 0.25));
+    }
+}
+
+@keyframes glowPulse {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1.1);
+        opacity: 1.1;
+    }
+}
+
 
 

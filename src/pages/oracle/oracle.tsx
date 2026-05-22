@@ -1,9 +1,9 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import SiteNav from "../../components/siteNav";
-import OracleBackground from "./oracleBackground";
+import ParticlesBackground from "../../components/particlesBackground";
 import { BTN_PRIMARY } from "../../constants/btnPrimary";
 import "./oracle.css";
 
@@ -22,20 +22,28 @@ export default function Oracle() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef  = useRef<HTMLHeadingElement>(null);
   const cardRef   = useRef<HTMLDivElement>(null);
-  const [bgReady, setBgReady] = useState(false);
+  const watermarkRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    if (!bgReady || !titleRef.current || !cardRef.current) return;
+    if (!titleRef.current || !cardRef.current || !watermarkRef.current) return;
 
-    const letters = titleRef.current.querySelectorAll<HTMLElement>(".oracle-letter, .oracle-space");
+    const letters = titleRef.current.querySelectorAll<HTMLElement>(
+      ".oracle-letter, .oracle-space"
+    );
 
     // autoAlpha = opacity + visibility juntos.
-    // Isso evita o bug clássico: background-clip:text some quando opacity:0
-    // porque o navegador usa layers de compositing diferentes.
     gsap.set(letters, { autoAlpha: 0, y: 28, force3D: true });
     gsap.set(cardRef.current, { autoAlpha: 0, y: 40, force3D: true });
+    gsap.set(watermarkRef.current, { autoAlpha: 0, scale: 0.85, force3D: true });
 
     gsap.timeline({ delay: 0.15 })
+      .to(watermarkRef.current, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 2.2,
+        ease: "power2.out",
+        force3D: true,
+      }, 0)
       .to(letters, {
         autoAlpha: 1,
         y: 0,
@@ -43,7 +51,7 @@ export default function Oracle() {
         ease: "power3.out",
         stagger: 0.035,
         force3D: true,
-      })
+      }, 0.1)
       .to(cardRef.current, {
         autoAlpha: 1,
         y: 0,
@@ -51,7 +59,7 @@ export default function Oracle() {
         ease: "power3.out",
         force3D: true,
       }, "-=0.4");
-  }, { dependencies: [bgReady] });
+  }, {});
 
   // Helper — cada char vira um span. Espaços viram oracle-space com largura garantida.
   const renderLetters = (text: string, extraClass = "") =>
@@ -63,7 +71,7 @@ export default function Oracle() {
 
   return (
     <section className="oracle-section" ref={sectionRef}>
-      <OracleBackground onReady={() => setBgReady(true)} />
+      <ParticlesBackground />
       <SiteNav />
 
       {/* ── CONTEÚDO PRINCIPAL ── */}
@@ -71,6 +79,16 @@ export default function Oracle() {
 
         {/* ── COLUNA ESQUERDA: Título ── */}
         <div className="oracle-title-col">
+          {/* Marca d'água de Oxum com efeito cósmico/místico */}
+          <div className="oracle-oxum-container" ref={watermarkRef}>
+            <div className="oracle-oxum-glow" />
+            <img
+              src="/images/oxum.png"
+              className="oracle-oxum-watermark"
+              alt="Oxum"
+            />
+          </div>
+
           <h1 className="oracle-title" ref={titleRef}>
             {/* Linha 1 — prata gradiente */}
             {renderLetters(LINE1, "oracle-letter--gradient")}
