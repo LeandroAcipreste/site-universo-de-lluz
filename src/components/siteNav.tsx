@@ -115,7 +115,7 @@ export default function SiteNav() {
                   <img
                     src={`${NAV_ICONS[label]}?v=4`}
                     className="h-4 w-4 object-contain transition-transform group-hover:scale-110 md:h-4.5 md:w-4.5"
-                    style={label === "Defesas" || label === "Conheça-nos" ? {} : { filter: "brightness(0) sepia(1) saturate(5) hue-rotate(245deg) brightness(0.2)" }}
+                    style={label === "Defesas" || label === "Conheça-nos" ? { filter: "brightness(0) opacity(0.85)" } : { filter: "brightness(0) sepia(1) saturate(5) hue-rotate(245deg) brightness(0.2)" }}
                     alt=""
                   />
                 ) : (
@@ -168,22 +168,24 @@ export default function SiteNav() {
           style={{ pointerEvents: "auto" }}
         >
           <div className="flex w-fit flex-col gap-2">
-            <button
-              type="button"
-              className={`${NAV_BTN_CLASS} w-full`}
-              style={BTN_PRIMARY}
-              onClick={() => handleNavClick("Página Inicial")}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.boxShadow =
-                  "0 4px 20px -5px rgba(155, 161, 166, 0.4)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
-              }}
-            >
-              Página Inicial
-              <img src="/logos/logo.svg" className="h-4 w-4 object-contain" alt="" />
-            </button>
+            {!isHomePage && (
+              <button
+                type="button"
+                className={`${NAV_BTN_CLASS} w-full`}
+                style={BTN_PRIMARY}
+                onClick={() => handleNavClick("Página Inicial")}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow =
+                    "0 4px 20px -5px rgba(155, 161, 166, 0.4)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow = BTN_PRIMARY.boxShadow as string;
+                }}
+              >
+                Página Inicial
+                <img src="/logos/logo.svg" className="h-4 w-4 object-contain" alt="" />
+              </button>
+            )}
             {NAV_LABELS.map((label) => (
               <button
                 key={label}
@@ -204,7 +206,7 @@ export default function SiteNav() {
                   <img
                     src={`${NAV_ICONS[label]}?v=4`}
                     className="h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5"
-                    style={label === "Defesas" || label === "Conheça-nos" ? {} : { filter: "brightness(0) sepia(1) saturate(5) hue-rotate(245deg) brightness(0.2)" }}
+                    style={label === "Defesas" || label === "Conheça-nos" ? { filter: "brightness(0) opacity(0.85)" } : { filter: "brightness(0) sepia(1) saturate(5) hue-rotate(245deg) brightness(0.2)" }}
                     alt=""
                   />
                 ) : (
