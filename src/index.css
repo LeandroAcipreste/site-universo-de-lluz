@@ -111,6 +111,10 @@
     overflow: hidden;
     z-index: 1;
     background: transparent !important;
+    /* Conserta bug de overflow no Safari com mix-blend-mode */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    mask-image: radial-gradient(white, black);
+    transform: translateZ(0);
   }
   
   .btn-silver-snake::before {
