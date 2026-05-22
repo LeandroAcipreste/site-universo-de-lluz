@@ -110,18 +110,6 @@ export default function Hero() {
 
               {/* Espaçador (desktop) */}
               <div className="hero-spacer" aria-hidden />
-
-              {/* Botões */}
-              <div className="hero-btns">
-                <button
-                  className="hero-btn btn-silver-snake"
-                  onClick={() => { window.location.href = "/meet-us"; }}
-                  aria-label="Conhecer o Universo de Luz"
-                >
-                  <span className="hero-btn__label">Conheça o Universo</span>
-                  <ArrowRight className="hero-btn__icon" aria-hidden="true" />
-                </button>
-              </div>
             </div>
 
             {/* ── COLUNA DIREITA — Card da Oração ── */}
