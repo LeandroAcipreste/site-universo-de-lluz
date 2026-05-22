@@ -134,21 +134,19 @@
 }
 
 .hero-desc-container {
-    display: flex;
-    flex-direction: row; /* Parte 1 (Vivências...) na esquerda, Parte 2 (reconectam...) na direita */
-    justify-content: space-between;
-    align-items: flex-start;
+    display: block;
     width: 100%;
-    gap: 16%; /* Espaço livre no centro exato para o feixe WebGL e chakras */
+    max-width: 85%; /* Mantém todo do lado esquerdo no mobile */
+    text-align: left;
 }
 
 .hero-desc-part {
-    display: block; /* Garante que a largura (42%) e o alinhamento de texto sejam aplicados perfeitamente no mobile */
-    width: 42%; /* Garante simetria perfeita nas duas laterais */
+    display: inline;
     color: #F8F9FA; /* Prata claro */
     font-weight: 700; /* Bold */
     font-size: clamp(0.75rem, 2.5vw, 0.95rem);
     line-height: 1.5;
+    text-align: left;
     /* Borda preta sutil e sombra forte para leitura no mobile */
     -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.6);
     text-shadow: 
@@ -161,29 +159,17 @@
 }
 
 .hero-desc-part1 {
-    text-align: left !important;
-}
-
-.hero-desc-part2 {
-    text-align: right !important;
+    margin-right: 0.25rem;
 }
 
 @media (min-width: 1024px) {
     .hero-desc-container {
-        display: block;
         max-width: 36rem;
     }
     
     .hero-desc-part {
-        display: inline;
-        width: auto;
         font-size: clamp(0.85rem, 2.5vw, 1.125rem);
         line-height: 1.7;
-        text-align: left;
-    }
-    
-    .hero-desc-part1 {
-        margin-right: 0.25rem;
     }
 }
 
@@ -327,11 +313,11 @@
     gap: 0.5rem;
     padding: 0.65rem 1.25rem;
     border-radius: 9999px;
-    background: linear-gradient(135deg, rgba(248, 249, 250, 0.08), rgba(221, 224, 227, 0.08), rgba(155, 161, 166, 0.08));
-    border: 1px solid rgba(221, 224, 227, 0.25);
-    color: rgba(248, 249, 250, 0.85);
+    background: rgba(10, 10, 10, 0.4);
+    border: 1px solid #5B6166; /* Borda cinza escuro da paleta */
+    color: #5B6166; /* Nome/Texto cinza escuro da paleta */
     font-size: 0.8rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.02em;
     text-decoration: none;
     backdrop-filter: blur(8px);
@@ -339,10 +325,10 @@
 }
 
 .hero-instagram-link:hover {
-    color: white;
-    background: linear-gradient(135deg, rgba(248, 249, 250, 0.16), rgba(221, 224, 227, 0.16), rgba(155, 161, 166, 0.16));
-    border-color: rgba(248, 249, 250, 0.45);
-    box-shadow: 0 4px 15px -3px rgba(155, 161, 166, 0.3);
+    color: #9BA1A6; /* Clareia levemente no hover */
+    background: rgba(91, 97, 102, 0.15);
+    border-color: #9BA1A6;
+    box-shadow: 0 4px 15px -3px rgba(91, 97, 102, 0.2);
     transform: translateY(-2px);
 }
 

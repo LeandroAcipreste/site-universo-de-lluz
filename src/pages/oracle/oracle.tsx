@@ -33,7 +33,6 @@ export default function Oracle() {
     // autoAlpha = opacity + visibility juntos.
     gsap.set(letters, { autoAlpha: 0, y: 28, force3D: true });
     gsap.set(cardRef.current, { autoAlpha: 0, y: 40, force3D: true });
-    gsap.set(figuresRef.current, { autoAlpha: 0, y: 30, force3D: true });
 
     gsap.timeline({ delay: 0.15 })
       .to(letters, {
