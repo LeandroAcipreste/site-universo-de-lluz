@@ -3,9 +3,10 @@ import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, Menu, X, Youtube } from "lucide-react";
 import { BTN_PRIMARY } from "../constants/btnPrimary";
 
-export const NAV_LABELS = ["Orações", "Limpezas", "Defesas", "Oráculo"] as const;
+export const NAV_LABELS = ["Conheça-nos", "Orações", "Limpezas", "Defesas", "Oráculo"] as const;
 
 const NAV_ICONS: Record<string, string> = {
+  "Conheça-nos": "/logos/logo.svg",
   "Orações": "/icons/universo-pray.png",
   "Limpezas": "/icons/universo-incense.png",
   "Defesas": "/icons/defenses-luz.png",
@@ -25,7 +26,8 @@ export default function SiteNav() {
     setNavOpen(false);
 
     let path = "/";
-    if (label === "Orações") path = "/prayers";
+    if (label === "Conheça-nos") path = "/meet-us";
+    else if (label === "Orações") path = "/prayers";
     else if (label === "Limpezas") path = "/cleansing";
     else if (label === "Defesas") path = "/defense";
     else if (label === "Oráculo") path = "/oracle";
@@ -112,10 +114,8 @@ export default function SiteNav() {
                 {NAV_ICONS[label] ? (
                   <img
                     src={`${NAV_ICONS[label]}?v=4`}
-                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 md:h-4.5 md:w-4.5 ${
-                      label === "Defesas" ? "mix-blend-multiply" : ""
-                    }`}
-                    style={label === "Defesas" ? {} : { filter: "brightness(0) sepia(1) saturate(5) hue-rotate(245deg) brightness(0.2)" }}
+                    className="h-4 w-4 object-contain transition-transform group-hover:scale-110 md:h-4.5 md:w-4.5"
+                    style={label === "Defesas" || label === "Conheça-nos" ? {} : { filter: "brightness(0) sepia(1) saturate(5) hue-rotate(245deg) brightness(0.2)" }}
                     alt=""
                   />
                 ) : (
@@ -203,10 +203,8 @@ export default function SiteNav() {
                 {NAV_ICONS[label] ? (
                   <img
                     src={`${NAV_ICONS[label]}?v=4`}
-                    className={`h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5 ${
-                      label === "Defesas" ? "mix-blend-multiply" : ""
-                    }`}
-                    style={label === "Defesas" ? {} : { filter: "brightness(0) sepia(1) saturate(5) hue-rotate(245deg) brightness(0.2)" }}
+                    className="h-4 w-4 object-contain transition-transform group-hover:scale-110 sm:h-4.5 sm:w-4.5"
+                    style={label === "Defesas" || label === "Conheça-nos" ? {} : { filter: "brightness(0) sepia(1) saturate(5) hue-rotate(245deg) brightness(0.2)" }}
                     alt=""
                   />
                 ) : (

@@ -115,15 +115,6 @@ export default function Hero() {
               <div className="hero-btns">
                 <button
                   className="hero-btn btn-silver-snake"
-                  onClick={() => { window.location.href = "/retiro"; }}
-                  aria-label="Ir para Retiro Cura do Beija-Flor"
-                >
-                  <span className="hero-btn__label">Retiro Cura do Beija-Flor</span>
-                  <ArrowRight className="hero-btn__icon" aria-hidden="true" />
-                </button>
-
-                <button
-                  className="hero-btn btn-silver-snake"
                   onClick={() => { window.location.href = "/meet-us"; }}
                   aria-label="Conhecer o Universo de Luz"
                 >
