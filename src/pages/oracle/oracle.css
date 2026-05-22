@@ -206,102 +206,24 @@
 .oracle-btn:hover  { transform: scale(1.05); }
 .oracle-btn:active { transform: scale(0.95); }
 
-/* ── Figuras Divinas debaixo do Card ── */
-.oracle-figures-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 2.5rem;
-    margin-top: 3.5rem;
-    position: relative;
-    z-index: 5;
-    /* Estado inicial definido pelo gsap.set() */
-    will-change: transform, opacity;
-}
-
-.oracle-figure {
-    position: relative;
-    width: clamp(120px, 25vw, 200px); /* Tamanho elegante */
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-    cursor: default;
-}
-
-.oracle-figure:hover {
-    transform: translateY(-12px) scale(1.02);
-}
-
-.oracle-figure-img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    /* Imagem real, sem marca d'água pesada. Apenas um filtro para harmonizar e trazer nobreza */
-    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.15)) contrast(1.1) brightness(1.05);
-    /* Fade out suave na parte inferior para que elas "surjam" do infinito */
-    -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
-    animation: gentleFloat 7s ease-in-out infinite alternate;
-}
-
-.oracle-figure--oxum .oracle-figure-img {
-    animation-delay: 0s;
-    /* Toque divino dourado/solar para Oxum */
-    filter: drop-shadow(0 5px 25px rgba(253, 224, 71, 0.2)) sepia(0.2) contrast(1.1) brightness(1.1);
-}
-
-.oracle-figure--isis .oracle-figure-img {
-    animation-delay: -3.5s;
-    /* Toque lunar/estrelado para Isis */
-    filter: drop-shadow(0 5px 25px rgba(139, 92, 246, 0.2)) contrast(1.1) brightness(1.15);
-}
-
-.oracle-figure-glow {
+/* ── Background e Overlay ── */
+.oracle-bg {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 140%;
-    height: 140%;
-    border-radius: 50%;
-    filter: blur(40px);
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.6s ease;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
 }
 
-.oracle-figure--oxum .oracle-figure-glow {
-    background: radial-gradient(circle, rgba(234, 179, 8, 0.25), transparent 60%);
-}
-
-.oracle-figure--isis .oracle-figure-glow {
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 60%);
-}
-
-.oracle-figure:hover .oracle-figure-glow {
-    opacity: 1;
-}
-
-.oracle-figure-name {
-    margin-top: 1rem;
-    font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
-    font-size: clamp(0.7rem, 2vw, 0.9rem);
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    color: rgba(255, 255, 255, 0.4);
-    transition: color 0.4s ease, transform 0.4s ease;
-}
-
-.oracle-figure:hover .oracle-figure-name {
-    color: rgba(255, 255, 255, 0.95);
-    transform: translateY(-3px);
-}
-
-@keyframes gentleFloat {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-15px); }
+.oracle-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(5, 5, 8, 0.8) 0%, rgba(15, 5, 20, 0.6) 100%);
+    z-index: 1;
+    pointer-events: none;
 }
 
 

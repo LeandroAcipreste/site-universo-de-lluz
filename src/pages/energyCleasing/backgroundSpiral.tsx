@@ -32,20 +32,20 @@ export default function BackgroundSpiral() {
         float spiral1 = sin(twist * 4.0) * 0.5 + 0.5;
         float spiral2 = sin(twist * 7.0 + u_time * 0.5) * 0.5 + 0.5;
         float flow = spiral1 * 0.6 + spiral2 * 0.4;
-        float disk = smoothstep(0.7, 0.0, r);
+        float disk = smoothstep(0.45, 0.0, r); // Aura afinada/delicada
         
         // Cores metálicas do logotipo (Prata e Platina)
         vec3 coreColor = vec3(0.87, 0.88, 0.89); // Platina brilhante (#DDE0E3)
         vec3 edgeColor = vec3(0.36, 0.38, 0.40); // Cromo escuro (#5B6166)
         
         vec3 col = mix(edgeColor, coreColor, flow * disk);
-        col *= flow * disk * 2.5;
+        col *= flow * disk * 1.8; // Intensidade reduzida para mais delicadeza
         
-        // Brilho central (Branco platina de alta intensidade)
-        col += vec3(0.95, 0.96, 0.98) * smoothstep(0.15, 0.0, r) * 1.2;
+        // Brilho central (Branco platina) afinado
+        col += vec3(0.95, 0.96, 0.98) * smoothstep(0.1, 0.0, r) * 0.9;
         
-        // Alpha baseado na intensidade para não criar um bloco preto
-        float alpha = clamp(length(col) * 1.2, 0.0, 1.0);
+        // Alpha baseado na intensidade
+        float alpha = clamp(length(col) * 1.1, 0.0, 1.0);
         
         gl_FragColor = vec4(col, alpha);
       }

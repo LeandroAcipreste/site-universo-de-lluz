@@ -22,10 +22,9 @@ export default function Oracle() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef  = useRef<HTMLHeadingElement>(null);
   const cardRef   = useRef<HTMLDivElement>(null);
-  const figuresRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    if (!titleRef.current || !cardRef.current || !figuresRef.current) return;
+    if (!titleRef.current || !cardRef.current) return;
 
     const letters = titleRef.current.querySelectorAll<HTMLElement>(
       ".oracle-letter, .oracle-space"
@@ -51,14 +50,7 @@ export default function Oracle() {
         duration: 0.9,
         ease: "power3.out",
         force3D: true,
-      }, "-=0.4")
-      .to(figuresRef.current, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.9,
-        ease: "power3.out",
-        force3D: true,
-      }, "-=0.2");
+      }, "-=0.4");
   }, {});
 
   // Helper — cada char vira um span. Espaços viram oracle-space com largura garantida.
@@ -71,6 +63,10 @@ export default function Oracle() {
 
   return (
     <section className="oracle-section" ref={sectionRef}>
+      {/* Background Layer */}
+      <img src="/logos/photo-1528722828814-77b9b83aafb2-e1574333496357.jpg" alt="Background Universo" className="oracle-bg" />
+      <div className="oracle-overlay" />
+
       <ParticlesBackground />
       <SiteNav />
 
@@ -143,21 +139,6 @@ export default function Oracle() {
                 Agendar Consulta
                 <ArrowRight className="h-3 w-3" />
               </a>
-            </div>
-          </div>
-
-          {/* ── Figuras Divinas Abaixo do Card ── */}
-          <div className="oracle-figures-container" ref={figuresRef}>
-            <div className="oracle-figure oracle-figure--oxum">
-              <div className="oracle-figure-glow" />
-              <img src="/images/oxum.png" alt="Mãe Oxum" className="oracle-figure-img" />
-              <span className="oracle-figure-name">Mãe Oxum</span>
-            </div>
-            
-            <div className="oracle-figure oracle-figure--isis">
-              <div className="oracle-figure-glow" />
-              <img src="/images/isis.png" alt="Deusa Isis" className="oracle-figure-img" />
-              <span className="oracle-figure-name">Deusa Isis</span>
             </div>
           </div>
         </div>
