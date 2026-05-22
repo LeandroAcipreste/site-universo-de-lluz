@@ -22,10 +22,10 @@ export default function Oracle() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef  = useRef<HTMLHeadingElement>(null);
   const cardRef   = useRef<HTMLDivElement>(null);
-  const watermarkRef = useRef<HTMLDivElement>(null);
+  const figuresRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    if (!titleRef.current || !cardRef.current || !watermarkRef.current) return;
+    if (!titleRef.current || !cardRef.current || !figuresRef.current) return;
 
     const letters = titleRef.current.querySelectorAll<HTMLElement>(
       ".oracle-letter, .oracle-space"
@@ -34,16 +34,9 @@ export default function Oracle() {
     // autoAlpha = opacity + visibility juntos.
     gsap.set(letters, { autoAlpha: 0, y: 28, force3D: true });
     gsap.set(cardRef.current, { autoAlpha: 0, y: 40, force3D: true });
-    gsap.set(watermarkRef.current, { autoAlpha: 0, scale: 0.85, force3D: true });
+    gsap.set(figuresRef.current, { autoAlpha: 0, y: 30, force3D: true });
 
     gsap.timeline({ delay: 0.15 })
-      .to(watermarkRef.current, {
-        autoAlpha: 1,
-        scale: 1,
-        duration: 2.2,
-        ease: "power2.out",
-        force3D: true,
-      }, 0)
       .to(letters, {
         autoAlpha: 1,
         y: 0,
@@ -51,14 +44,21 @@ export default function Oracle() {
         ease: "power3.out",
         stagger: 0.035,
         force3D: true,
-      }, 0.1)
+      })
       .to(cardRef.current, {
         autoAlpha: 1,
         y: 0,
         duration: 0.9,
         ease: "power3.out",
         force3D: true,
-      }, "-=0.4");
+      }, "-=0.4")
+      .to(figuresRef.current, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.9,
+        ease: "power3.out",
+        force3D: true,
+      }, "-=0.2");
   }, {});
 
   // Helper — cada char vira um span. Espaços viram oracle-space com largura garantida.
@@ -79,15 +79,6 @@ export default function Oracle() {
 
         {/* ── COLUNA ESQUERDA: Título ── */}
         <div className="oracle-title-col">
-          {/* Marca d'água de Oxum com efeito cósmico/místico */}
-          <div className="oracle-oxum-container" ref={watermarkRef}>
-            <div className="oracle-oxum-glow" />
-            <img
-              src="/images/oxum.png"
-              className="oracle-oxum-watermark"
-              alt="Oxum"
-            />
-          </div>
 
           <h1 className="oracle-title" ref={titleRef}>
             {/* Linha 1 — prata gradiente */}
@@ -104,15 +95,6 @@ export default function Oracle() {
         {/* ── COLUNA DIREITA: Card Informativo ── */}
         <div className="oracle-card-col">
           <div className="oracle-card" ref={cardRef}>
-            {/* Marca d'água de Isis com efeito místico dentro do card */}
-            <div className="oracle-isis-container">
-              <div className="oracle-isis-glow" />
-              <img
-                src="/images/isis.png"
-                className="oracle-isis-watermark"
-                alt="Isis"
-              />
-            </div>
 
             {/* Brilho interno */}
             <div className="oracle-card-glow" />
@@ -161,6 +143,21 @@ export default function Oracle() {
                 Agendar Consulta
                 <ArrowRight className="h-3 w-3" />
               </a>
+            </div>
+          </div>
+
+          {/* ── Figuras Divinas Abaixo do Card ── */}
+          <div className="oracle-figures-container" ref={figuresRef}>
+            <div className="oracle-figure oracle-figure--oxum">
+              <div className="oracle-figure-glow" />
+              <img src="/images/oxum.png" alt="Mãe Oxum" className="oracle-figure-img" />
+              <span className="oracle-figure-name">Mãe Oxum</span>
+            </div>
+            
+            <div className="oracle-figure oracle-figure--isis">
+              <div className="oracle-figure-glow" />
+              <img src="/images/isis.png" alt="Deusa Isis" className="oracle-figure-img" />
+              <span className="oracle-figure-name">Deusa Isis</span>
             </div>
           </div>
         </div>
