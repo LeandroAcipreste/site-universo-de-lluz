@@ -104,6 +104,16 @@ export default function Oracle() {
         {/* ── COLUNA DIREITA: Card Informativo ── */}
         <div className="oracle-card-col">
           <div className="oracle-card" ref={cardRef}>
+            {/* Marca d'água de Isis com efeito místico dentro do card */}
+            <div className="oracle-isis-container">
+              <div className="oracle-isis-glow" />
+              <img
+                src="/images/isis.png"
+                className="oracle-isis-watermark"
+                alt="Isis"
+              />
+            </div>
+
             {/* Brilho interno */}
             <div className="oracle-card-glow" />
 
