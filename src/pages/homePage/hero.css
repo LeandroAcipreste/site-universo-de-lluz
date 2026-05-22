@@ -136,9 +136,8 @@
 .hero-desc-container {
     display: block;
     width: 100%;
-    margin-left: auto; /* Empurra para a direita */
-    text-align: right; /* Alinha à direita no mobile */
-    max-width: 85%; /* Limita a largura para ficar contido no canto direito */
+    text-align: left; /* Alinha à esquerda no mobile */
+    max-width: 85%; /* Limita a largura para ficar contido no canto esquerdo */
 }
 
 .hero-desc-part {
@@ -147,7 +146,7 @@
     font-weight: 700; /* Bold */
     font-size: clamp(0.75rem, 2.5vw, 0.95rem);
     line-height: 1.5;
-    text-align: right; /* Alinha à direita */
+    text-align: left; /* Alinha à esquerda */
     /* Borda preta sutil e sombra forte para leitura no mobile */
     -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.6);
     text-shadow: 
