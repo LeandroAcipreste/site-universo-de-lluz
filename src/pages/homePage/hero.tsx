@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { ArrowRight, Instagram } from "lucide-react";
+import { Instagram } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import HeroBackground from "./heroBackground";
