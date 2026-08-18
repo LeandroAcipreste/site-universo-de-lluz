@@ -26,6 +26,10 @@ export const ENTRADAS = [
   { rotulo: 'Limpezas', caminho: '/cleansing' },
   { rotulo: 'Defesas', caminho: '/defense' },
   { rotulo: 'Oráculo', caminho: '/oracle' },
+  /* Depois do Oráculo porque é lá dentro que o livro é oferecido: quem vem do
+     card do fim daquela página encontra a entrada no lugar onde já estava
+     olhando. */
+  { rotulo: 'Livro', caminho: '/book' },
   { rotulo: 'YouTube', caminho: '/youtube' },
 ];
 

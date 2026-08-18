@@ -11,6 +11,7 @@
     { "source": "/cleansing", "destination": "/src/pages/cleansing/cleansing.html" },
     { "source": "/defense", "destination": "/src/pages/defense/defense.html" },
     { "source": "/oracle", "destination": "/src/pages/oracle/oracle.html" },
+    { "source": "/book", "destination": "/src/pages/book/book.html" },
     { "source": "/youtube", "destination": "/src/pages/youtube/youtube.html" }
   ]
 }

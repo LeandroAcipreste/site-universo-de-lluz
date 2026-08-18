@@ -273,23 +273,23 @@
 /* ==========================================================================
    O livro — acréscimo, não existe no oracle.css original
 
-   Fica na coluna do título, que em tela larga sobra espaço embaixo dele. A
-   capa e o botão ficam lado a lado, como pedido.
+   Fica no fim do card, embaixo do mapa e do botão de agendamento. Já esteve na
+   coluna do título, à esquerda; ali ele dividia a atenção com o agendamento,
+   que é o que esta página existe para pedir. Aqui vem depois dele.
+
+   A capa e o botão continuam lado a lado, e o filete de cima é o mesmo de
+   `.oracle-local` — dentro do card, o que separa blocos é sempre esse fio.
    ========================================================================== */
 
 .oracle-livro {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    margin-top: 2.5rem;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     text-align: left;
-}
-
-@media (max-width: 1023px) {
-    .oracle-livro {
-        justify-content: center;
-        margin-top: 2rem;
-    }
 }
 
 /* A capa. A proporção vem fixada para o bloco não saltar quando a imagem

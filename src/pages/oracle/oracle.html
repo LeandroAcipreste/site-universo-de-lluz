@@ -50,35 +50,6 @@
     <!-- ── COLUNA ESQUERDA: Título ── -->
     <div class="oracle-title-col">
       <h1 class="oracle-title"></h1>
-
-      <!-- O livro. A capa e o botão lado a lado.
-
-           O endereço vai limpo: o link que veio tinha `utm_source`,
-           `utm_medium`, `utm_content` e `fbclid` pendurados — parâmetros que o
-           Instagram e o Facebook acrescentam para rastrear de onde veio o
-           clique. Num link do próprio site eles não medem nada de útil e
-           carregam um identificador de sessão de rede social para dentro da
-           navegação de quem clica. -->
-      <div class="oracle-livro">
-        <img class="oracle-livro-capa"
-             src="/public/img/capa-do-livro.PNG"
-             alt="Capa do livro Inspirações para a Nova Era, de Olyvia Libório"
-             loading="lazy">
-
-        <a class="oracle-livro-btn"
-           href="https://www.madras.com.br/espiritualidade/inspiracoes-para-a-nova-era"
-           target="_blank" rel="noopener noreferrer">
-          Comprar o livro
-          <!-- <ArrowRight /> do lucide-react 0.544.0 -->
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round"
-               class="oracle-btn-icon" aria-hidden="true">
-            <path d="M5 12h14"/>
-            <path d="m12 5 7 7-7 7"/>
-          </svg>
-        </a>
-      </div>
     </div>
 
     <!-- ── COLUNA DIREITA: Card Informativo ── -->
@@ -164,6 +135,39 @@
             rel="noopener noreferrer"
             class="oracle-btn">
             Agendar Consulta
+            <!-- <ArrowRight /> do lucide-react 0.544.0 -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 class="oracle-btn-icon" aria-hidden="true">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- O livro, no fim do card — embaixo do mapa e do agendamento.
+
+             Antes ficava na coluna do título, à esquerda. Ali ele competia com
+             o agendamento, que é o que a página existe para pedir; aqui vem
+             depois dele, como a oferta seguinte de quem já leu tudo.
+
+             O endereço vai limpo: o link que veio tinha `utm_source`,
+             `utm_medium`, `utm_content` e `fbclid` pendurados — parâmetros que
+             o Instagram e o Facebook acrescentam para rastrear de onde veio o
+             clique. Num link do próprio site eles não medem nada de útil e
+             carregam um identificador de sessão de rede social para dentro da
+             navegação de quem clica. -->
+        <div class="oracle-livro">
+          <img class="oracle-livro-capa"
+               src="/public/img/capa-do-livro.PNG"
+               alt="Capa do livro Inspirações para a Nova Era, de Olyvia Libório"
+               loading="lazy">
+
+          <a class="oracle-livro-btn"
+             href="https://www.madras.com.br/espiritualidade/inspiracoes-para-a-nova-era"
+             target="_blank" rel="noopener noreferrer">
+            Comprar o livro
             <!-- <ArrowRight /> do lucide-react 0.544.0 -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                  fill="none" stroke="currentColor" stroke-width="2"

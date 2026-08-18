@@ -77,8 +77,20 @@ src/pages/meet-us/     Conheça-nos
 src/pages/prayers/     Orações      + dados.js
 src/pages/defense/     Defesas      + dados.js
 src/pages/oracle/      Oráculo
+src/pages/book/        O livro      — não veio do React
 src/pages/youtube/     YouTube
 ```
+
+`book/` é a única que não é porte: foi escrita aqui. Ela toma emprestado do
+Oráculo o fundo, a sobreposição, as partículas, o gradiente prata do título e
+a pílula de vidro do botão, de propósito — as duas falam da mesma pessoa, e o
+livro é oferecido no fim do card do Oráculo.
+
+E é a única que **rola**. Isso tem uma consequência que não é óbvia: o rodapé
+do site é `position: fixed`, o que só funciona em página que cabe numa tela.
+Aqui ele ficava carimbado no meio da sinopse, e por isso o `book.css` o passa
+para `absolute` com `position: relative` no `body`. Qualquer página futura que
+role precisa fazer o mesmo.
 
 Uma pasta por página, com o `.html`, o `.css`, o `.js` e um `img/` próprio
 quando tem imagem só dela.

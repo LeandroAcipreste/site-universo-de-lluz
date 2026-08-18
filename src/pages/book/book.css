@@ -1,0 +1,321 @@
+/* ==========================================================================
+   O livro — Inspirações para a Nova Era
+
+   Página nova: não veio do site antigo em React. O fundo, a sobreposição, as
+   partículas, a pílula de vidro do botão e o gradiente prata do título são os
+   mesmos do Oráculo, deliberadamente — as duas páginas falam da mesma pessoa,
+   e o livro é oferecido lá dentro.
+
+   O que muda é o encargo. O Oráculo é um cartão de informações curtas ao lado
+   de um título grande; aqui há duzentas palavras de sinopse para ler. Por isso
+   esta página **rola**, a medida de linha é limitada e o corpo é maior.
+   ========================================================================== */
+
+@import url("/src/pages/comum/base.css");
+@import url("/src/pages/comum/nav.css");
+
+/* --------------------------------------------------------------------------
+   A seção e o fundo
+   Iguais aos do Oráculo. `min-height: 100svh` e não `100vh`: no celular o
+   `vh` conta a barra de endereço como se ela nunca existisse, e a página
+   ganharia um vão morto embaixo.
+   -------------------------------------------------------------------------- */
+
+.livro-section {
+    position: relative;
+    min-height: 100svh;
+    overflow-x: clip;
+    background-color: #000;
+    color: #fff;
+}
+
+/* O rodapé desta página para no fim do documento, e não na janela. A regra
+   não está aqui: vale para todas as páginas internas e mora no
+   `comum/base.css`, com o porquê. */
+
+.livro-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+}
+
+.livro-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(5, 5, 8, 0.8) 0%, rgba(15, 5, 20, 0.6) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* As partículas são `fixed` e acompanham a rolagem, como no Oráculo.
+   `pointer-events: none` aqui, e não `auto`: nesta página há texto longo para
+   selecionar e um botão para tocar, e um canvas por cima da página inteira
+   comeria esses gestos. No Oráculo não havia o que selecionar. */
+.livro-particles {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+/* --------------------------------------------------------------------------
+   O arranjo
+   Uma coluna no celular, capa e texto lado a lado a partir de 900px. O `start`
+   no alinhamento é o que deixa a capa no alto ao lado do texto, em vez de
+   flutuando no meio de uma coluna muito mais alta.
+   -------------------------------------------------------------------------- */
+
+.livro-content {
+    position: relative;
+    z-index: 10;
+    margin: 0 auto;
+    max-width: 68rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 7.5rem 1.5rem 4rem;
+}
+
+@media (min-width: 900px) {
+    .livro-content {
+        display: grid;
+        grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+        align-items: start;
+        gap: 4rem;
+        padding: 9rem 2.5rem 5rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   A capa
+   -------------------------------------------------------------------------- */
+
+.livro-capa-fig {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Em tela larga a capa acompanha a leitura em vez de sair de cena no primeiro
+   rolar. O `top` é a altura da barra mais uma folga. */
+@media (min-width: 900px) {
+    .livro-capa-fig {
+        position: sticky;
+        top: 7rem;
+    }
+}
+
+/* A proporção vem fixada para o bloco não saltar quando a imagem termina de
+   baixar. É a proporção real do arquivo, a mesma usada no Oráculo — lá a capa
+   tem 84px de largura, aqui ela é o assunto da página. */
+.livro-capa {
+    width: clamp(11rem, 52vw, 17rem);
+    aspect-ratio: 417 / 589;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.85);
+    /* Estado inicial definido pelo gsap.set() */
+    will-change: transform, opacity;
+}
+
+@media (min-width: 900px) {
+    .livro-capa { width: 100%; }
+}
+
+/* --------------------------------------------------------------------------
+   O texto
+   -------------------------------------------------------------------------- */
+
+.livro-texto {
+    width: 100%;
+    max-width: 40rem;
+    text-align: center;
+}
+
+@media (min-width: 900px) {
+    .livro-texto { text-align: left; }
+}
+
+.livro-sobretitulo {
+    margin: 0 0 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.45);
+    /* Estado inicial definido pelo gsap.set() */
+    will-change: transform, opacity;
+}
+
+/* A mesma face, o mesmo peso e o mesmo gradiente prata do título do Oráculo.
+   Sem `text-transform: uppercase`: lá o título tem três palavras curtas, aqui
+   são cinco, e em caixa alta elas viram um paredão. */
+.livro-titulo {
+    margin: 0 0 0.6rem;
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+    font-size: clamp(2.1rem, 6vw, 3.4rem);
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.95)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.8));
+}
+
+/* O invólucro da palavra. Cada letra é um `inline-block`, e sem isto o
+   navegador quebra a linha entre duas letras quaisquer — o título saía
+   "Inspirações para a Nov / a Era". O `nowrap` diz que ali dentro não se
+   quebra; entre as palavras, sim. */
+.livro-palavra {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+/* Cada letra é um span, para o GSAP as trazer uma depois da outra — é o mesmo
+   recurso do título do Oráculo. */
+.livro-letra {
+    display: inline-block;
+    background: linear-gradient(135deg,
+        #ffffff 0%,
+        #f1f5f9 20%,
+        #cbd5e1 40%,
+        #94a3b8 55%,
+        #475569 70%,
+        #94a3b8 85%,
+        #ffffff 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    /* Estado inicial definido pelo gsap.set() */
+    will-change: transform, opacity;
+}
+
+/* O espaço entre palavras não leva gradiente — só precisa de largura. */
+.livro-espaco {
+    display: inline-block;
+    width: 0.28em;
+    will-change: transform, opacity;
+}
+
+.livro-autoria {
+    margin: 0 0 2rem;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    will-change: transform, opacity;
+}
+
+/* A sinopse. `max-width` em ch e não em rem: a medida confortável de leitura
+   se conta em caracteres, não em pixels, e assim ela acompanha o corpo. */
+.livro-sinopse {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 62ch;
+    margin-inline: auto;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 1.02rem;
+    color: #e5e5e5;
+    text-align: left;
+    will-change: transform, opacity;
+}
+
+@media (min-width: 900px) {
+    .livro-sinopse { margin-inline: 0; }
+}
+
+.livro-sinopse p { margin: 0; }
+
+/* --------------------------------------------------------------------------
+   O botão
+   A mesma pílula de vidro do Oráculo e do menu da home, um degrau maior:
+   aqui ele é a única ação da página, e não um entre vários.
+   -------------------------------------------------------------------------- */
+
+.livro-acao {
+    margin-top: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+@media (min-width: 900px) {
+    .livro-acao { align-items: flex-start; }
+}
+
+.livro-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    padding: 0.7rem 1.6rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    background: rgb(255 255 255 / 0.08);
+    border: 1px solid rgb(255 255 255 / 0.18);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+}
+
+.livro-btn:hover {
+    transform: scale(1.05);
+    background: rgb(255 255 255 / 0.14);
+    border-color: rgb(255 255 255 / 0.3);
+    box-shadow: 0 4px 20px -5px rgba(155, 161, 166, 0.4);
+}
+
+.livro-btn:active { transform: scale(0.95); }
+
+.livro-btn-icone {
+    width: 0.85rem;
+    height: 0.85rem;
+}
+
+.livro-acao-nota {
+    margin: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   Quem prefere menos movimento
+   A entrada é enfeite: sem ela a página é a mesma. O GSAP também consulta
+   isto, no book.js; a regra aqui é a rede de segurança para o caso de o
+   módulo não chegar a rodar.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .livro-capa,
+    .livro-sobretitulo,
+    .livro-letra,
+    .livro-espaco,
+    .livro-autoria,
+    .livro-sinopse,
+    .livro-btn {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+}

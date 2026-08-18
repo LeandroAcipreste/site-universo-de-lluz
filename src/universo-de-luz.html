@@ -96,9 +96,9 @@
           <div class="menu" hidden>
 
             <!-- O gatilho só existe em tela estreita, onde não cabe o eixo de
-                 seis botões ao lado da logo. No desktop ele some e a lista
-                 fica sempre aberta — daí `aria-expanded` nascer verdadeiro e o
-                 JS só mexer nele quando o botão está em uso. -->
+                 botões ao lado da logo. No desktop ele some e a lista fica
+                 sempre aberta — daí `aria-expanded` nascer verdadeiro e o JS
+                 só mexer nele quando o botão está em uso. -->
             <button class="menu__gatilho" type="button"
                     aria-expanded="false" aria-controls="menu-lista">
               <span class="menu__barras" aria-hidden="true"><span></span><span></span></span>
@@ -106,12 +106,17 @@
               <span class="menu__seta" aria-hidden="true"></span>
             </button>
 
+            <!-- A mesma ordem de `ENTRADAS`, em `pages/comum/nav.js`. São duas
+                 listas porque são dois componentes que não se encontram: a
+                 barra das páginas internas se monta por JS, e esta é marcação
+                 da própria home. Quem mexer numa tem de mexer na outra. -->
             <nav class="menu__lista" id="menu-lista" aria-label="Principal">
               <a class="menu__item" href="/meet-us">Conheça-nos</a>
               <a class="menu__item" href="/prayers">Orações</a>
               <a class="menu__item" href="/cleansing">Limpezas</a>
               <a class="menu__item" href="/defense">Defesas</a>
               <a class="menu__item" href="/oracle">Oráculo</a>
+              <a class="menu__item" href="/book">Livro</a>
               <a class="menu__item" href="/youtube">YouTube</a>
             </nav>
 

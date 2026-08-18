@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O livro — Universo de Luz</title>
+<meta name="description" content="Inspirações para a Nova Era: mensagens canalizadas pela médium Olyvia Libório nos encontros do Happy Luz.">
+<link rel="icon" type="image/svg+xml" href="/public/img/logo.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="/public/img/logo-192.png">
+
+<!-- Caminhos a partir da raiz: a página é servida em `/book` por reescrita
+     (ver vercel.json), e ali um caminho relativo resolveria para a raiz. -->
+<!-- A transição entre páginas, e é a única folha do projeto que vem por
+     <link> próprio em vez de por @import. O porquê completo está no
+     `universo-de-luz.html`: a regra `@view-transition` precisa ser conhecida
+     antes do primeiro desenho, e por @import ela chega tarde demais. -->
+<style>@view-transition { navigation: auto }</style>
+<link rel="stylesheet" href="/src/transicao.css">
+<link rel="stylesheet" href="/src/pages/book/book.css">
+</head>
+
+<body>
+
+<!-- A página do livro. O fundo é o mesmo do Oráculo — a mesma fotografia, a
+     mesma sobreposição e as mesmas partículas —, porque as duas páginas falam
+     da mesma pessoa e o livro é oferecido lá dentro. Trocar de fundo aqui
+     faria parecer outro site. -->
+<section class="livro-section">
+
+  <!-- Camada de fundo -->
+  <img src="/src/pages/comum/img/fundo.jpg" alt="" aria-hidden="true" class="livro-bg">
+  <div class="livro-overlay"></div>
+  <canvas class="livro-particles"></canvas>
+
+  <div class="livro-content">
+
+    <!-- ── A capa ──
+         Ela é o assunto da página, então vem grande. A proporção está fixada
+         no CSS para o bloco não saltar quando a imagem termina de baixar.
+
+         Sem `loading="lazy"`: aqui a capa está no primeiro quadro da página,
+         e adiar o pedido só atrasaria o que a pessoa veio ver. Na página do
+         Oráculo é o contrário, e lá ela é lazy. -->
+    <figure class="livro-capa-fig">
+      <img class="livro-capa"
+           src="/public/img/capa-do-livro.PNG"
+           alt="Capa do livro Inspirações para a Nova Era, de Olyvia Libório"
+           fetchpriority="high">
+    </figure>
+
+    <!-- ── O texto ── -->
+    <div class="livro-texto">
+
+      <p class="livro-sobretitulo">O livro</p>
+
+      <h1 class="livro-titulo"></h1>
+
+      <p class="livro-autoria">de Olyvia Libório</p>
+
+      <!-- A sinopse. O texto é o que foi entregue, palavra por palavra; a
+           única liberdade foi quebrá-lo em quatro parágrafos nos pontos em que
+           o assunto vira. Num bloco só ele daria uma parede de vinte linhas no
+           celular, e a maioria das pessoas não chegaria ao fim. -->
+      <div class="livro-sinopse">
+        <p>
+          O planeta Terra e tudo o que vive nele estão passando por um
+          memorável momento. É o tempo de agirmos revestidos da Divina
+          Presença, de modo a elevar ilimitadamente a vibração de tudo o que
+          existe.
+        </p>
+        <p>
+          Aceitação, compaixão, coragem, fé e alegria são algumas das fibras
+          que constituem a armadura do guerreiro da luz. Forjados com grande
+          lucidez, inúmeros espíritos aguerridos por todas as partes do mundo
+          expandem conhecimentos, curas, métodos e artes, sempre movidos por
+          idêntico ideal: despertar a essência divina em cada ser e, assim,
+          iluminar a Terra.
+        </p>
+        <p>
+          Mas, afinal, qual o melhor caminho para esse belo despertar? Como
+          então viver a paz e o divino amor quando o cotidiano reflete um mundo
+          desigual e imperfeito? Essas e outras perguntas são abordadas aqui.
+        </p>
+        <p>
+          Uma obra que reúne mensagens canalizadas pela médium Olyvia Libório,
+          em encontros mensais batizados de Happy Luz, nos quais variados seres
+          a serviço da Criação brindam os presentes com instruções imantadas do
+          mais sublime amor, como quem organiza uma festa aguardando ilustres
+          convidados.
+        </p>
+      </div>
+
+      <!-- O endereço vai limpo: o link que veio tinha `utm_source`,
+           `utm_medium`, `utm_content` e `fbclid` pendurados — parâmetros que o
+           Instagram e o Facebook acrescentam para rastrear de onde veio o
+           clique. Num link do próprio site eles não medem nada de útil e
+           carregam um identificador de sessão de rede social para dentro da
+           navegação de quem clica. -->
+      <div class="livro-acao">
+        <a class="livro-btn"
+           href="https://www.madras.com.br/espiritualidade/inspiracoes-para-a-nova-era"
+           target="_blank" rel="noopener noreferrer">
+          Adquira o seu exemplar
+          <!-- <ArrowRight /> do lucide-react 0.544.0 -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               class="livro-btn-icone" aria-hidden="true">
+            <path d="M5 12h14"/>
+            <path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+        <p class="livro-acao-nota">Editora Madras</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script type="importmap">
+{
+  "imports": {
+    "gsap": "/public/lib/gsap/index.js"
+  }
+}
+</script>
+<script type="module" src="/src/pages/book/book.js"></script>
+</body>
+</html>
