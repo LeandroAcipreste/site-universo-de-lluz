@@ -64,10 +64,11 @@
     pointer-events: none;
   }
 
-  .nav__marca { display: none; }
-
   .nav__gatilho { pointer-events: auto; }
 }
+
+/* A marca sai no celular, e a regra que a esconde mora **depois** das que a
+   desenham — ver a nota lá embaixo. */
 
 @keyframes navEntra {
   from { opacity: 0; transform: translateY(-14px); }
@@ -99,6 +100,20 @@
   height: 1rem;
   width: auto;
   opacity: 0.9;
+}
+
+/* No celular a marca não existe: a folha do menu já tem "Página inicial" como
+   primeira entrada, e o triângulo levava ao mesmo lugar ocupando espaço numa
+   tela que não tem espaço. Fica só o hambúrguer.
+
+   E esta regra está **aqui**, depois do `.nav__marca { display: flex }` de
+   cima, e não junto com o resto do bloco de celular lá em cima. As duas
+   seletoras têm a mesma especificidade — uma classe cada —, então quem vem
+   depois no arquivo ganha. Estando antes, o `display: flex` a anulava e a
+   marca continuava aparecendo no telefone. Estar dentro de um `@media` não
+   aumenta especificidade nenhuma. */
+@media (max-width: 1023px) {
+  .nav__marca { display: none; }
 }
 
 /* ── os links, só em tela larga ── */
