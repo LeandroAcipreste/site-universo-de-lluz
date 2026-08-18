@@ -37,6 +37,38 @@
   animation: navEntra 1s var(--nav-ease) 0.15s both;
 }
 
+/* --------------------------------------------------------------------------
+   No celular a barra é só o hambúrguer
+
+   Some a faixa: o gradiente escuro e o `backdrop-filter` cobriam o alto de
+   toda página interna, e era essa faixa que apagava os botões de categoria de
+   Orações, Defesas e Limpezas — eles ficam justamente ali em cima.
+
+   Some também a marca. Ela leva à página inicial, e a folha do menu já tem
+   "Página inicial" como primeira entrada: dois caminhos para o mesmo lugar,
+   um deles ocupando espaço numa tela que não tem espaço.
+
+   E some o alcance do toque. A barra é `position: fixed` de ponta a ponta;
+   mesmo sem pintar nada, ela continuaria interceptando o dedo na largura
+   inteira e roubando o toque do que estivesse por baixo. `pointer-events:
+   none` na barra e `auto` no botão devolve a faixa para a página, deixando
+   clicável só o hambúrguer.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1023px) {
+  .nav {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    justify-content: flex-end;   /* sem a marca, o botão fica onde estava */
+    pointer-events: none;
+  }
+
+  .nav__marca { display: none; }
+
+  .nav__gatilho { pointer-events: auto; }
+}
+
 @keyframes navEntra {
   from { opacity: 0; transform: translateY(-14px); }
   to   { opacity: 1; transform: none; }
@@ -178,8 +210,6 @@
   /* No original este radial era arroxeado; aqui é o mesmo grafite frio das
      páginas, para a folha não destoar do que está por baixo dela. */
   background: radial-gradient(120% 90% at 15% 10%, rgb(24 26 30 / 0.96), rgb(5 5 8 / 0.985));
-  -webkit-backdrop-filter: blur(22px);
-  backdrop-filter: blur(22px);
 
   /* Ela desce como uma cortina, em vez de aparecer. */
   clip-path: inset(0 0 100% 0);
@@ -187,9 +217,18 @@
   pointer-events: none;
 }
 
+/* O desfoque só existe com a folha aberta.
+
+   Declarado na regra de cima, ele valia também com a folha fechada. O
+   `clip-path` esconde o desenho dela, mas `backdrop-filter` é filtro do que
+   está **atrás** — e no WebKit ele costuma continuar sendo aplicado mesmo com
+   o elemento recortado a zero. O resultado é uma camada de desfoque sobre a
+   página inteira, o tempo todo, sem nada visível que a explique. */
 .nav-folha.esta-aberto {
   clip-path: inset(0 0 0 0);
   pointer-events: auto;
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
 }
 
 @media (min-width: 1024px) {
