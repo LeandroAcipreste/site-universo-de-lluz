@@ -48,17 +48,18 @@
   pointer-events: none;
 }
 
-/* A vinheta que escurece o pé da tela, para o texto se sustentar sobre a cena. */
-.hero__content::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40rem;
-  background: linear-gradient(180deg, #3c627800, #3c627899);
-  z-index: 1;
-}
+/* Aqui havia uma vinheta — um `::after` de 40rem no pé da tela, com um
+   gradiente de #3c6278 até 60% de opacidade. A ideia era escurecer a cena para
+   o texto se sustentar sobre ela.
+
+   Fazia o contrário. A nuvem onde a câmera pousa é branca, e 60% de azul
+   acinzentado por cima dela não escurecem o fundo: **lavam a faixa inteira**.
+   A oração é azul, e passava a ser azul sobre azul — no celular, onde a
+   vinheta cobria quase metade da tela, ela sumia. Parecia uma película sobre o
+   texto, e era exatamente isso.
+
+   Não voltar. Se algum texto precisar se sustentar sobre a cena, o lugar de
+   resolver é a cor do próprio texto, não uma camada por cima de tudo. */
 
 .hero__grid {
   position: relative;
@@ -449,18 +450,9 @@
     margin-top: 1.2rem;
   }
 
-  /* A oração ocupa a largura toda embaixo do triângulo.
-
-     Ela já foi menor do que isto, e não dava para ler. O motivo não é óbvio:
-     1rem aqui não são 16px, são `10 * 100vw / 390` — dez pixels na largura de
-     projeto e *menos* do que isso em qualquer aparelho mais estreito. Os
-     1.2rem que a linha tinha viravam 12px no iPhone 14, 11,5px no SE e 11,1px
-     num Galaxy de 360. Some a isso o `-webkit-text-size-adjust: none` do
-     global, que impede o celular de compensar por conta própria, e o texto
-     ficava no limite do ilegível nos dois sistemas.
-
-     Os corpos abaixo estão em rem de propósito, para continuarem
-     acompanhando a escala — o que mudou foi o patamar, não o mecanismo. */
+  /* A oração encolhe para caber embaixo do triângulo sem apertar as margens.
+     Ela é o bloco mais alto da tela; cada décimo aqui vira espaço de sobra
+     para o vão do meio. */
   .oracao {
     max-width: none;
     text-align: left;
@@ -468,17 +460,16 @@
        isso começa branco; aqui embaixo o card inteiro está sobre nuvem branca,
        e o branco sumiria da primeira à última linha.
 
-       E o azul é mais fundo do que o do desktop. O antigo começava em #5f90bd,
-       que sobre nuvem branca dá 3,38:1 — abaixo dos 4,5:1 que texto de corpo
-       precisa, e era por isso que as primeiras linhas sumiam justamente onde a
-       nuvem é mais clara. Este começa em 5,11:1 e termina em 9,16:1. */
+       E o azul é mais fundo do que o do desktop, porque o fundo aqui é a nuvem
+       clara: começa em 5,11:1 de contraste e termina em 9,16:1. Antes começava
+       em #5f90bd, que dá 3,38:1 — abaixo dos 4,5:1 que texto de corpo pede. */
     background-image: linear-gradient(180deg, #41729c 0%, #1e4a75 100%);
   }
-  .oracao__selo { margin-bottom: 1.4rem; font-size: 1.15rem; }
-  .oracao__titulo { margin-bottom: 1.2rem; font-size: 2.9rem; }
-  .oracao__linha { margin-bottom: 0.6rem; font-size: 1.6rem; line-height: 1.4; }
-  .oracao__fecho { margin: 1.4rem 0 1.1rem; font-size: 1.5rem; }
-  .oracao__aclamacoes { margin-bottom: 0; font-size: 1.4rem; }
+  .oracao__selo { margin-bottom: 1.4rem; font-size: 1.05rem; }
+  .oracao__titulo { margin-bottom: 1.2rem; font-size: 2.6rem; }
+  .oracao__linha { margin-bottom: 0.5rem; font-size: 1.2rem; line-height: 1.35; }
+  .oracao__fecho { margin: 1.2rem 0 1rem; font-size: 1.2rem; }
+  .oracao__aclamacoes { margin-bottom: 0; font-size: 1.2rem; }
   .oracao__aclamacoes span + span { margin-left: 1.6rem; }
 }
 
@@ -530,5 +521,4 @@
     flex-wrap: nowrap;
     align-items: stretch;
   }
-  .hero__content::after { height: 17rem; background: linear-gradient(180deg, #3c627800, #3c62784d); }
 }
