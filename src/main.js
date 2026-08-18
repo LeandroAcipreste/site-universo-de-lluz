@@ -17,6 +17,7 @@
  */
 
 import { mostrarRodape } from './components/rodape/rodape.js';
+import { mostrarCookies } from './components/cookies/cookies.js';
 import { criarIntroducao } from './components/introducao/introducao.js';
 
 /* A introdução começa antes de o three.js existir, e é por isso que o hero
@@ -42,7 +43,9 @@ const hero = createHero(document.getElementById('hero'));
 await hero.montarCena(intro.progresso);
 await intro.sair();
 
-/* O rodapé só agora: ele é fixo no pé da tela e ficaria por cima do preloader,
-   que cobre tudo. Aparece junto com a cena, e some da abertura. */
+/* O rodapé e o aviso de cookies só agora: os dois são fixos no pé da tela e
+   ficariam por cima do preloader, que cobre tudo. Aparecem junto com a cena, e
+   somem da abertura. */
 mostrarRodape();
+mostrarCookies();
 hero.voar();

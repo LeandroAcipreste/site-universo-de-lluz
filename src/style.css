@@ -9,6 +9,7 @@
    ========================================================================== */
 
 @import url("components/rodape/rodape.css");
+@import url("components/cookies/cookies.css");
 @import url("components/introducao/introducao.css");
 @import url("components/hero/hero.css");
 

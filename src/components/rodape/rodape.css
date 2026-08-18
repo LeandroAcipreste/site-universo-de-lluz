@@ -65,6 +65,32 @@
   flex: none;
 }
 
+/* A direita do rodapé: o link dos documentos e o crédito, um sobre o outro no
+   celular e lado a lado quando há largura. */
+.rodape__direita {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+@media (min-width: 800px) {
+  .rodape__direita {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.4rem;
+  }
+}
+
+.rodape__doc {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: rgb(255 255 255 / 0.5);
+}
+
+.rodape__doc:hover,
+.rodape__doc:focus-visible { color: #fff; }
+
 /* O crédito: bem mais apagado que as redes, porque é assinatura e não
    chamada. Só ganha contraste quando o ponteiro passa. */
 .rodape__credito {

@@ -1,0 +1,194 @@
+/* ==========================================================================
+   O aviso de cookies
+
+   Uma faixa no pé da tela, na mesma linguagem de vidro do resto do site. Fica
+   acima de tudo (z-index 70: a barra é 60, o rodapé 50) porque enquanto ela
+   está aberta é dela a decisão.
+
+   Ela **não** é modal de bloqueio. Um aviso que tranca a página até responder
+   é justamente o padrão escuro que a lei desaprova: consentimento arrancado
+   não é consentimento. Aqui dá para ignorar e continuar lendo — só o mapa do
+   Oráculo fica esperando.
+
+   Pelo mesmo motivo os dois botões têm o mesmo peso visual. "Aceitar" com
+   destaque e "recusar" escondido num link cinza é o outro padrão escuro
+   clássico; aqui o que muda entre os dois é a cor de fundo, não a
+   proeminência.
+   ========================================================================== */
+
+.cookies {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 70;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1rem clamp(1.1rem, 3vw, 2.25rem);
+
+  background: rgb(8 10 16 / 0.92);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgb(255 255 255 / 0.12);
+  color: #fff;
+  font-family: sans, system-ui, sans-serif;
+
+  /* Entra deslizando. O estado inicial é este; `.esta-visivel` o desfaz. */
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cookies.esta-visivel {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cookies { transition: none; transform: none; }
+}
+
+@media (min-width: 800px) {
+  .cookies {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 1.1rem clamp(1.5rem, 3vw, 2.25rem);
+  }
+}
+
+.cookies__texto { max-width: 62ch; }
+
+.cookies__titulo {
+  margin: 0 0 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.9);
+}
+
+.cookies__linha {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgb(255 255 255 / 0.68);
+}
+
+.cookies__linha strong {
+  font-weight: 500;
+  color: rgb(255 255 255 / 0.85);
+}
+
+.cookies__linha a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.cookies__acoes {
+  display: flex;
+  gap: 0.6rem;
+  flex: none;
+}
+
+/* Os dois botões são do mesmo tamanho e do mesmo corpo, de propósito — ver a
+   nota do topo. E 2.75rem de altura mínima é o alvo de toque de 44px. */
+.cookies__btn {
+  flex: 1;
+  min-height: 2.75rem;
+  padding: 0.6rem 1.3rem;
+  border-radius: 9999px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 800px) {
+  .cookies__btn { flex: none; }
+}
+
+.cookies__btn:active { transform: scale(0.96); }
+
+.cookies__btn--recusar {
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 0.28);
+  color: rgb(255 255 255 / 0.85);
+}
+
+.cookies__btn--recusar:hover {
+  background: rgb(255 255 255 / 0.08);
+  border-color: rgb(255 255 255 / 0.45);
+}
+
+.cookies__btn--aceitar {
+  background: rgb(255 255 255 / 0.14);
+  border: 1px solid rgb(255 255 255 / 0.3);
+  color: #fff;
+}
+
+.cookies__btn--aceitar:hover {
+  background: rgb(255 255 255 / 0.22);
+  border-color: rgb(255 255 255 / 0.45);
+}
+
+/* ==========================================================================
+   O lugar do mapa, enquanto não há consentimento
+
+   Não é uma mensagem de erro: é o mapa esperando. O botão carrega na hora, e
+   carregar por ali vale como o mesmo "sim" do aviso.
+   ========================================================================== */
+
+.espera-terceiro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  height: 180px;
+  padding: 1rem;
+  text-align: center;
+  border: 1px dashed rgb(255 255 255 / 0.18);
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.03);
+}
+
+@media (min-width: 768px) {
+  .espera-terceiro { height: 210px; }
+}
+
+.espera-terceiro__linha {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 0.78rem;
+  font-weight: 300;
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.55);
+}
+
+.espera-terceiro__btn {
+  min-height: 2.75rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 9999px;
+  border: 1px solid rgb(255 255 255 / 0.22);
+  background: rgb(255 255 255 / 0.08);
+  color: #fff;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.espera-terceiro__btn:hover { background: rgb(255 255 255 / 0.16); }

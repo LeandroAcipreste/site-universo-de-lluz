@@ -102,12 +102,22 @@
                mesmo recurso que os mapas em modo escuro usam: inverter e
                girar o matiz devolve as cores aproximadamente onde estavam,
                com o fundo escuro. -->
+          <!-- O endereço do mapa está em `data-src`, e não em `src`, de
+               propósito: em `src` o navegador pede o iframe ao carregar a
+               página, e o Google põe os cookies dele antes de qualquer
+               pergunta. Consentimento depois do fato não é consentimento.
+
+               Quem move o endereço para `src` é o `oracle.js`, e só depois do
+               "aceitar" — ver `components/cookies/cookies.js`. Sem
+               consentimento fica no lugar dele um bloco com um botão, que
+               carrega na hora para quem quiser só aquele mapa. -->
           <iframe
             class="oracle-mapa"
             title="Mapa da Livraria Terceiro Milênio, no Rio Vermelho"
-            src="https://www.google.com/maps?q=Livraria%20Terceiro%20Mil%C3%AAnio%2C%20Rua%20Maca%C3%BAbas%2C%2028%2C%20Rio%20Vermelho%2C%20Salvador%2C%20BA&output=embed"
+            data-src="https://www.google.com/maps?q=Livraria%20Terceiro%20Mil%C3%AAnio%2C%20Rua%20Maca%C3%BAbas%2C%2028%2C%20Rio%20Vermelho%2C%20Salvador%2C%20BA&output=embed"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
+            hidden
             allowfullscreen></iframe>
 
           <div class="oracle-local-acao">

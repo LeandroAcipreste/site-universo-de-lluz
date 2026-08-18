@@ -1,0 +1,312 @@
+/* ==========================================================================
+   Privacidade e Termos
+
+   Página de documento. Herda o fundo do site para não parecer outro lugar,
+   mas larga tudo o que nas outras páginas serve para impressionar: não há
+   partículas, não há entrada animada, não há título em gradiente recortado.
+
+   O motivo não é economia. Quem abre esta página quer achar um parágrafo — às
+   vezes com pressa, às vezes com um leitor de tela. Texto que começa
+   invisível esperando o GSAP é texto que pode não chegar, e um gradiente
+   `background-clip: text` é texto que alguns leitores anunciam pior. Aqui
+   ganha a leitura.
+   ========================================================================== */
+
+@import url("/src/pages/comum/base.css");
+@import url("/src/pages/comum/nav.css");
+
+.doc-section {
+    position: relative;
+    min-height: 100svh;
+    overflow-x: clip;
+    background-color: #050505;
+    color: #fff;
+}
+
+/* Mais apagado que nas outras páginas: ali a fotografia é ambiente, aqui ela
+   é papel de parede atrás de texto corrido, e a 0.4 ela competia com a
+   leitura. */
+.doc-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.18;
+}
+
+.doc-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(5, 5, 8, 0.9) 0%, rgba(12, 8, 18, 0.82) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   A coluna de texto
+
+   `65ch` e não uma medida em pixels: a largura confortável de leitura se conta
+   em caracteres, e assim ela acompanha o corpo se ele mudar.
+   -------------------------------------------------------------------------- */
+
+.doc-content {
+    position: relative;
+    z-index: 10;
+    max-width: 65ch;
+    margin: 0 auto;
+    padding: 7.5rem 1.5rem 6rem;
+}
+
+@media (min-width: 768px) {
+    .doc-content { padding: 9rem 2rem 7rem; }
+}
+
+/* ── Cabeçalho ── */
+
+.doc-sobretitulo {
+    margin: 0 0 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.doc-titulo {
+    margin: 0 0 0.75rem;
+    font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+    font-weight: 300;
+    font-size: clamp(1.9rem, 5vw, 2.8rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #fff;
+}
+
+.doc-data {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* ── Índice ── */
+
+.doc-indice {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 2rem 0 0;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.doc-indice a {
+    padding: 0.45rem 1rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.72);
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.doc-indice a:hover,
+.doc-indice a:focus-visible {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.32);
+    color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   Os blocos de texto
+
+   `scroll-margin-top` porque a barra do site é fixa: sem isso, pular para
+   `#termos` deixa o título embaixo dela, e a pessoa acha que o link falhou.
+   -------------------------------------------------------------------------- */
+
+.doc-bloco {
+    padding-top: 2.75rem;
+    scroll-margin-top: 6rem;
+}
+
+.doc-bloco h2 {
+    margin: 0 0 1.25rem;
+    font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.4rem, 3.5vw, 1.85rem);
+    line-height: 1.2;
+    color: #fff;
+}
+
+.doc-bloco h3 {
+    margin: 2rem 0 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.doc-bloco p {
+    margin: 0 0 1rem;
+    font-weight: 300;
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: #dcdcdc;
+}
+
+.doc-bloco strong { font-weight: 500; color: #fff; }
+.doc-bloco em { color: #efefef; }
+
+.doc-bloco ul {
+    margin: 0 0 1rem;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.doc-bloco li {
+    font-weight: 300;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: #dcdcdc;
+}
+
+.doc-bloco a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
+}
+
+.doc-bloco a:hover { text-decoration-color: #fff; }
+
+.doc-bloco code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.86em;
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+/* O aviso de que nada aqui é conselho médico. É a única coisa da página que
+   alguém pode precisar ver sem ler o resto, então é a única destacada. */
+.doc-destaque {
+    margin: 1.5rem 0;
+    padding: 1rem 1.15rem;
+    border-left: 2px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0 8px 8px 0;
+}
+
+.doc-bloco .doc-destaque { color: #f0f0f0; }
+
+/* --------------------------------------------------------------------------
+   O botão que parece link
+
+   É `<button>` e não `<a href="#">` porque ele faz uma coisa, não leva a lugar
+   nenhum. Um leitor de tela anuncia "botão", que é o que é; uma âncora falsa
+   anunciaria "link" e prometeria uma navegação que não acontece.
+   -------------------------------------------------------------------------- */
+
+.doc-link-botao {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+}
+
+.doc-link-botao:hover { text-decoration-color: #fff; }
+
+/* --------------------------------------------------------------------------
+   A tabela de cookies
+
+   A caixa com `overflow-x: auto` é o que impede a página inteira de rolar de
+   lado no celular: quem rola é a tabela, dentro dos limites dela.
+   -------------------------------------------------------------------------- */
+
+.doc-tabela-caixa {
+    margin: 1.25rem 0 1.5rem;
+    overflow-x: auto;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+}
+
+.doc-tabela {
+    width: 100%;
+    min-width: 34rem;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.doc-tabela__legenda {
+    padding: 0.8rem 1rem;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.42);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.doc-tabela th,
+.doc-tabela td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    vertical-align: top;
+    font-weight: 300;
+    line-height: 1.55;
+    color: #d8d8d8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.doc-tabela thead th {
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.doc-tabela tbody th {
+    font-weight: 500;
+    color: #fff;
+}
+
+.doc-tabela tbody tr:last-child th,
+.doc-tabela tbody tr:last-child td { border-bottom: 0; }
+
+/* ── Pé ── */
+
+.doc-pe {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.doc-pe p {
+    margin: 0;
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.doc-pe a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}

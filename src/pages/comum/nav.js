@@ -18,6 +18,7 @@
  */
 
 import { mostrarRodape } from '/src/components/rodape/rodape.js';
+import { mostrarCookies } from '/src/components/cookies/cookies.js';
 
 export const ENTRADAS = [
   { rotulo: 'Página inicial', caminho: '/' },
@@ -26,6 +27,7 @@ export const ENTRADAS = [
   { rotulo: 'Limpezas', caminho: '/cleansing' },
   { rotulo: 'Defesas', caminho: '/defense' },
   { rotulo: 'Oráculo', caminho: '/oracle' },
+  { rotulo: 'Eventos', caminho: '/events' },
   /* Depois do Oráculo porque é lá dentro que o livro é oferecido: quem vem do
      card do fim daquela página encontra a entrada no lugar onde já estava
      olhando. */
@@ -109,3 +111,4 @@ window.addEventListener('keydown', (e) => {
 /* Nada a esperar aqui: a página já está na tela quando este módulo roda. Na
    inicial é diferente — ver o main.js. */
 mostrarRodape();
+mostrarCookies();

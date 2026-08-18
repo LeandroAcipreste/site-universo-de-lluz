@@ -51,13 +51,20 @@ rodape.innerHTML = `
     </a>
   </div>
 
-  <p class="rodape__credito">
-    <!-- O "desenvolvido por" vai num span porque no celular ele sai: a linha
-         inteira não cabe ao lado dos ícones sem espremer o crédito a um corpo
-         que ninguém lê. O endereço sozinho já diz o que precisa. -->
-    <span class="rodape__credito-prefixo">desenvolvido por</span>
-    <a href="${DESENVOLVEDOR}" target="_blank" rel="noopener noreferrer">@leandroaciprestedesenvolvedor</a>
-  </p>`;
+  <div class="rodape__direita">
+    <!-- O lugar dos documentos é o rodapé, não a barra de cima: quem procura
+         a política procura aqui, e quem não procura não deve topar com ela
+         entre as páginas do site. -->
+    <a class="rodape__doc" href="/privacy">Privacidade e Termos</a>
+
+    <p class="rodape__credito">
+      <!-- O "desenvolvido por" vai num span porque no celular ele sai: a linha
+           inteira não cabe ao lado dos ícones sem espremer o crédito a um
+           corpo que ninguém lê. O endereço sozinho já diz o que precisa. -->
+      <span class="rodape__credito-prefixo">desenvolvido por</span>
+      <a href="${DESENVOLVEDOR}" target="_blank" rel="noopener noreferrer">@leandroaciprestedesenvolvedor</a>
+    </p>
+  </div>`;
 
 document.body.append(rodape);
 

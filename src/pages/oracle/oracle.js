@@ -16,7 +16,40 @@
 
 import gsap from 'gsap';
 import { particulas } from '../comum/particulas.js';
+import { quandoAceitar } from '/src/components/cookies/cookies.js';
 import '../comum/nav.js';   // a barra se monta sozinha
+
+/* ── O mapa, e o consentimento ──
+   Esta é a única página do site com um embutido de terceiro que põe cookie.
+   O endereço fica em `data-src` no HTML, e só vira `src` aqui — antes disso
+   o Google não é sequer contactado.
+
+   Enquanto não houver "sim", no lugar dele fica um bloco com um botão. Não é
+   aviso de erro: é o mapa esperando, e quem clicar carrega só este mapa. */
+const mapa = document.querySelector('.oracle-mapa');
+
+const espera = document.createElement('div');
+espera.className = 'espera-terceiro';
+espera.innerHTML = `
+  <p class="espera-terceiro__linha">
+    O mapa vem do Google, que põe cookies próprios. Ele carrega quando você
+    permitir.
+  </p>
+  <button type="button" class="espera-terceiro__btn">Carregar o mapa</button>`;
+
+function carregarMapa() {
+  if (!mapa || mapa.src) return;   // `src` vazio até aqui: nada foi pedido
+  mapa.src = mapa.dataset.src;
+  mapa.hidden = false;
+  espera.remove();
+}
+
+espera.querySelector('button').addEventListener('click', carregarMapa);
+
+if (mapa) {
+  mapa.insertAdjacentElement('beforebegin', espera);
+  quandoAceitar(carregarMapa);
+}
 
 /* As linhas do título, como no original. As constantes LINE3B_PREFIX,
    LINE3B_CYAN e LINE3B_SUFFIX existem lá para pintar o "y" de Olyvia de ciano,
