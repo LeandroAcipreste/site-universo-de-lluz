@@ -91,3 +91,41 @@ body {
   inset: 0;
   overflow: hidden;
 }
+
+/* --------------------------------------------------------------------------
+   O rodapé, aqui, é azul
+
+   O `rodape.css` pinta o rodapé de branco, e nas páginas internas isso está
+   certo: todas elas têm fotografia escura por baixo. A inicial é a única com
+   fundo **claro** no pé — a câmera pousa numa nuvem branca, e é sobre ela que
+   o rodapé fica parado no fim do voo. Branco sobre branco: os dois ícones e o
+   crédito sumiam por completo.
+
+   Este bloco mora aqui, e não no `rodape.css`, porque esta folha é a da página
+   inicial e de mais nenhuma — o que se escreve aqui vale só para ela, sem
+   precisar inventar uma classe no `body` para dizer "estou na home".
+
+   O azul é o mesmo `#143a5e` da oração, pela mesma razão: é o marinho que se
+   sustenta sobre a nuvem. E a sombra vira branca — a do `rodape.css` é preta,
+   feita para separar texto claro de fundo escuro, e aqui o problema é o
+   inverso.
+   -------------------------------------------------------------------------- */
+
+.rodape a {
+  color: rgb(20 58 94 / 0.85);
+  text-shadow: 0 0 0.4rem rgb(255 255 255 / 0.9);
+}
+
+.rodape a:hover,
+.rodape a:focus-visible { color: #0d2743; }
+
+.rodape__doc { color: rgb(20 58 94 / 0.72); }
+
+/* O crédito continua mais apagado que as redes — é assinatura, não chamada —,
+   mas agora apagado *para baixo*, na direção do fundo claro. */
+.rodape__credito {
+  color: rgb(20 58 94 / 0.62);
+  text-shadow: 0 0 0.4rem rgb(255 255 255 / 0.9);
+}
+
+.rodape__credito a { color: rgb(20 58 94 / 0.78); }

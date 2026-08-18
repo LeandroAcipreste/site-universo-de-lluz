@@ -423,20 +423,42 @@
 @media (max-width: 649px) {
   .hero__content { align-items: stretch; }
 
-  /* De grade a pilha, ocupando a altura toda: é o `space-between` que abre o
-     vão do meio, e é nele que o triângulo aparece. */
+  /* De grade a pilha, ocupando a altura toda.
+
+     Já foi `space-between`, com a oração colada no pé da tela. Ela agora fica
+     no **meio**: o menu continua no alto, e a coluna da oração toma toda a
+     sobra e centra o card dentro dela. É por isso que quem manda no meio é o
+     `flex: 1` da coluna, e não um `justify-content` do grid — assim o menu não
+     desce junto quando a oração é curta, nem sobe quando é longa. */
   .hero__grid {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     height: 100%;
     padding: 2.4rem 2rem 3.2rem;
   }
 
+  .hero__col {
+    flex: 1;
+    align-items: center;
+    justify-content: center;   /* é isto que centra a oração na tela */
+    min-height: 0;             /* deixa a coluna encolher se faltar altura */
+  }
+
   /* O gatilho vem primeiro na tela, mas continua depois no HTML — a ordem do
-     documento é a da leitura: oração, depois navegação. */
-  .hero__col--nav { order: -1; }
-  .hero__col { align-items: center; }
+     documento é a da leitura: oração, depois navegação.
+
+     E esta regra vem **depois** da de cima de propósito. A coluna do menu
+     também é `.hero__col`, e as duas seletoras têm a mesma especificidade —
+     uma classe cada. Na ordem inversa, o `flex: 1` de cima vencia o
+     `flex: none` daqui, as duas colunas dividiam a altura ao meio e a oração
+     era centrada só na metade de baixo da tela. Foi exatamente o que
+     aconteceu. */
+  .hero__col--nav {
+    order: -1;
+    flex: none;
+    justify-content: flex-start;
+  }
 
   .menu__gatilho { display: inline-flex; }
 
@@ -450,21 +472,65 @@
     margin-top: 1.2rem;
   }
 
-  /* A oração encolhe para caber embaixo do triângulo sem apertar as margens.
-     Ela é o bloco mais alto da tela; cada décimo aqui vira espaço de sobra
-     para o vão do meio. */
-  .oracao {
-    max-width: none;
-    text-align: left;
-    /* Sem o trecho branco. No desktop o topo do card cai sobre céu azul e por
-       isso começa branco; aqui embaixo o card inteiro está sobre nuvem branca,
-       e o branco sumiria da primeira à última linha.
+  /* ── A oração, no meio da tela e com cor própria ──
 
-       E o azul é mais fundo do que o do desktop, porque o fundo aqui é a nuvem
-       clara: começa em 5,11:1 de contraste e termina em 9,16:1. Antes começava
-       em #5f90bd, que dá 3,38:1 — abaixo dos 4,5:1 que texto de corpo pede. */
-    background-image: linear-gradient(180deg, #41729c 0%, #1e4a75 100%);
+     Aqui ela **não** usa `background-clip: text`. No desktop usa, e funciona;
+     no celular a mesma técnica deixou a oração ilegível num iPhone de verdade,
+     mostrando um texto lavado, quase da cor da nuvem.
+
+     O motivo é o que a técnica é. Com `background-clip: text` o texto não tem
+     cor: ele é um recorte por onde aparece o fundo do elemento **pai**. Para
+     dar certo, três coisas precisam se comportar ao mesmo tempo — o recorte
+     atravessar descendentes que têm caixa própria, o `color: transparent` de
+     cada um deles, e o `opacity: 0.94` que algumas linhas carregam. Opacidade
+     num descendente o compõe em separado, e composição em separado é
+     exatamente onde os motores divergem: no Chrome o gradiente do pai
+     atravessa, no WebKit do iPhone ele não chega, e sobra o texto transparente
+     com o halo da sombra — que é o borrão que se via.
+
+     Não vale a pena descobrir a combinação que agrada os dois. O que a página
+     precisa é que a oração se leia, e para isso basta o texto ter cor. Um
+     azul-marinho sólido sobre a nuvem clara dá 8,6:1 — quase o dobro dos
+     4,5:1 exigidos —, e não depende de recorte, de composição nem de motor. */
+  .oracao {
+    max-width: 34rem;
+    text-align: left;
+
+    /* Desliga o recorte herdado da regra de cima. As três linhas andam
+       juntas: sem `background-image: none` o gradiente continuaria pintado
+       atrás do texto agora opaco. */
+    background-image: none;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
   }
+
+  /* Cor de verdade, e não `transparent`. O `-webkit-text-fill-color` é
+     obrigatório: no WebKit ele ganha de `color`, e sem zerá-lo aqui o texto
+     continuaria transparente por causa da regra de cima. */
+  .oracao__selo,
+  .oracao__titulo,
+  .oracao__linha,
+  .oracao__fecho,
+  .oracao__aclamacoes {
+    color: #143a5e;
+    -webkit-text-fill-color: #143a5e;
+    /* A sombra larga de 1.6rem sai. Ela existia para segurar o texto
+       transparente contra a nuvem; com cor sólida ela só embaça o glifo. Fica
+       um fio branco de meio pixel, que separa a letra da nuvem sem borrar
+       nada — o oposto do que havia. */
+    text-shadow: 0 0 0.5rem rgb(255 255 255 / 0.85);
+  }
+
+  /* A hierarquia volta a ser feita com cor, que é o que sobra quando não há
+     gradiente: o selo e o fecho recuam, o corpo fica cheio. */
+  .oracao__selo { color: #2c5580; -webkit-text-fill-color: #2c5580; }
+  .oracao__fecho { color: #2c5580; -webkit-text-fill-color: #2c5580; }
+
+  /* E as opacidades parciais somem. Com `background-clip: text` elas eram o
+     jeito de graduar; agora só apagariam o texto sem motivo. */
+  .oracao__linha,
+  .oracao__fecho { opacity: 1; }
+
   .oracao__selo { margin-bottom: 1.4rem; font-size: 1.05rem; }
   .oracao__titulo { margin-bottom: 1.2rem; font-size: 2.6rem; }
   .oracao__linha { margin-bottom: 0.5rem; font-size: 1.2rem; line-height: 1.35; }

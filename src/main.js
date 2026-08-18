@@ -43,9 +43,17 @@ const hero = createHero(document.getElementById('hero'));
 await hero.montarCena(intro.progresso);
 await intro.sair();
 
-/* O rodapé e o aviso de cookies só agora: os dois são fixos no pé da tela e
-   ficariam por cima do preloader, que cobre tudo. Aparecem junto com a cena, e
-   somem da abertura. */
+/* O rodapé só agora: ele é fixo no pé da tela e ficaria por cima do
+   preloader, que cobre tudo. Aparece junto com a cena, e some da abertura. */
 mostrarRodape();
+
+/* O voo, 8s, e a oração entrando 2s depois de a câmera parar — o `voar()`
+   só resolve quando tudo isso terminou.
+
+   O aviso de cookies espera essa promessa. Ele é uma faixa opaca no pé da
+   tela, e subindo junto com a cena apareceria por cima da travessia das
+   nuvens, que é a abertura inteira do site. Nada nele é urgente: enquanto
+   ninguém responde, o único efeito é o mapa do Oráculo não carregar, e o
+   Oráculo está a um clique de distância daqui. */
+await hero.voar();
 mostrarCookies();
-hero.voar();
