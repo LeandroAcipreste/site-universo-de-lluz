@@ -62,6 +62,19 @@
     backdrop-filter: none;
     justify-content: flex-end;   /* sem a marca, o botão fica onde estava */
     pointer-events: none;
+
+    /* Acima da folha do menu, que é 70. Sem isto o X some quando o menu abre:
+       a folha é de tela cheia e passa por cima da barra.
+
+       O `z-index: 80` que o próprio botão declara não resolve. A `.nav` é
+       `position: fixed` **com** `z-index`, e isso cria um contexto de
+       empilhamento: lá dentro o 80 só disputa com os irmãos do botão, e a
+       barra inteira continua valendo 60 contra a folha. Quem precisa subir é
+       a barra, não o botão.
+
+       Fazer isso só no celular é seguro porque aqui ela não tem mais nada:
+       sem faixa, sem marca e sem alcance de toque fora do botão. */
+    z-index: 80;
   }
 
   .nav__gatilho { pointer-events: auto; }
