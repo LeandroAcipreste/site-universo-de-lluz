@@ -430,6 +430,8 @@
      sobra e centra o card dentro dela. É por isso que quem manda no meio é o
      `flex: 1` da coluna, e não um `justify-content` do grid — assim o menu não
      desce junto quando a oração é curta, nem sobe quando é longa. */
+  /* De grade a pilha, ocupando a altura toda: o menu no alto e a oração
+     embaixo, com o triângulo aparecendo no vão entre os dois. */
   .hero__grid {
     display: flex;
     flex-direction: column;
@@ -438,11 +440,14 @@
     padding: 2.4rem 2rem 3.2rem;
   }
 
+  /* A oração fica na parte de baixo, embaixo do triângulo. O meio da tela é
+     dele: a câmera pousa ali, e oração centrada na vertical cai em cima da
+     logo. Centrada ela é na horizontal. */
   .hero__col {
     flex: 1;
     align-items: center;
-    justify-content: center;   /* é isto que centra a oração na tela */
-    min-height: 0;             /* deixa a coluna encolher se faltar altura */
+    justify-content: flex-end;
+    min-height: 0;
   }
 
   /* O gatilho vem primeiro na tela, mas continua depois no HTML — a ordem do
@@ -454,6 +459,10 @@
      `flex: none` daqui, as duas colunas dividiam a altura ao meio e a oração
      era centrada só na metade de baixo da tela. Foi exatamente o que
      aconteceu. */
+  /* Esta regra vem **depois** da de cima de propósito: a coluna do menu também
+     é `.hero__col`, as duas seletoras têm a mesma especificidade, e na ordem
+     inversa o `flex: 1` de cima venceria o `flex: none` daqui — as duas
+     colunas dividiriam a altura ao meio. */
   .hero__col--nav {
     order: -1;
     flex: none;
@@ -494,7 +503,11 @@
      4,5:1 exigidos —, e não depende de recorte, de composição nem de motor. */
   .oracao {
     max-width: 34rem;
-    text-align: left;
+    /* Centrada, e não alinhada à esquerda como no desktop. Lá o card divide a
+       largura com o menu e a margem esquerda é o que alinha os dois; aqui ele
+       está sozinho embaixo do triângulo, e o eixo da composição é o mesmo
+       eixo dele. */
+    text-align: center;
 
     /* Desliga o recorte herdado da regra de cima. As três linhas andam
        juntas: sem `background-image: none` o gradiente continuaria pintado
@@ -503,6 +516,11 @@
     -webkit-background-clip: border-box;
     background-clip: border-box;
   }
+
+  /* As aclamações são quatro palavras soltas numa linha só; centradas, a
+     margem lateral de cada uma vira espaço entre elas e nada mais. */
+  .oracao__selo span:first-child { margin-right: 0.7em; }
+  .oracao__selo span:last-child { margin-left: 0.7em; }
 
   /* Cor de verdade, e não `transparent`. O `-webkit-text-fill-color` é
      obrigatório: no WebKit ele ganha de `color`, e sem zerá-lo aqui o texto
