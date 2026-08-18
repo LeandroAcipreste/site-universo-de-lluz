@@ -41,8 +41,28 @@ src/pages/                    as páginas internas, uma pasta cada
 public/fontes/                as três fontes
 public/img/                   logo e fundo; `img/cena/` são as texturas da cena
 public/lib/                   three e gsap, servidos daqui e não de CDN
-vercel.json                   as rotas
+vercel.json                   as rotas e a configuração de implantação
 ```
+
+## A implantação
+
+Não há build: a Vercel serve os arquivos como estão. Quem diz isso são quatro
+chaves no `vercel.json`, e elas não são decoração.
+
+```
+"framework": null      "Other" — nenhum framework
+"buildCommand": ""     não construa nada
+"installCommand": ""   não instale nada
+"outputDirectory": "." sirva a raiz do repositório
+```
+
+O projeto na Vercel nasceu do site antigo em React e ficou com a predefinição
+**Vite** gravada no painel. Quando o React saiu, a predefinição continuou lá: a
+implantação rodava `vite build`, não achava o `vite` — que foi embora com o
+`package.json` — e morria com `exited with 127`. O que está no `vercel.json`
+tem precedência sobre o painel, então a correção mora no repositório e vale
+para qualquer clone. Apagar essas quatro linhas devolve o painel ao comando, e
+o erro volta.
 
 ## As páginas internas
 

@@ -1,5 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "",
+  "installCommand": "",
+  "outputDirectory": ".",
   "rewrites": [
     { "source": "/", "destination": "/src/universo-de-luz.html" },
     { "source": "/meet-us", "destination": "/src/pages/meet-us/meet-us.html" },
