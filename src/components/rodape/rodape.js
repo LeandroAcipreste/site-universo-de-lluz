@@ -52,7 +52,10 @@ rodape.innerHTML = `
   </div>
 
   <p class="rodape__credito">
-    desenvolvido por
+    <!-- O "desenvolvido por" vai num span porque no celular ele sai: a linha
+         inteira não cabe ao lado dos ícones sem espremer o crédito a um corpo
+         que ninguém lê. O endereço sozinho já diz o que precisa. -->
+    <span class="rodape__credito-prefixo">desenvolvido por</span>
     <a href="${DESENVOLVEDOR}" target="_blank" rel="noopener noreferrer">@leandroaciprestedesenvolvedor</a>
   </p>`;
 

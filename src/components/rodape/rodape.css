@@ -84,11 +84,38 @@
   color: rgb(255 255 255 / 0.42);
 }
 
-/* Em tela estreita o rótulo das redes sai e ficam só os ícones: o crédito é
-   longo e, com os dois textos, a linha quebrava. */
+/* --------------------------------------------------------------------------
+   Celular
+
+   Em tela estreita o rótulo das redes sai e ficam só os ícones: o crédito é
+   longo e, com os dois textos, a linha quebrava.
+
+   Só que ficar *só* o ícone expôs um erro que a versão com rótulo escondia. O
+   `svg` mede `1.15em`, e esse em é o do link — `0.68rem`. Dava **12,5px** de
+   ícone, e o crédito, a `0.55rem`, dava 8,8px. Num monitor, ao lado de um
+   texto, ninguém reparava; sozinhos no pé de um celular, os dois somem. E
+   12,5px também não é alvo de toque: o mínimo que se recomenda para o dedo é
+   44px, quase quatro vezes isso.
+
+   A correção separa as duas medidas, que nunca deviam ter sido a mesma: o
+   ícone passa a 1,3rem (≈21px) e quem vai a 44px é a **área ao redor dele**,
+   que não se vê e é o que a mão acerta.
+   -------------------------------------------------------------------------- */
+
 @media (max-width: 640px) {
-  .rodape { padding: 0.7rem 1.1rem; }
-  .rodape__redes { gap: 1.1rem; }
+  .rodape { padding: 0.2rem 0.9rem; }
+  .rodape__redes { gap: 0.25rem; }
   .rodape__rotulo { display: none; }
-  .rodape__credito { font-size: 0.55rem; letter-spacing: 0.08em; }
+
+  .rodape__redes a {
+    justify-content: center;
+    min-width: 2.75rem;    /* 44px — o alvo de toque */
+    min-height: 2.75rem;
+  }
+
+  /* Em rem, não em em: aqui o corpo do link não deve mandar no ícone. */
+  .rodape svg { width: 1.3rem; height: 1.3rem; }
+
+  .rodape__credito { font-size: 0.66rem; letter-spacing: 0.04em; }
+  .rodape__credito-prefixo { display: none; }
 }

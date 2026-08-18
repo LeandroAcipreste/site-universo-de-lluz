@@ -31,7 +31,34 @@ body {
   font-family: sans, system-ui, sans-serif;
   font-weight: 400;
   line-height: 1.4;
+
+  /* Âncora do rodapé — ver logo abaixo. */
+  position: relative;
 }
+
+/* --------------------------------------------------------------------------
+   O rodapé nas páginas internas
+
+   O `rodape.css` o declara `position: fixed`, e na página inicial é isso
+   mesmo: lá o `body` tem `overflow: hidden`, a cena ocupa a janela e nada
+   rola, então preso na janela é preso no pé da página.
+
+   Aqui não. Estas páginas rolam — o Oráculo passa de 1150px de conteúdo num
+   celular de 844, e a do livro tem uma sinopse inteira —, e fixo o rodapé
+   ficava **carimbado no meio do texto**: o crédito atravessando um parágrafo,
+   os ícones sobre o mapa. Não é questão de estilo, é texto por cima de texto.
+
+   `absolute` o leva para o fim do documento. E o `position: relative` no
+   `body`, ali em cima, é o que faz isso funcionar: sem um ancestral
+   posicionado, `absolute` se mede pelo bloco que contém tudo por padrão — do
+   tamanho da **janela**, não do documento — e o rodapé voltaria a cair no meio
+   do texto, agora sem nem acompanhar a rolagem.
+
+   Nas páginas que cabem numa tela nada muda: a seção tem `min-height: 100svh`,
+   então o fim do documento é o pé da janela de qualquer jeito.
+   -------------------------------------------------------------------------- */
+
+.rodape { position: absolute; }
 
 /* As mesmas fontes do resto do site. Vieram do bundle original e por isso
    moram em /public/fontes/: são licenciadas, e precisam ser trocadas ou

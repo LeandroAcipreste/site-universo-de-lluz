@@ -449,22 +449,36 @@
     margin-top: 1.2rem;
   }
 
-  /* A oração encolhe para caber embaixo do triângulo sem apertar as margens.
-     Ela é o bloco mais alto da tela; cada décimo aqui vira espaço de sobra
-     para o vão do meio. */
+  /* A oração ocupa a largura toda embaixo do triângulo.
+
+     Ela já foi menor do que isto, e não dava para ler. O motivo não é óbvio:
+     1rem aqui não são 16px, são `10 * 100vw / 390` — dez pixels na largura de
+     projeto e *menos* do que isso em qualquer aparelho mais estreito. Os
+     1.2rem que a linha tinha viravam 12px no iPhone 14, 11,5px no SE e 11,1px
+     num Galaxy de 360. Some a isso o `-webkit-text-size-adjust: none` do
+     global, que impede o celular de compensar por conta própria, e o texto
+     ficava no limite do ilegível nos dois sistemas.
+
+     Os corpos abaixo estão em rem de propósito, para continuarem
+     acompanhando a escala — o que mudou foi o patamar, não o mecanismo. */
   .oracao {
     max-width: none;
     text-align: left;
     /* Sem o trecho branco. No desktop o topo do card cai sobre céu azul e por
        isso começa branco; aqui embaixo o card inteiro está sobre nuvem branca,
-       e o branco sumiria da primeira à última linha. */
-    background-image: linear-gradient(180deg, #5f90bd 0%, #2f6091 100%);
+       e o branco sumiria da primeira à última linha.
+
+       E o azul é mais fundo do que o do desktop. O antigo começava em #5f90bd,
+       que sobre nuvem branca dá 3,38:1 — abaixo dos 4,5:1 que texto de corpo
+       precisa, e era por isso que as primeiras linhas sumiam justamente onde a
+       nuvem é mais clara. Este começa em 5,11:1 e termina em 9,16:1. */
+    background-image: linear-gradient(180deg, #41729c 0%, #1e4a75 100%);
   }
-  .oracao__selo { margin-bottom: 1.4rem; font-size: 1.05rem; }
-  .oracao__titulo { margin-bottom: 1.2rem; font-size: 2.6rem; }
-  .oracao__linha { margin-bottom: 0.5rem; font-size: 1.2rem; line-height: 1.35; }
-  .oracao__fecho { margin: 1.2rem 0 1rem; font-size: 1.2rem; }
-  .oracao__aclamacoes { margin-bottom: 0; font-size: 1.2rem; }
+  .oracao__selo { margin-bottom: 1.4rem; font-size: 1.15rem; }
+  .oracao__titulo { margin-bottom: 1.2rem; font-size: 2.9rem; }
+  .oracao__linha { margin-bottom: 0.6rem; font-size: 1.6rem; line-height: 1.4; }
+  .oracao__fecho { margin: 1.4rem 0 1.1rem; font-size: 1.5rem; }
+  .oracao__aclamacoes { margin-bottom: 0; font-size: 1.4rem; }
   .oracao__aclamacoes span + span { margin-left: 1.6rem; }
 }
 
