@@ -1,0 +1,322 @@
+/* ==========================================================================
+   Eventos
+
+   Três encontros, um card cada, numa coluna só. Mesmo fundo e mesma pílula de
+   vidro do Oráculo e da página do livro.
+
+   Coluna única mesmo no desktop, e não uma grade de três: os textos têm
+   tamanhos muito diferentes — o Encontro Cósmico tem o dobro do Retiro, e
+   ainda leva uma lista de dados — e lado a lado ou os cards ficam com alturas
+   desiguais ou o menor ganha um vão vazio embaixo. Empilhados, cada um ocupa
+   o que precisa.
+   ========================================================================== */
+
+@import url("/src/pages/comum/base.css");
+@import url("/src/pages/comum/nav.css");
+
+.ev-section {
+    position: relative;
+    min-height: 100svh;
+    overflow-x: clip;
+    background-color: #000;
+    color: #fff;
+}
+
+.ev-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+.ev-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(5, 5, 8, 0.85) 0%, rgba(15, 5, 20, 0.7) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* `pointer-events: none`, como na página do livro: esta rola e tem texto para
+   selecionar, e um canvas por cima da página inteira comeria o gesto. */
+.ev-particles {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    mix-blend-mode: screen;
+}
+
+.ev-content {
+    position: relative;
+    z-index: 10;
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 7.5rem 1.5rem 5rem;
+}
+
+@media (min-width: 768px) {
+    .ev-content { padding: 9rem 2rem 6rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Cabeçalho
+   -------------------------------------------------------------------------- */
+
+.ev-sobretitulo {
+    margin: 0 0 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    will-change: transform, opacity;
+}
+
+.ev-titulo {
+    margin: 0 0 1rem;
+    font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.95)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.8));
+}
+
+/* Uma palavra por span, com as letras dentro — sem o invólucro da palavra o
+   navegador quebra a linha entre duas letras quaisquer, porque cada letra é
+   uma caixa `inline-block`. É a mesma armadilha da página do livro. */
+.ev-palavra {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.ev-letra {
+    display: inline-block;
+    background: linear-gradient(135deg,
+        #ffffff 0%, #f1f5f9 20%, #cbd5e1 40%, #94a3b8 55%,
+        #475569 70%, #94a3b8 85%, #ffffff 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    will-change: transform, opacity;
+}
+
+.ev-espaco {
+    display: inline-block;
+    width: 0.28em;
+    will-change: transform, opacity;
+}
+
+.ev-chamada {
+    margin: 0;
+    max-width: 46ch;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.62);
+    will-change: transform, opacity;
+}
+
+/* --------------------------------------------------------------------------
+   Os cards
+
+   `<ol>` e não `<div>`: são três coisas numeradas numa ordem que quer dizer
+   algo — do mais frequente ao mais raro. O marcador some no CSS, a semântica
+   fica.
+   -------------------------------------------------------------------------- */
+
+.ev-lista {
+    list-style: none;
+    margin: 2.75rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.ev-card {
+    position: relative;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: rgba(0, 0, 0, 0.45);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    padding: 1.5rem 1.35rem;
+    will-change: transform, opacity;
+}
+
+@media (min-width: 768px) {
+    .ev-card { padding: 2rem 1.9rem; }
+}
+
+/* O selo da frequência. É a primeira linha do card porque é a primeira coisa
+   que alguém quer saber de um evento: com que frequência isto acontece. */
+.ev-cadencia {
+    display: inline-block;
+    margin: 0 0 0.85rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.62);
+}
+
+.ev-card-titulo {
+    margin: 0 0 0.8rem;
+    font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: #fff;
+}
+
+.ev-card-texto {
+    margin: 0;
+    max-width: 58ch;
+    font-weight: 300;
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: #dcdcdc;
+}
+
+/* --------------------------------------------------------------------------
+   Os dados do Encontro Cósmico
+
+   `<dl>` porque é rótulo e valor. Cada par vai num `<div>` próprio: é o que
+   permite tratá-los como uma unidade no grid sem quebrar a associação entre
+   `<dt>` e `<dd>`.
+   -------------------------------------------------------------------------- */
+
+.ev-dados {
+    margin: 1.35rem 0 0;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: grid;
+    gap: 0.9rem;
+}
+
+@media (min-width: 620px) {
+    .ev-dados { grid-template-columns: 1fr 1fr; gap: 1rem 2rem; }
+}
+
+.ev-dados dt {
+    margin-bottom: 0.2rem;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.ev-dados dd {
+    margin: 0;
+    font-weight: 300;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #e2e2e2;
+}
+
+/* --------------------------------------------------------------------------
+   Botões
+   -------------------------------------------------------------------------- */
+
+.ev-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+}
+
+.ev-card > .ev-btn { margin-top: 1.5rem; }
+
+.ev-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;          /* 44px — o alvo de toque */
+    padding: 0.6rem 1.4rem;
+    border-radius: 9999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    background: rgb(255 255 255 / 0.08);
+    border: 1px solid rgb(255 255 255 / 0.18);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ev-btn:hover {
+    transform: scale(1.04);
+    background: rgb(255 255 255 / 0.14);
+    border-color: rgb(255 255 255 / 0.3);
+}
+
+.ev-btn:active { transform: scale(0.96); }
+
+.ev-btn--discreto {
+    background: transparent;
+    border-color: rgb(255 255 255 / 0.14);
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.ev-btn-icone { width: 0.85rem; height: 0.85rem; }
+
+/* --------------------------------------------------------------------------
+   Pé
+   -------------------------------------------------------------------------- */
+
+.ev-pe {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ev-pe p {
+    margin: 0;
+    max-width: 58ch;
+    font-weight: 300;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.ev-pe a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   Quem prefere menos movimento
+   A entrada é enfeite. O `events.js` também consulta isto, e sai antes de
+   escrever qualquer estilo inline; esta regra é a rede de segurança para o
+   caso de o módulo não chegar a rodar.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .ev-sobretitulo, .ev-letra, .ev-espaco, .ev-chamada, .ev-card {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+}

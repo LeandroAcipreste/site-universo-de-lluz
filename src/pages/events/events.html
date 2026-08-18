@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eventos — Universo de Luz</title>
+<meta name="description" content="Sessões de Ayahuasca, o Encontro Cósmico das terças-feiras e os retiros do Universo de Luz.">
+<link rel="icon" type="image/svg+xml" href="/public/img/logo.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="/public/img/logo-192.png">
+
+<!-- Caminhos a partir da raiz: a página é servida em `/events` por reescrita
+     (ver vercel.json), e ali um caminho relativo resolveria para a raiz. -->
+<style>@view-transition { navigation: auto }</style>
+<link rel="stylesheet" href="/src/transicao.css">
+<link rel="stylesheet" href="/src/pages/events/events.css">
+</head>
+
+<body>
+
+<section class="ev-section">
+
+  <img src="/src/pages/comum/img/fundo.jpg" alt="" aria-hidden="true" class="ev-bg">
+  <div class="ev-overlay"></div>
+  <canvas class="ev-particles"></canvas>
+
+  <div class="ev-content">
+
+    <header class="ev-cabecalho">
+      <p class="ev-sobretitulo">Eventos</p>
+      <h1 class="ev-titulo"></h1>
+      <p class="ev-chamada">
+        Os encontros do Universo de Luz ao longo do ano — o que acontece toda
+        semana, o que acontece todo mês e o que acontece uma ou duas vezes.
+      </p>
+    </header>
+
+    <!-- Os três eventos. A cadência de cada um vira um selo no alto do card,
+         porque é a primeira coisa que se quer saber: com que frequência isto
+         acontece. -->
+    <ol class="ev-lista">
+
+      <li class="ev-card">
+        <p class="ev-cadencia">Uma ou duas vezes por mês</p>
+        <h2 class="ev-card-titulo">Sessão de Ayahuasca</h2>
+        <p class="ev-card-texto">
+          As sessões de Ayahuasca com temas diversos nos convidam a um mergulho
+          em nós mesmos a fim de promover mudanças extraordinárias em nossas
+          vidas externas. O Universo de Luz é uma escola e a sagrada medicina é
+          uma planta professora, uma bússola que nos indica o melhor caminho
+          para nossa evolução.
+        </p>
+        <a class="ev-btn" href="https://wa.me/5571996612421"
+           target="_blank" rel="noopener noreferrer">
+          Saber da próxima sessão
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class="ev-btn-icone" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </li>
+
+      <li class="ev-card">
+        <p class="ev-cadencia">Toda terça-feira</p>
+        <h2 class="ev-card-titulo">Encontro Cósmico</h2>
+        <p class="ev-card-texto">
+          O Encontro Cósmico acontece na Livraria Terceiro Milênio toda
+          terça-feira, e os presentes recebem um passe dos trabalhadores do
+          Universo de Luz. Logo depois, Olyvia canaliza mensagens e orientações
+          aos presentes. Quem é assinante do canal pode assistir ao vivo pelo
+          YouTube; para participar presencialmente há um valor de troca de
+          10 reais.
+        </p>
+
+        <!-- Os dados soltos do encontro. Numa lista de definição porque é o
+             que eles são: rótulo e valor, e não uma tabela de duas dimensões. -->
+        <dl class="ev-dados">
+          <div><dt>Onde</dt><dd>Livraria Terceiro Milênio — Rua Macaúbas, 28, Rio Vermelho, Salvador</dd></div>
+          <div><dt>Quando</dt><dd>Toda terça-feira</dd></div>
+          <div><dt>Troca</dt><dd>10 reais, presencialmente</dd></div>
+          <div><dt>À distância</dt><dd>Ao vivo no canal, para assinantes</dd></div>
+        </dl>
+
+        <div class="ev-acoes">
+          <a class="ev-btn" href="https://wa.me/5571996612421"
+             target="_blank" rel="noopener noreferrer">
+            Falar sobre o encontro
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" class="ev-btn-icone" aria-hidden="true">
+              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+          <a class="ev-btn ev-btn--discreto" href="/youtube">
+            Ver o canal
+          </a>
+        </div>
+      </li>
+
+      <li class="ev-card">
+        <p class="ev-cadencia">Uma ou duas vezes por ano</p>
+        <h2 class="ev-card-titulo">Retiro</h2>
+        <p class="ev-card-texto">
+          Os retiros acontecem uma ou duas vezes por ano, sendo um final de
+          semana inteiro imerso em atividades transformadoras e sessões com a
+          sagrada medicina.
+        </p>
+        <a class="ev-btn" href="https://wa.me/5571996612421"
+           target="_blank" rel="noopener noreferrer">
+          Entrar na lista do próximo retiro
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class="ev-btn-icone" aria-hidden="true">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </li>
+
+    </ol>
+
+    <!-- As datas não estão na página de propósito: elas mudam, e uma data
+         velha num site é pior do que data nenhuma. O agendamento é pelo
+         WhatsApp, como no Oráculo. -->
+    <footer class="ev-pe">
+      <p>
+        As datas de cada encontro são combinadas pelo WhatsApp, e é por lá que
+        elas chegam primeiro. Os atendimentos e encontros são de natureza
+        espiritual — o que isso quer dizer está nos
+        <a href="/privacy#termos">Termos de Uso</a>.
+      </p>
+    </footer>
+
+  </div>
+</section>
+
+<script type="importmap">
+{
+  "imports": {
+    "gsap": "/public/lib/gsap/index.js"
+  }
+}
+</script>
+<script type="module" src="/src/pages/events/events.js"></script>
+</body>
+</html>
