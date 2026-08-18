@@ -51,6 +51,8 @@ export function montarCarrossel({ prefixo, banco, categorias, corpoDoCard, taman
   let indice = 0;
   let sentido = 1;
   let travado = false;
+  /* Senha da última troca de título pedida — ver a nota no `pintar()`. */
+  let vezDoTitulo = 0;
 
   if (!categoria) return;
 
@@ -86,10 +88,32 @@ export function montarCarrossel({ prefixo, banco, categorias, corpoDoCard, taman
   rolagemPorGesto(secao, () => navegar(1), () => navegar(-1));
 
   // ── os cards ──
+  /* Redesenha a pilha e **já a coloca no lugar**, sem transição.
+
+     O `gsap.set` no fim não é enfeite: `innerHTML` cria elementos novos, sem
+     estilo nenhum, e um card sem estilo é um card opaco em cima do outro.
+     Sem isto, trocar de categoria mostrava as sete orações de "Aos Anjos"
+     empilhadas e sobrepostas até o `pintar()` terminar de animá-las para
+     fora — meio segundo aqui, e bem mais num telefone lento, porque as
+     animações do GSAP andam com o quadro.
+
+     É a mesma preparação que a montagem inicial fazia solta, logo antes do
+     primeiro `pintar()`. Estando aqui dentro, ninguém pode redesenhar os
+     cards e esquecer dela. */
   function desenharCards() {
     viewport.innerHTML = banco[categoria]
       .map((item) => `<div class="${p('card-slot')}">${corpoDoCard(item)}</div>`)
       .join('');
+
+    [...viewport.children].forEach((slot, i) => {
+      const ativo = i === indice;
+      gsap.set(slot, {
+        opacity: ativo ? 1 : 0,
+        y: ativo ? 0 : (i < indice ? -100 : 100),
+        scale: ativo ? 1 : 0.85,
+      });
+      slot.style.pointerEvents = ativo ? 'auto' : 'none';
+    });
   }
 
   // ── um quadro ──
@@ -106,9 +130,19 @@ export function montarCarrossel({ prefixo, banco, categorias, corpoDoCard, taman
 
     /* O título sai e entra. No original era um `AnimatePresence mode="wait"`,
        que espera a saída terminar antes de montar a entrada; aqui é a mesma
-       coisa com uma linha do tempo do GSAP e a troca do texto no meio. */
+       coisa com uma linha do tempo do GSAP e a troca do texto no meio.
+
+       O `vez` é o que torna isso seguro contra toque rápido. A escrita do
+       título acontece num `onComplete`, meio segundo depois do clique; se
+       nesse meio tempo houver outro clique, existem duas trocas pendentes,
+       cada uma segurando o `atual` do momento em que foi criada, e a que
+       chegar por último manda — que pode ser a mais antiga. O resultado é o
+       nome de uma categoria com os cards de outra. Cada `pintar()` tira uma
+       senha, e só a senha mais recente tem permissão de escrever. */
+    const vez = ++vezDoTitulo;
     const antigo = areaTitulo.firstElementChild;
     const trocar = () => {
+      if (vez !== vezDoTitulo) return;
       areaTitulo.innerHTML = `
         <div class="${p('motion-container')}">
           <h3 class="${p('title')}"${tamanhoDoTitulo ? ` style="font-size: ${tamanhoDoTitulo(atual.title)}"` : ''}>${atual.title}</h3>
@@ -151,12 +185,9 @@ export function montarCarrossel({ prefixo, banco, categorias, corpoDoCard, taman
     y: 5, duration: 0.75, ease: 'power1.inOut', repeat: -1, yoyo: true,
   });
 
-  desenharCards();
   /* Sem transição no primeiro quadro: o original usa `initial={false}` nos
      cards, ou seja, eles nascem já no lugar em vez de animar da posição de
-     fora. */
-  [...viewport.children].forEach((slot, i) => {
-    gsap.set(slot, { opacity: i === 0 ? 1 : 0, y: i === 0 ? 0 : 100, scale: i === 0 ? 1 : 0.85 });
-  });
+     fora. Quem cuida disso é o próprio `desenharCards()`. */
+  desenharCards();
   pintar();
 }

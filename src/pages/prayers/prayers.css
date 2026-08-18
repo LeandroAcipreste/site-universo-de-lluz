@@ -90,14 +90,27 @@
     }
 }
 
+/* Os três botões que trocam o tipo de oração.
+
+   Os números do original eram para monitor: 9px de corpo no celular, borda
+   branca a 10% e texto a 40%. Num telefone isso não é discreto, é invisível —
+   e 9px com 0.375rem de padding dá um alvo de toque de menos de 25px, contra
+   os 44px que se recomenda para o dedo. Quem não enxerga o botão não descobre
+   que a página tem três categorias.
+
+   Aqui o corpo sobe para 11px no celular, o alvo de toque vai a 40px de
+   altura, e a inativa sai de 40% para 62% — apagada em relação à ativa, que é
+   o que a distinção pede, mas legível sozinha. No monitor os números seguem
+   os do original. */
 .prayer-tab {
     border-radius: 9999px;
     border: 1px solid;
-    padding: 0.375rem 1rem;
+    min-height: 2.5rem;              /* 40px de alvo de toque */
+    padding: 0.5rem 1.05rem;
     font-family: monospace;
-    font-size: 9px;
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.14em;
     cursor: pointer;
     transition: all 0.3s;
     background: transparent;
@@ -105,25 +118,32 @@
 
 @media (min-width: 768px) {
     .prayer-tab {
-        font-size: 11px;
+        min-height: 0;
+        padding: 0.375rem 1rem;
+        letter-spacing: 0.15em;
     }
 }
 
 .prayer-tab--active {
-    border-color: rgba(255, 255, 255, 0.3);
-    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.45);
+    background-color: rgba(255, 255, 255, 0.14);
     color: white;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
 }
 
 .prayer-tab--inactive {
-    border-color: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.62);
+}
+
+@media (min-width: 768px) {
+    .prayer-tab--active { border-color: rgba(255, 255, 255, 0.3); background-color: rgba(255, 255, 255, 0.1); }
+    .prayer-tab--inactive { border-color: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.4); }
 }
 
 .prayer-tab--inactive:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.85);
 }
 
 /* Title area */
