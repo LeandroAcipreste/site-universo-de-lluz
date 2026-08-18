@@ -1,0 +1,419 @@
+/* ==========================================================================
+   Conheça-nos
+   Porte de `site-antigo/site-UL/src/pages/meetUs/meetUs.css`. Da linha do
+   comentário "meetUs.css original" para baixo é cópia literal — os mesmos
+   seletores, os mesmos números, as mesmas cores.
+
+   As imagens desta página moram nesta pasta. O que vem de fora é só o chão
+   comum a todas as páginas internas — ver `comum/base.css`, que também explica
+   por que nenhuma delas carrega o `src/style.css`.
+   ========================================================================== */
+
+@import url("/src/pages/comum/base.css");
+@import url("/src/pages/comum/nav.css");
+
+/* ==========================================================================
+   meetUs.css original — daqui para baixo é cópia
+   ========================================================================== */
+
+.meetus-root {
+    position: relative;
+    min-height: 100svh;
+    background-color: #050505;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Background image */
+.meetus-bg {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4; /* Escurece bastante a original */
+}
+
+/* Película escura adicional (Dark Film) */
+.meetus-overlay {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(5, 5, 8, 0.8) 0%, rgba(15, 5, 20, 0.6) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Decorative grid lines from the design system */
+.meetus-grid-lines {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.meetus-grid-line-v {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.05), transparent);
+}
+.meetus-grid-line-v:nth-child(1) { left: 12.5%; }
+.meetus-grid-line-v:nth-child(2) { left: 25%; }
+.meetus-grid-line-v:nth-child(3) { left: 37.5%; }
+.meetus-grid-line-v:nth-child(4) { left: 50%; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.08), transparent); }
+.meetus-grid-line-v:nth-child(5) { left: 62.5%; }
+.meetus-grid-line-v:nth-child(6) { left: 75%; }
+.meetus-grid-line-v:nth-child(7) { left: 87.5%; }
+
+.meetus-grid-line-h {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.05), transparent);
+}
+.meetus-grid-line-h:nth-child(8) { top: 20%; }
+.meetus-grid-line-h:nth-child(9) { top: 40%; }
+.meetus-grid-line-h:nth-child(10) { top: 60%; }
+.meetus-grid-line-h:nth-child(11) { top: 80%; }
+
+/* Particles Canvas */
+.meetus-particles {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: auto; /* Para capturar o mouse hover */
+    mix-blend-mode: screen;
+}
+
+/* Content Container */
+.meetus-content {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    min-height: 100svh;
+    align-items: center;
+    padding: 6rem 2rem 4rem 2rem;
+}
+
+.meetus-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Grid para Hero (Texto na esquerda, Imagem na direita) */
+.meetus-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .meetus-hero-grid {
+        grid-template-columns: 1.2fr 0.8fr;
+    }
+}
+
+/* Imagem em Arco Neon */
+.meetus-hero-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+    aspect-ratio: 3/4;
+    border-radius: 999px 999px 24px 24px; /* Formato exato do Arco de Luz */
+    padding: 3px; /* Borda luminosa interna */
+    background: linear-gradient(180deg, rgba(248, 249, 250, 1), rgba(155, 161, 166, 0.4) 50%, transparent);
+
+    /* Brilho Neon Prata */
+    box-shadow:
+        0 -20px 60px rgba(221, 224, 227, 0.5),
+        0 0 100px rgba(155, 161, 166, 0.3),
+        inset 0 15px 30px rgba(255, 255, 255, 0.4);
+
+    transform: rotate(2deg); /* Charme artístico */
+    animation: floatArch 6s ease-in-out infinite alternate;
+}
+
+@keyframes floatArch {
+    0% { transform: translateY(0px) rotate(2deg); }
+    100% { transform: translateY(-20px) rotate(0deg); }
+}
+
+.meetus-hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 996px 996px 20px 20px;
+    mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+.meetus-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    margin-bottom: 1.5rem;
+}
+
+.meetus-badge-logo {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+.meetus-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    max-width: 45rem;
+}
+
+.meetus-title-gradient {
+    display: block;
+    background-image: linear-gradient(90deg, #F8F9FA 0%, #DDE0E3 50%, #9BA1A6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.meetus-desc {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    max-width: 35rem;
+}
+
+/* Dirigente Section */
+.meetus-dirigente {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    margin-bottom: 4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meetus-dirigente-title {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 500;
+    color: white;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+}
+
+.meetus-dirigente-desc {
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    max-width: 35rem;
+}
+
+.meetus-dirigente-desc strong {
+    color: white;
+    font-weight: 600;
+}
+
+.meetus-ig-link {
+    color: #DDE0E3;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.meetus-ig-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* Grids e Cartões Flutuantes */
+.meetus-floating-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.meetus-card {
+    position: relative;
+    background: rgba(10, 10, 10, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.meetus-card:hover {
+    background: rgba(17, 17, 17, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+}
+
+.meetus-card-glow {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background: rgba(139, 92, 246, 0.15);
+    filter: blur(40px);
+    border-radius: 50%;
+    transition: background 0.5s ease;
+}
+
+.meetus-card:nth-child(2) .meetus-card-glow {
+    background: rgba(59, 130, 246, 0.15); /* Blue */
+}
+
+.meetus-card:nth-child(3) .meetus-card-glow {
+    background: rgba(16, 185, 129, 0.15); /* Emerald */
+}
+
+.meetus-card:hover .meetus-card-glow {
+    background: rgba(139, 92, 246, 0.3);
+}
+
+.meetus-card:nth-child(2):hover .meetus-card-glow {
+    background: rgba(59, 130, 246, 0.3);
+}
+
+.meetus-card:nth-child(3):hover .meetus-card-glow {
+    background: rgba(16, 185, 129, 0.3);
+}
+
+
+.meetus-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+    color: white;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.meetus-card:hover .meetus-card-icon {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.meetus-card-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    color: white;
+    letter-spacing: -0.01em;
+}
+
+.meetus-card-text {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.6;
+}
+
+/* GSAP Start States */
+.meetus-anim {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+/* ── SEÇÃO AYAHUASCA ── */
+.meetus-ayahuasca {
+    margin-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.meetus-ayahuasca-title {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: white;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+}
+
+.meetus-ayahuasca-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    padding: 2rem 2.5rem;
+}
+
+@media (min-width: 768px) {
+    .meetus-ayahuasca-card {
+        padding: 2.5rem 3.5rem;
+    }
+}
+
+.meetus-ayahuasca-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.meetus-ayahuasca-body p {
+    font-size: clamp(0.88rem, 1.5vw + 0.3rem, 1rem);
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.72);
+    font-weight: 300;
+}
+
+.meetus-ayahuasca-body em {
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+}
+
+/* Linha decorativa à esquerda no card */
+.meetus-ayahuasca-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    width: 3px;
+    background: linear-gradient(to bottom, #F8F9FA, #DDE0E3, #9BA1A6);
+    border-radius: 0 3px 3px 0;
+    opacity: 0.7;
+}
+
+/* Parágrafo CTA — destaque sutil no encerramento */
+.meetus-ayahuasca-cta {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1rem;
+    margin-top: 0.25rem;
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-style: italic;
+}

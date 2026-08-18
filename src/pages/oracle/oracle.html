@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oráculo — Universo de Luz</title>
+<link rel="icon" type="image/svg+xml" href="/public/img/logo.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="/public/img/logo-192.png">
+
+<!-- Caminhos a partir da raiz: a página é servida em `/oracle` por reescrita
+     (ver vercel.json), e ali um caminho relativo resolveria para a raiz. -->
+<!-- A transição entre páginas, e é a única folha do projeto que vem por
+     <link> próprio em vez de por @import.
+
+     Não é desleixo de organização: a regra `@view-transition` e as animações
+     `::view-transition-*` precisam ser conhecidas **antes do primeiro
+     desenho**. Numa cadeia de importações o navegador só as descobre depois de
+     dois pedidos de rede encadeados, e a essa altura já decidiu — por @import
+     a transição era descartada ("Transition was skipped") e, quando não era,
+     rodava com o esmaecimento padrão em vez do deslize. Como <link> ela é
+     baixada em paralelo com a folha da página, e chega a tempo.
+
+     A ativação vai embutida logo abaixo, e não na folha: ela precisa valer
+     **sem sequer uma ida à rede**. Medido: só no <link>, a transição voltava a
+     ser descartada; embutida, dispara sempre. As animações podem chegar um
+     instante depois, a ativação não. -->
+<style>@view-transition { navigation: auto }</style>
+<link rel="stylesheet" href="/src/transicao.css">
+<link rel="stylesheet" href="/src/pages/oracle/oracle.css">
+</head>
+
+<body>
+
+<!-- Porte de site-antigo/site-UL/src/pages/oracle/oracle.tsx.
+     O <h1> nasce vazio de propósito: o JS o preenche letra a letra, porque é
+     assim que o GSAP as anima uma depois da outra — como no original, onde o
+     `renderLetters` fazia isso em JSX. -->
+<section class="oracle-section">
+
+  <!-- Background Layer -->
+  <img src="/src/pages/comum/img/fundo.jpg" alt="Background Universo" class="oracle-bg">
+  <div class="oracle-overlay"></div>
+
+  <!-- <ParticlesBackground /> -->
+  <canvas class="oracle-particles"></canvas>
+
+  <!-- ── CONTEÚDO PRINCIPAL ── -->
+  <div class="oracle-content">
+
+    <!-- ── COLUNA ESQUERDA: Título ── -->
+    <div class="oracle-title-col">
+      <h1 class="oracle-title"></h1>
+
+      <!-- O livro. A capa e o botão lado a lado.
+
+           O endereço vai limpo: o link que veio tinha `utm_source`,
+           `utm_medium`, `utm_content` e `fbclid` pendurados — parâmetros que o
+           Instagram e o Facebook acrescentam para rastrear de onde veio o
+           clique. Num link do próprio site eles não medem nada de útil e
+           carregam um identificador de sessão de rede social para dentro da
+           navegação de quem clica. -->
+      <div class="oracle-livro">
+        <img class="oracle-livro-capa"
+             src="/public/img/capa-do-livro.PNG"
+             alt="Capa do livro Inspirações para a Nova Era, de Olyvia Libório"
+             loading="lazy">
+
+        <a class="oracle-livro-btn"
+           href="https://www.madras.com.br/espiritualidade/inspiracoes-para-a-nova-era"
+           target="_blank" rel="noopener noreferrer">
+          Comprar o livro
+          <!-- <ArrowRight /> do lucide-react 0.544.0 -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"
+               class="oracle-btn-icon" aria-hidden="true">
+            <path d="M5 12h14"/>
+            <path d="m12 5 7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── COLUNA DIREITA: Card Informativo ── -->
+    <div class="oracle-card-col">
+      <div class="oracle-card">
+
+        <!-- Brilho interno -->
+        <div class="oracle-card-glow"></div>
+
+        <h2 class="oracle-card-subtitle">
+          Como é o Oráculo?
+        </h2>
+
+        <div class="oracle-card-body">
+          <p>
+            O encontro dura 40 minutos onde Olyvia se conecta com seus
+            guias pessoais, servindo de ponte para mensagens e orientações
+            profundas.
+          </p>
+          <p>
+            Atendimentos às terças-feiras (presencial ou online) e um
+            sábado por mês (apenas online), mediante agendamento prévio.
+          </p>
+          <p>
+            Inclui receita via e-mail e limpeza energética obrigatória
+            para atendimentos presenciais na Livraria 3º Milênio, Salvador.
+          </p>
+          <p class="oracle-card-note">
+            *Serviço de descarrego com Ramaiana disponível nos dias de
+            atendimento presencial.
+          </p>
+        </div>
+
+        <!-- Onde acontece. O endereço vem antes do mapa de propósito: quem já
+             conhece a cidade resolve na primeira linha e não espera o mapa
+             carregar. -->
+        <div class="oracle-local">
+          <h3 class="oracle-local-titulo">Onde acontece</h3>
+          <p class="oracle-local-endereco">
+            <strong>Livraria Terceiro Milênio</strong><br>
+            Rua Macaúbas, 28 — Rio Vermelho, Salvador
+          </p>
+
+          <!-- O mapa é a única coisa de terceiros que o site carrega além das
+               bibliotecas. Por isso vem com `loading="lazy"`: só é buscado se
+               a pessoa chegar a vê-lo, e não custa nada a quem abre a página.
+
+               O filtro escurece o mapa do Google, que é claro, para ele não
+               abrir um retângulo branco no meio de uma página de tinta. É o
+               mesmo recurso que os mapas em modo escuro usam: inverter e
+               girar o matiz devolve as cores aproximadamente onde estavam,
+               com o fundo escuro. -->
+          <iframe
+            class="oracle-mapa"
+            title="Mapa da Livraria Terceiro Milênio, no Rio Vermelho"
+            src="https://www.google.com/maps?q=Livraria%20Terceiro%20Mil%C3%AAnio%2C%20Rua%20Maca%C3%BAbas%2C%2028%2C%20Rio%20Vermelho%2C%20Salvador%2C%20BA&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+
+          <div class="oracle-local-acao">
+            <a class="oracle-livro-btn"
+               href="https://www.google.com/maps/dir/?api=1&destination=Livraria%20Terceiro%20Mil%C3%AAnio%2C%20Rua%20Maca%C3%BAbas%2C%2028%2C%20Rio%20Vermelho%2C%20Salvador%2C%20BA"
+               target="_blank" rel="noopener noreferrer">
+              Como chegar
+              <!-- <ArrowRight /> do lucide-react 0.544.0 -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round"
+                   class="oracle-btn-icon" aria-hidden="true">
+                <path d="M5 12h14"/>
+                <path d="m12 5 7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Botão compacto centralizado -->
+        <div class="oracle-btn-container">
+          <a
+            href="https://wa.me/5571996612421"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="oracle-btn">
+            Agendar Consulta
+            <!-- <ArrowRight /> do lucide-react 0.544.0 -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round"
+                 class="oracle-btn-icon" aria-hidden="true">
+              <path d="M5 12h14"/>
+              <path d="m12 5 7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script type="importmap">
+{
+  "imports": {
+    "gsap": "/public/lib/gsap/index.js"
+  }
+}
+</script>
+<script type="module" src="/src/pages/oracle/oracle.js"></script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+/* ==========================================================================
+   A barra das páginas internas
+
+   Porte de `site-antigo/site-UL/src/components/siteNav.css`, que fazia
+   exatamente isto: barra fixa com a marca à esquerda, os botões à direita fora
+   da home, e hambúrguer mais folha de tela cheia no celular.
+
+   A paleta é outra, e é de propósito. O menu da home vive sobre nuvem clara e
+   céu azul, então é azul-do-céu sobre vidro branco. Aqui já se está dentro do
+   universo: fundo de tinta, e a prata e a platina da logo — #F8F9FA, #DDE0E3,
+   #9BA1A6, #5B6166 — que é a mesma escala que os títulos destas páginas usam.
+   Do original saiu o espectro azul-violeta-rosa da marca antiga, que não tem
+   parentesco com nenhuma das duas.
+   ========================================================================== */
+
+.nav {
+  --nav-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --nav-linha: rgb(255 255 255 / 0.11);
+  --nav-tinta: #F8F9FA;
+  --nav-prata: #9BA1A6;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem clamp(1.1rem, 3vw, 2.25rem);
+
+  background: linear-gradient(180deg, rgb(5 5 8 / 0.85), rgb(5 5 8 / 0));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  animation: navEntra 1s var(--nav-ease) 0.15s both;
+}
+
+@keyframes navEntra {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── a marca ── */
+.nav__marca {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex: none;
+  text-decoration: none;
+}
+
+.nav__marca img:first-child {
+  width: 1.9rem;
+  height: 1.9rem;
+  transition: transform 0.8s var(--nav-ease), filter 0.8s var(--nav-ease);
+}
+
+/* No original o brilho do giro era violeta; aqui é a platina da logo. */
+.nav__marca:hover img:first-child {
+  transform: rotate(120deg);
+  filter: drop-shadow(0 0 10px rgb(221 224 227 / 0.75));
+}
+
+.nav__marca img:last-child {
+  height: 1rem;
+  width: auto;
+  opacity: 0.9;
+}
+
+/* ── os links, só em tela larga ── */
+.nav__lista {
+  display: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+@media (min-width: 1024px) {
+  .nav__lista { display: flex; }
+}
+
+.nav__item {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.55em 1.1em;
+
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+  color: rgb(242 242 242 / 0.55);
+
+  transition: color 0.4s var(--nav-ease), border-color 0.4s var(--nav-ease),
+              background-color 0.4s var(--nav-ease);
+}
+
+.nav__item:hover,
+.nav__item:focus-visible {
+  color: var(--nav-tinta);
+  border-color: rgb(255 255 255 / 0.18);
+  background: rgb(255 255 255 / 0.06);
+}
+
+/* A página em que se está. O gradiente é o mesmo dos títulos destas páginas. */
+.nav__item[aria-current="page"] {
+  border-color: rgb(255 255 255 / 0.25);
+  background: rgb(255 255 255 / 0.08);
+  color: transparent;
+  background-image: linear-gradient(90deg, #F8F9FA 0%, #DDE0E3 50%, #9BA1A6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  box-shadow: 0 0 15px rgb(255 255 255 / 0.08);
+}
+
+/* ── o hambúrguer, só em tela estreita ── */
+.nav__gatilho {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--nav-linha);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.04);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  z-index: 80;
+}
+
+@media (min-width: 1024px) {
+  .nav__gatilho { display: none; }
+}
+
+.nav__barras {
+  position: relative;
+  width: 1.05rem;
+  height: 0.6rem;
+}
+
+.nav__barras span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--nav-tinta);
+  transition: transform 0.55s var(--nav-ease);
+}
+
+.nav__barras span:first-child { top: 0; }
+.nav__barras span:last-child  { bottom: 0; }
+
+.nav.esta-aberto .nav__barras span:first-child { transform: translateY(0.29rem) rotate(45deg); }
+.nav.esta-aberto .nav__barras span:last-child  { transform: translateY(-0.29rem) rotate(-45deg); }
+
+/* ==========================================================================
+   A folha de tela cheia (celular)
+   ========================================================================== */
+
+.nav-folha {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5.5rem 1.6rem 2.5rem;
+
+  /* No original este radial era arroxeado; aqui é o mesmo grafite frio das
+     páginas, para a folha não destoar do que está por baixo dela. */
+  background: radial-gradient(120% 90% at 15% 10%, rgb(24 26 30 / 0.96), rgb(5 5 8 / 0.985));
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
+
+  /* Ela desce como uma cortina, em vez de aparecer. */
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.nav-folha.esta-aberto {
+  clip-path: inset(0 0 0 0);
+  pointer-events: auto;
+}
+
+@media (min-width: 1024px) {
+  .nav-folha { display: none; }
+}
+
+.nav-folha__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.nav-folha__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  width: 100%;
+  padding: 0.62rem 0;
+  text-decoration: none;
+
+  font-size: clamp(1.5rem, 8vw, 2.2rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: #f2f2f2;
+
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s var(--nav-ease, cubic-bezier(0.16, 1, 0.3, 1)),
+              transform 0.7s var(--nav-ease, cubic-bezier(0.16, 1, 0.3, 1));
+  transition-delay: calc(var(--i) * 0.055s);
+}
+
+.nav-folha.esta-aberto .nav-folha__item {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(0.16s + var(--i) * 0.055s);
+}
+
+.nav-folha__item[aria-current="page"] {
+  color: transparent;
+  background-image: linear-gradient(90deg, #F8F9FA 0%, #DDE0E3 50%, #9BA1A6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* O número de ordem. Era violeta no original; aqui é a prata média. */
+.nav-folha__num {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--nav-prata, #9BA1A6);
+  font-variant-numeric: tabular-nums;
+}
+
+.nav-folha__pe {
+  margin-top: 2.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-folha.esta-aberto .nav-folha__pe {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.5s;
+}
+
+.nav-folha__insta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  background: rgb(255 255 255 / 0.05);
+  padding: 0.75em 1.3em;
+
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #DDE0E3;
+}
+
+.nav-folha__insta svg { width: 1.05em; height: 1.05em; }
+
+/* A barra é fixa e cobre o topo; as páginas que centram o conteúdo na altura
+   toda precisam desse respiro para o título não nascer embaixo dela. */
+.nav-respiro { padding-top: 4.5rem; }

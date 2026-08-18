@@ -1,8 +1,20 @@
-/* ─────────────────────────────────────────────────────────────────
-   ORACLE PAGE — Universo de Luz
-   Estratégia: GSAP gerencia opacity / transform.
-               CSS gerencia apenas aparência visual (cor, gradiente).
-───────────────────────────────────────────────────────────────── */
+/* ==========================================================================
+   Oráculo
+   Cópia de `site-antigo/site-UL/src/pages/oracle/oracle.css`. Da linha do
+   comentário "oracle.css original" para baixo é cópia literal.
+
+   Uma regra da folha original não veio: `.oracle-letter--cyan`. O `oracle.tsx`
+   define as constantes que a usariam (o "y" ciano de "Olyvia") mas depois
+   desenha a linha inteira com `--gradient` — a classe ciano não é aplicada em
+   lugar nenhum. Copiar CSS morto é copiar erro.
+   ========================================================================== */
+
+@import url("/src/pages/comum/base.css");
+@import url("/src/pages/comum/nav.css");
+
+/* ==========================================================================
+   oracle.css original — daqui para baixo é cópia
+   ========================================================================== */
 
 /* ── Section wrapper ── */
 .oracle-section {
@@ -70,7 +82,7 @@
     letter-spacing: -0.02em;
     font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
     font-size: clamp(2rem, 9vw, 4.75rem);
-    
+
     /* Filtro de sombra idêntico ao da home page */
     filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.95)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.8));
 }
@@ -89,17 +101,15 @@
     will-change: transform, opacity;
 }
 
-
-
 /* ── Variante gradiente prata metálica da logo ── */
 .oracle-letter--gradient {
     /* Gradiente metálico líquido de prata e platina */
-    background: linear-gradient(135deg, 
-        #ffffff 0%, 
-        #f1f5f9 20%, 
-        #cbd5e1 40%, 
-        #94a3b8 55%, 
-        #475569 70%, 
+    background: linear-gradient(135deg,
+        #ffffff 0%,
+        #f1f5f9 20%,
+        #cbd5e1 40%,
+        #94a3b8 55%,
+        #475569 70%,
         #94a3b8 85%,
         #ffffff 100%
     );
@@ -107,12 +117,6 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-}
-
-/* ── Variante ciano ── */
-.oracle-letter--cyan {
-    color: #67e8f9;
-    -webkit-text-fill-color: #67e8f9;
 }
 
 /* ── Card Informativo ── */
@@ -148,14 +152,14 @@
     text-transform: uppercase;
     letter-spacing: 0.18em;
     font-size: clamp(0.65rem, 1.5vw + 0.3rem, 0.8rem);
-    
+
     /* Gradiente idêntico ao do título principal */
-    background: linear-gradient(135deg, 
-        #ffffff 0%, 
-        #f1f5f9 20%, 
-        #cbd5e1 40%, 
-        #94a3b8 55%, 
-        #475569 70%, 
+    background: linear-gradient(135deg,
+        #ffffff 0%,
+        #f1f5f9 20%,
+        #cbd5e1 40%,
+        #94a3b8 55%,
+        #475569 70%,
         #94a3b8 85%,
         #ffffff 100%
     );
@@ -175,6 +179,8 @@
     color: #e5e5e5;
     font-size: clamp(0.8rem, 1.5vw + 0.3rem, 0.95rem);
 }
+
+.oracle-card-body p { margin: 0; }
 
 .oracle-card-note {
     font-style: italic;
@@ -206,6 +212,32 @@
 .oracle-btn:hover  { transform: scale(1.05); }
 .oracle-btn:active { transform: scale(0.95); }
 
+/* O botão não tinha nenhum fundo próprio: no `oracle.tsx` ele recebia
+   `style={BTN_PRIMARY}` e a classe `btn-silver-snake`. O `BTN_PRIMARY` é um
+   objeto **vazio** — está marcado como `@deprecated` em
+   `constants/btnPrimary.ts`, mantido só para não quebrar imports — e a classe
+   `btn-silver-snake` não existe em folha nenhuma do projeto. O resultado lá
+   era um botão sem contorno nem fundo, texto branco solto sobre o card.
+   Aqui ele ganha a mesma pílula de vidro do menu da home, que é a linguagem
+   que este projeto já tem. */
+.oracle-btn {
+    background: rgb(255 255 255 / 0.08);
+    border: 1px solid rgb(255 255 255 / 0.18);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.oracle-btn:hover {
+    background: rgb(255 255 255 / 0.14);
+    border-color: rgb(255 255 255 / 0.3);
+    box-shadow: 0 4px 20px -5px rgba(155, 161, 166, 0.4);
+}
+
+.oracle-btn-icon {
+    width: 0.75rem;
+    height: 0.75rem;
+}
+
 /* ── Background e Overlay ── */
 .oracle-bg {
     position: absolute;
@@ -226,5 +258,140 @@
     pointer-events: none;
 }
 
+/* O canvas das partículas. No site antigo o componente trazia estes valores
+   num `style` inline do JSX, não em folha. */
+.oracle-particles {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: auto;
+    mix-blend-mode: screen;
+}
 
+/* ==========================================================================
+   O livro — acréscimo, não existe no oracle.css original
 
+   Fica na coluna do título, que em tela larga sobra espaço embaixo dele. A
+   capa e o botão ficam lado a lado, como pedido.
+   ========================================================================== */
+
+.oracle-livro {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    text-align: left;
+}
+
+@media (max-width: 1023px) {
+    .oracle-livro {
+        justify-content: center;
+        margin-top: 2rem;
+    }
+}
+
+/* A capa. A proporção vem fixada para o bloco não saltar quando a imagem
+   termina de baixar — sem isso o botão ao lado dá um pulo. */
+.oracle-livro-capa {
+    width: 84px;
+    aspect-ratio: 417 / 589;   /* a proporção real do arquivo */
+    flex: none;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 14px 40px -12px rgba(0, 0, 0, 0.8);
+}
+
+@media (min-width: 768px) {
+    .oracle-livro-capa { width: 100px; }
+}
+
+/* O botão é o mesmo do agendamento — mesma pílula de vidro, mesma linguagem. */
+.oracle-livro-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    border-radius: 9999px;
+    padding: 0.4rem 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    background: rgb(255 255 255 / 0.08);
+    border: 1px solid rgb(255 255 255 / 0.18);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.oracle-livro-btn:hover {
+    transform: scale(1.05);
+    background: rgb(255 255 255 / 0.14);
+    border-color: rgb(255 255 255 / 0.3);
+    box-shadow: 0 4px 20px -5px rgba(155, 161, 166, 0.4);
+}
+
+.oracle-livro-btn:active { transform: scale(0.95); }
+
+/* ==========================================================================
+   Onde acontece — acréscimo, não existe no oracle.css original
+   ========================================================================== */
+
+.oracle-local {
+    margin-top: 1.25rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.oracle-local-titulo {
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: clamp(0.6rem, 1.4vw + 0.25rem, 0.72rem);
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.oracle-local-endereco {
+    margin: 0 0 0.9rem;
+    font-weight: 300;
+    line-height: 1.55;
+    color: #e5e5e5;
+    font-size: clamp(0.78rem, 1.4vw + 0.3rem, 0.92rem);
+}
+
+.oracle-local-endereco strong {
+    font-weight: 500;
+    color: #fff;
+}
+
+/* O mapa. A altura é fixa e a proporção não: um mapa não tem conteúdo que
+   precise caber, e altura fixa evita que o card salte quando o iframe carrega. */
+.oracle-mapa {
+    display: block;
+    width: 100%;
+    height: 180px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+
+    /* O mapa do Google é claro e abriria um retângulo branco numa página de
+       tinta. Inverter e girar o matiz devolve as cores aproximadamente onde
+       estavam, com o fundo escuro — é o mesmo recurso dos mapas em modo
+       escuro. Não é perfeito, e é o preço de embutir um serviço de terceiro
+       que não oferece tema. */
+    filter: invert(0.92) hue-rotate(180deg) saturate(0.75) brightness(0.95);
+}
+
+@media (min-width: 768px) {
+    .oracle-mapa { height: 210px; }
+}
+
+.oracle-local-acao {
+    margin-top: 0.9rem;
+    display: flex;
+    justify-content: center;
+}

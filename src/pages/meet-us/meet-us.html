@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conheça-nos — Universo de Luz</title>
+<link rel="icon" type="image/svg+xml" href="/public/img/logo.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="/public/img/logo-192.png">
+
+<!-- Caminhos a partir da raiz, não relativos: a página é servida em `/meet-us`
+     por reescrita (ver vercel.json), e ali um `href="meet-us.css"` resolveria
+     para `/meet-us.css` — que não existe. -->
+<!-- A transição entre páginas, e é a única folha do projeto que vem por
+     <link> próprio em vez de por @import.
+
+     Não é desleixo de organização: a regra `@view-transition` e as animações
+     `::view-transition-*` precisam ser conhecidas **antes do primeiro
+     desenho**. Numa cadeia de importações o navegador só as descobre depois de
+     dois pedidos de rede encadeados, e a essa altura já decidiu — por @import
+     a transição era descartada ("Transition was skipped") e, quando não era,
+     rodava com o esmaecimento padrão em vez do deslize. Como <link> ela é
+     baixada em paralelo com a folha da página, e chega a tempo.
+
+     A ativação vai embutida logo abaixo, e não na folha: ela precisa valer
+     **sem sequer uma ida à rede**. Medido: só no <link>, a transição voltava a
+     ser descartada; embutida, dispara sempre. As animações podem chegar um
+     instante depois, a ativação não. -->
+<style>@view-transition { navigation: auto }</style>
+<link rel="stylesheet" href="/src/transicao.css">
+<link rel="stylesheet" href="/src/pages/meet-us/meet-us.css">
+</head>
+
+<body>
+
+<!-- Porte de site-antigo/site-UL/src/pages/meetUs/meetUs.tsx. A árvore é a
+     mesma do JSX; o que era componente virou marcação:
+       <ParticlesBackground />  →  o <canvas class="meetus-particles">
+       <FileEdit/TrendingUp/Star size={20} />  →  os SVG do lucide, embutidos
+     Os ícones são os mesmos: os `d` vêm de lucide-react 0.544.0 (file-pen,
+     trending-up, star) e os atributos são os padrões da biblioteca —
+     viewBox 0 0 24 24, fill none, stroke currentColor, largura 2, pontas e
+     junções redondas. -->
+<main class="meetus-root">
+
+  <!-- Background Layer -->
+  <img src="/src/pages/meet-us/img/fundo-conheca-nos.jpg" alt="Background Universo" class="meetus-bg">
+
+  <!-- Dark Film Overlay -->
+  <div class="meetus-overlay"></div>
+
+  <!-- Decorative Grids -->
+  <div class="meetus-grid-lines">
+    <div class="meetus-grid-line-v"></div>
+    <div class="meetus-grid-line-v"></div>
+    <div class="meetus-grid-line-v"></div>
+    <div class="meetus-grid-line-v"></div>
+    <div class="meetus-grid-line-v"></div>
+    <div class="meetus-grid-line-v"></div>
+    <div class="meetus-grid-line-v"></div>
+    <div class="meetus-grid-line-h"></div>
+    <div class="meetus-grid-line-h"></div>
+    <div class="meetus-grid-line-h"></div>
+    <div class="meetus-grid-line-h"></div>
+  </div>
+
+  <!-- Floating Particles Canvas -->
+  <canvas class="meetus-particles"></canvas>
+
+  <!-- Content Layer -->
+  <div class="meetus-content">
+    <div class="meetus-container">
+
+      <div class="meetus-hero-grid">
+        <!-- Esquerda: Textos -->
+        <div>
+          <!-- Header -->
+          <div class="meetus-badge meetus-anim">
+            <img src="/public/img/logo.svg" alt="Logo" class="meetus-badge-logo">
+            <span>UNIVERSO DE LUZ • NOSSA ESSÊNCIA</span>
+          </div>
+
+          <h1 class="meetus-title meetus-anim">
+            Despertando Consciências,
+            <span class="meetus-title-gradient"> Elevando Vibrações</span>
+          </h1>
+
+          <p class="meetus-desc meetus-anim">
+            Somos um grupo universalista e ayahuasqueiro, fundado em 2014.
+            <br><br>
+            <strong>NOSSA MISSÃO É</strong> Promover consciência e fé inteligente, acolhendo de forma integral todos os seres, a começar pela consciência do autocuidado. Comprometidos com amor e alegria, gentileza e zelo, multiplicando fraternidade em total prosperidade e harmonia por todos os mundos.
+          </p>
+
+          <div class="meetus-dirigente meetus-anim">
+            <h2 class="meetus-dirigente-title">
+              Conheça nossa dirigente Olyvia Libório
+            </h2>
+            <p class="meetus-dirigente-desc">
+              <strong>Olyvia Libório </strong>
+              <a href="https://www.instagram.com/olyvialiborio/" target="_blank" rel="noopener noreferrer" class="meetus-ig-link">
+                @olyvialiborio
+              </a>
+              <br>
+              fundadora do Universo de Luz e responsável pela sustentação energética do grupo.
+              <br><br>
+              Com olhar firme e condução zelosa, ela garante a segurança espiritual e a integridade de cada processo, ancorando a luz e a ordem nas cerimônias.
+            </p>
+          </div>
+        </div>
+
+        <!-- Direita: Imagem da Olyvia no Arco Neon -->
+        <div class="meetus-hero-image-wrapper meetus-anim">
+          <img
+            src="/src/pages/meet-us/img/olyvia.jpg"
+            alt="Olyvia - Universo de Luz"
+            class="meetus-hero-image">
+        </div>
+      </div>
+
+      <!-- Floating Feature Cards -->
+      <div class="meetus-floating-cards">
+        <!-- Card 1: MISSÃO -->
+        <div class="meetus-card meetus-anim">
+          <div class="meetus-card-glow"></div>
+          <div class="meetus-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12.5 22H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v9.5"/>
+              <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+              <path d="M13.378 15.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/>
+            </svg>
+          </div>
+          <h3 class="meetus-card-title">MISSÃO</h3>
+          <p class="meetus-card-text">
+            Auxiliar no despertar espiritual coletivo para vivenciarmos o AMOR de Deus e a transição planetária de maneira consciente, plena e saudável.
+          </p>
+        </div>
+
+        <!-- Card 2: VISÃO -->
+        <div class="meetus-card meetus-anim">
+          <div class="meetus-card-glow"></div>
+          <div class="meetus-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 7h6v6"/>
+              <path d="m22 7-8.5 8.5-5-5L2 17"/>
+            </svg>
+          </div>
+          <h3 class="meetus-card-title">VISÃO</h3>
+          <p class="meetus-card-text">
+            Tornar-se uma comunidade holística auto-sustentável capaz de acolher àqueles que buscam o despertar espiritual e comungam dos propósitos divinos.
+          </p>
+        </div>
+
+        <!-- Card 3: VALORES -->
+        <div class="meetus-card meetus-anim">
+          <div class="meetus-card-glow"></div>
+          <div class="meetus-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
+            </svg>
+          </div>
+          <h3 class="meetus-card-title">VALORES</h3>
+          <ul class="meetus-card-text" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.25rem 1rem; list-style: none; margin: 0; padding: 0">
+            <li>• Fé em Deus</li>
+            <li>• Firmeza</li>
+            <li>• Harmonia</li>
+            <li>• Amor</li>
+            <li>• Respeito</li>
+            <li>• Verdade</li>
+            <li>• Fraternidade</li>
+            <li>• Humildade</li>
+            <li>• Alegria</li>
+            <li>• União</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ── SEÇÃO AYAHUASCA ── -->
+      <div class="meetus-ayahuasca meetus-anim">
+        <h2 class="meetus-ayahuasca-title">
+          Sobre a Sagrada Medicina
+          <span class="meetus-title-gradient">Ayahuasca</span>
+        </h2>
+
+        <div class="meetus-ayahuasca-card">
+          <div class="meetus-card-glow"></div>
+          <div class="meetus-ayahuasca-body">
+            <p>
+              A ayahuasca atua como uma chave para o subconsciente, permitindo o acesso a traumas e bloqueios emocionais para que sejam amorosamente ressignificados.
+            </p>
+            <p>
+              Espiritualmente, a bebida é considerada uma sagrada <em>"medicina da alma"</em> que expande a consciência e facilita o reencontro do indivíduo com sua essência divina.
+            </p>
+            <p>
+              A purgação, muito comum durante os rituais, transcende o físico e atua como uma limpeza profunda, liberando e dissipando energias e pensamentos densos.
+            </p>
+            <p>
+              A experiência sob a força do chá promove a dissolução do ego, ajudando a cultivar o perdão, a empatia e um sentimento de unidade com o todo.
+            </p>
+            <p>
+              Terapeuticamente, essa vivência oferece novas perspectivas e clareza mental, impulsionando um processo poderoso de autocura e profundo despertar pessoal.
+            </p>
+            <p class="meetus-ayahuasca-cta">
+              Para viver essa experiência transformadora em nossa casa, é necessário passar por uma consulta com a dirigente
+              <a href="https://www.instagram.com/olyvialiborio/" target="_blank" rel="noopener noreferrer" class="meetus-ig-link">Olyvia Libório</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Mesma regra da página inicial: nenhum script antes do fim do body, e o
+     GSAP declarado no mapa de importação, com a mesma versão fixa. -->
+<script type="importmap">
+{
+  "imports": {
+    "gsap": "/public/lib/gsap/index.js"
+  }
+}
+</script>
+<script type="module" src="/src/pages/meet-us/meet-us.js"></script>
+</body>
+</html>

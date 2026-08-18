@@ -1,0 +1,46 @@
+@import url("/src/components/rodape/rodape.css");
+
+/* ==========================================================================
+   O chão das páginas internas
+
+   Toda página de `src/pages/` importa esta folha na primeira linha. Ela não
+   tem nada de nenhuma página em particular: é o básico do documento e as
+   fontes.
+
+   E carrega a decisão que vale para todas: **as páginas internas não usam o
+   `src/style.css`**. Lá o `html` tem
+   `font-size: clamp(1px, 10 * 100vw / var(--size), 12px)` — 1rem ≈ 10px —
+   para a cena da home escalar junto com a viewport. As folhas que vieram do
+   site antigo foram escritas para o padrão de 16px: sob a escala da home,
+   `max-width: 80rem` viraria 800px em vez de 1280px e as páginas encolheriam
+   pela metade. Aqui o rem é o do navegador, e as cópias se comportam como no
+   original.
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #050505;
+}
+
+body {
+  margin: 0;
+  font-family: sans, system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* As mesmas fontes do resto do site. Vieram do bundle original e por isso
+   moram em /public/fontes/: são licenciadas, e precisam ser trocadas ou
+   licenciadas antes de publicar. */
+@font-face {
+  font-family: sans; font-style: normal; font-weight: 400; font-display: swap;
+  src: url(/public/fontes/NHaasGroteskTXPro-55Rg.DjjIn3vU.woff2) format("woff2");
+}
+@font-face {
+  font-family: sans; font-style: normal; font-weight: 500; font-display: swap;
+  src: url(/public/fontes/NHaasGroteskTXPro-65Md.obxsJaSp.woff2) format("woff2");
+}

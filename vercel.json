@@ -1,8 +1,12 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "framework": "vite",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/", "destination": "/src/universo-de-luz.html" },
+    { "source": "/meet-us", "destination": "/src/pages/meet-us/meet-us.html" },
+    { "source": "/prayers", "destination": "/src/pages/prayers/prayers.html" },
+    { "source": "/cleansing", "destination": "/src/pages/cleansing/cleansing.html" },
+    { "source": "/defense", "destination": "/src/pages/defense/defense.html" },
+    { "source": "/oracle", "destination": "/src/pages/oracle/oracle.html" },
+    { "source": "/youtube", "destination": "/src/pages/youtube/youtube.html" }
   ]
 }

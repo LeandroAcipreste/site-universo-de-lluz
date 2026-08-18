@@ -1,0 +1,94 @@
+/* ==========================================================================
+   O rodapé
+
+   Transparente e fixo no pé de todas as páginas: as redes à esquerda, o
+   crédito no canto direito. Sem fundo nenhum — a cena e as fotos continuam
+   inteiras por baixo dele.
+
+   Transparente cobra um preço: o texto precisa se sustentar sobre qualquer
+   coisa que passe por trás, e no site isso vai de céu claro a estrelado. Daí a
+   sombra curta em cada item — não é enfeite, é o que garante a leitura sem
+   pintar uma faixa por cima da imagem.
+   ========================================================================== */
+
+.rodape {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;          /* abaixo da barra de cima (60), acima do conteúdo */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem clamp(1.1rem, 3vw, 2.25rem);
+
+  /* Só os links recebem o ponteiro: o rodapé atravessa a tela inteira, e
+     opaco ao clique ele roubaria o mouse da cena 3D da página inicial. */
+  pointer-events: none;
+
+  /* Entra depois — na home, junto com a oração; nas outras, ao carregar. */
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rodape.esta-visivel { opacity: 1; }
+
+.rodape__redes {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.rodape a {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  text-decoration: none;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgb(255 255 255 / 0.62);
+  text-shadow: 0 1px 6px rgb(0 0 0 / 0.55);
+  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rodape a:hover,
+.rodape a:focus-visible { color: #fff; }
+
+.rodape svg {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+}
+
+/* O crédito: bem mais apagado que as redes, porque é assinatura e não
+   chamada. Só ganha contraste quando o ponteiro passa. */
+.rodape__credito {
+  margin: 0;
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: rgb(255 255 255 / 0.3);
+  text-shadow: 0 1px 6px rgb(0 0 0 / 0.55);
+}
+
+.rodape__credito a {
+  font-size: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: rgb(255 255 255 / 0.42);
+}
+
+/* Em tela estreita o rótulo das redes sai e ficam só os ícones: o crédito é
+   longo e, com os dois textos, a linha quebrava. */
+@media (max-width: 640px) {
+  .rodape { padding: 0.7rem 1.1rem; }
+  .rodape__redes { gap: 1.1rem; }
+  .rodape__rotulo { display: none; }
+  .rodape__credito { font-size: 0.55rem; letter-spacing: 0.08em; }
+}

@@ -1,26 +1,40 @@
-# Referências locais de design (não vão para produção)
-designSystem/
-# src/pages/designSystem/ ← removido: componente necessário no build
+# ============================================================================
+# Universo de Luz
+#
+# Regra: sobe o que a Vercel precisa servir — o HTML, o CSS, os módulos de
+# `src/` e o conteúdo de `public/` (imagens, fontes e as bibliotecas). O resto
+# é referência de trabalho ou coisa que se reconstrói, e não tem por que estar
+# no repositório.
+# ============================================================================
 
-logs
+# Este projeto não usa npm: as duas bibliotecas (three e gsap) são declaradas
+# no mapa de importação do HTML e são servidas de `public/lib/`, e o server.js
+# só usa built-ins do Node. A linha fica como guarda — se alguém rodar um `npm install` por
+# engano, o resultado não vai para o repositório.
+node_modules/
+
+# O site antigo, em React. Está aqui só como referência — foi de onde vieram
+# os rótulos e a aparência dos botões da navegação. Não faz parte do que roda,
+# e carrega o próprio .git e o próprio node_modules dentro.
+site-antigo/
+
+# A captura original do quadplex80.com, 19 MB. Foi dela que saíram o shader
+# das nuvens, as posições das 240 nuvens e as medidas da câmera. Vale guardar
+# no disco, não no repositório.
+assets/
+index.snapshot.html
+
+# Rascunhos e saídas de teste
 *.log
+*.stackdump
+*.bak
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Editores e ferramentas locais
+.vscode/
+.claude/settings.local.json
 
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Sistema operacional
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+desktop.ini

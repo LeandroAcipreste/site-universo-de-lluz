@@ -1,0 +1,97 @@
+/* ==========================================================================
+   Introdução — o símbolo, o nome e a barra de carregamento
+
+   Ela cobre o tempo em que as texturas das nuvens carregam, e mais nada. Não
+   há animação de traçado aqui: o motivo está no cabeçalho do introducao.js.
+   ========================================================================== */
+
+.intro {
+  position: absolute;
+  inset: 0;
+  z-index: 10;              /* acima da hero */
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* O céu estrelado de img/background.jpg, sob um véu escuro que dá contraste
+     ao logo prateado. */
+  background:
+    linear-gradient(rgb(5 7 16 / 0.44), rgb(6 8 18 / 0.72) 54%, rgb(4 6 14 / 0.88)),
+    url(/public/img/background.jpg) center / cover no-repeat;
+  background-color: #05070f;
+}
+
+/* Um halo frio no centro, para o logo não nascer de um fundo morto. */
+.intro__brilho {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 46%,
+    rgb(150 175 220 / 0.16),
+    transparent 70%
+  );
+}
+
+/* A coluna: símbolo, nome (dentro do SVG), barra e porcentagem.
+   Nasce apagada — o JS a traz. */
+.intro__caixa {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  will-change: opacity;
+}
+
+/* Menor do que era: o símbolo aqui é uma marca de espera, não a cena. O
+   protagonismo é do triângulo em 3D, no fim do voo. */
+.intro__svg {
+  width: 180px;
+  height: auto;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .intro__svg { width: 220px; }
+}
+
+/* --------------------------------------------------------------------------
+   A barra
+   -------------------------------------------------------------------------- */
+
+.intro__barra {
+  position: relative;
+  width: 180px;
+  height: 2px;
+  margin-top: 0.6rem;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgb(255 255 255 / 0.12);
+}
+
+@media (min-width: 768px) {
+  .intro__barra { width: 220px; }
+}
+
+/* Cresce por `transform`, não por `width`: escalar é composto na GPU, mudar a
+   largura refaz o layout a cada passo — e isto roda justamente enquanto a
+   thread principal está ocupada carregando. */
+.intro__barra-preenche {
+  transform-origin: left center;
+  transform: scaleX(0);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #8A9299, #F8F9FA 55%, #C9CFD4);
+  will-change: transform;
+}
+
+.intro__pct {
+  margin: 0.9rem 0 0;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  color: rgb(242 242 242 / 0.45);
+  font-variant-numeric: tabular-nums;
+}

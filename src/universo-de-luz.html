@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Universo de Luz</title>
+<!-- O triângulo na aba. O SVG serve em qualquer tamanho; o PNG é a reserva
+     para navegadores que não aceitam favicon vetorial. -->
+<link rel="icon" type="image/svg+xml" href="/public/img/logo.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="/public/img/logo-192.png">
+
+<!-- A única folha do projeto: ela importa as das partes.
+
+     Caminho a partir da raiz, não relativo. Esta página é servida em `/` por
+     reescrita (ver vercel.json), e ali um `href="style.css"` resolve para
+     `/style.css` — que não existe. O sintoma é cruel: a página abre, o HTML
+     aparece cru, nada anima, e não há erro nenhum além de dois 404. -->
+<!-- A transição entre páginas, e é a única folha do projeto que vem por
+     <link> próprio em vez de por @import.
+
+     Não é desleixo de organização: a regra `@view-transition` e as animações
+     `::view-transition-*` precisam ser conhecidas **antes do primeiro
+     desenho**. Numa cadeia de importações o navegador só as descobre depois de
+     dois pedidos de rede encadeados, e a essa altura já decidiu — por @import
+     a transição era descartada ("Transition was skipped") e, quando não era,
+     rodava com o esmaecimento padrão em vez do deslize. Como <link> ela é
+     baixada em paralelo com a folha da página, e chega a tempo.
+
+     A ativação vai embutida logo abaixo, e não na folha: ela precisa valer
+     **sem sequer uma ida à rede**. Medido: só no <link>, a transição voltava a
+     ser descartada; embutida, dispara sempre. As animações podem chegar um
+     instante depois, a ativação não. -->
+<style>@view-transition { navigation: auto }</style>
+<link rel="stylesheet" href="/src/transicao.css">
+<link rel="stylesheet" href="/src/style.css">
+</head>
+
+<body>
+
+<div class="stage">
+
+  <!-- ====================================================================
+       1. INTRODUÇÃO — o logo se desenhando. É a primeira a rodar, por isso
+       vem primeiro. O JS monta o SVG aqui dentro, e a seção sai quando a
+       animação termina e as texturas da cena estão prontas. Fica por cima
+       pelo z-index, não pela ordem.
+       ==================================================================== -->
+  <section class="intro" id="introducao" aria-label="Universo de Luz"></section>
+
+  <!-- ====================================================================
+       2. HERO — a cena 3D e o card da oração, que entra no fim do voo
+       ==================================================================== -->
+  <div class="hero" id="hero">
+    <!-- A cena three.js monta o <canvas> aqui. Ver hero/cena.js. -->
+    <div class="hero__scene"></div>
+
+    <div class="hero__content">
+      <div class="hero__grid">
+        <div class="hero__col">
+
+          <!-- O card da oração. Nasce com `hidden`: é regra da folha do
+               próprio navegador (`[hidden] { display: none }`), então vale
+               desde o primeiro byte, antes de qualquer CSS meu carregar. O JS
+               só o tira quando a animação do voo termina. -->
+          <article class="oracao" hidden>
+            <p class="oracao__selo">
+              <span aria-hidden="true">△</span>
+              Oração do Universo de Luz
+              <span aria-hidden="true">△</span>
+            </p>
+
+            <h2 class="oracao__titulo">Divino Criador,</h2>
+
+            <p class="oracao__linha">Dai-me o deslumbre da Tua presença,</p>
+            <p class="oracao__linha">Dai-me o silêncio para escutar a música das estrelas,</p>
+            <p class="oracao__linha">Dai-me a força da fé para atravessar as tempestades,</p>
+            <p class="oracao__linha">Dai-me a sabedoria de aceitar a tudo e a todos como são,</p>
+            <p class="oracao__linha">Dai-me luz para manter-me num bom caminho,</p>
+            <p class="oracao__linha">Dai-me amor para testemunhar a Tua criação.</p>
+
+            <p class="oracao__fecho">Que assim seja hoje, sempre e eternamente</p>
+
+            <p class="oracao__aclamacoes">
+              <span>Amém!</span><span>Axé!</span><span>Saravá!</span><span>A-ho!</span>
+            </p>
+            
+          </article>
+
+        </div>
+
+        <!-- A navegação, no eixo vertical à direita da logo. Veio do site
+             antigo (site-antigo/site-UL/src/components/), onde os mesmos
+             botões ficavam em volta da marca. Nasce com `hidden` pelo mesmo
+             motivo do card, e entra junto com ele. -->
+        <div class="hero__col hero__col--nav">
+          <div class="menu" hidden>
+
+            <!-- O gatilho só existe em tela estreita, onde não cabe o eixo de
+                 seis botões ao lado da logo. No desktop ele some e a lista
+                 fica sempre aberta — daí `aria-expanded` nascer verdadeiro e o
+                 JS só mexer nele quando o botão está em uso. -->
+            <button class="menu__gatilho" type="button"
+                    aria-expanded="false" aria-controls="menu-lista">
+              <span class="menu__barras" aria-hidden="true"><span></span><span></span></span>
+              Menu
+              <span class="menu__seta" aria-hidden="true"></span>
+            </button>
+
+            <nav class="menu__lista" id="menu-lista" aria-label="Principal">
+              <a class="menu__item" href="/meet-us">Conheça-nos</a>
+              <a class="menu__item" href="/prayers">Orações</a>
+              <a class="menu__item" href="/cleansing">Limpezas</a>
+              <a class="menu__item" href="/defense">Defesas</a>
+              <a class="menu__item" href="/oracle">Oráculo</a>
+              <a class="menu__item" href="/youtube">YouTube</a>
+            </nav>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Mapa de importação: deixa o código usar `three` e `gsap` como nomes, em vez
+     de caminhos. Precisa vir antes do primeiro módulo que usa esses nomes —
+     por isso imediatamente acima do main.js.
+
+     Estas linhas são a **única** declaração de dependência do projeto. Não há
+     package.json, não há node_modules, não há build.
+
+     As bibliotecas ficam em /public/lib/, no próprio site, e não numa CDN.
+     Estiveram na jsdelivr e o preço apareceu duas vezes: o pedido do gsap saía
+     e **nunca voltava** — sem resposta e sem erro —, o grafo de módulos não
+     completava e a página inteira ficava sem JavaScript. Sem barra, sem
+     rodapé, sem nada, e nenhuma mensagem no console explicando.
+
+     Servidas daqui, elas chegam pela mesma conexão que já trouxe o HTML. Para
+     trocar de versão: baixar o arquivo novo em /public/lib/ e ajustar o
+     caminho aqui. -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "/public/lib/three.module.js",
+    "gsap": "/public/lib/gsap/index.js"
+  }
+}
+</script>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

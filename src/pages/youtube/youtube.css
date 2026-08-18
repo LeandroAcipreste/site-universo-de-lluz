@@ -1,0 +1,285 @@
+/* ==========================================================================
+   YouTube
+
+   Esta é a única das cinco páginas que **não tem** folha para copiar: o
+   `site-antigo/site-UL/src/pages/youtube/youtube.tsx` é um arquivo só, e todo
+   o visual dele está em classes utilitárias do Tailwind dentro do JSX. Este
+   projeto não usa Tailwind, então cada utilitária virou CSS de verdade.
+
+   A tradução foi feita uma a uma, com os valores que o Tailwind gera. Onde não
+   é óbvio, a utilitária de origem está no comentário. Os poucos trechos que já
+   eram `style` inline no JSX — as duas famílias tipográficas e o gradiente do
+   título — vieram como estavam.
+   ========================================================================== */
+
+@import url("/src/pages/comum/base.css");
+@import url("/src/pages/comum/nav.css");
+@import url("/src/pages/comum/fundo.css");
+@import url("/src/pages/comum/cobras.css");
+
+/* relative min-h-screen overflow-hidden bg-black text-white */
+.yt-section {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #000;
+  color: #fff;
+}
+
+.yt-section ::selection { background: rgb(239 68 68 / 0.3); }   /* selection:bg-red-500/30 */
+
+/* relative z-10 mx-auto flex min-h-screen flex-col items-center px-5
+   text-center pt-[max(8rem,15vh)] pb-20 justify-start lg:justify-center */
+.yt-content {
+  position: relative;
+  z-index: 10;
+  margin: 0 auto;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: max(8rem, 15vh) 1.25rem 5rem;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .yt-content { justify-content: center; }
+}
+
+/* mb-4 font-light leading-[1.05] tracking-tight uppercase antialiased
+   + o `style` inline do JSX */
+.yt-title {
+  margin: 0 0 1rem;
+  font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+  font-size: clamp(2.2rem, 7vw + 0.5rem, 5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+
+.yt-title-gradient {
+  color: transparent;
+  background-image: linear-gradient(90deg, #F8F9FA 0%, #DDE0E3 50%, #9BA1A6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* mb-8 font-light tracking-[0.15em] text-white/70 uppercase */
+.yt-subtitle {
+  margin: 0 0 2rem;
+  font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+  font-size: clamp(0.9rem, 1.5vw + 0.4rem, 1.25rem);
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.7);
+}
+
+.yt-bloco {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* group relative mb-[clamp(3rem,8vw,5rem)] flex items-center justify-center
+   gap-3 rounded-full px-8 py-3.5 text-base md:px-10 md:py-4 md:text-lg
+   font-medium transition-all duration-300 hover:scale-105 active:scale-95 */
+.yt-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: clamp(3rem, 8vw, 5rem);
+  padding: 0.875rem 2rem;
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s;
+
+  /* O `style={BTN_PRIMARY}` do JSX é um objeto **vazio** — está marcado como
+     `@deprecated` em `constants/btnPrimary.ts` — e a classe `btn-silver-snake`
+     que o acompanha não existe em folha nenhuma do projeto. Lá o botão ficava
+     sem fundo nem contorno. Aqui recebe a mesma pílula de vidro do menu da
+     home, que é a linguagem que este projeto já tem. */
+  background: rgb(255 255 255 / 0.08);
+  border: 1px solid rgb(255 255 255 / 0.18);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+@media (min-width: 768px) {
+  .yt-btn { padding: 1rem 2.5rem; font-size: 1.125rem; }
+}
+
+.yt-btn:hover {
+  transform: scale(1.05);
+  background: rgb(255 255 255 / 0.14);
+  border-color: rgb(255 255 255 / 0.3);
+  box-shadow: 0 4px 20px -5px rgba(155, 161, 166, 0.4);
+}
+
+.yt-btn:active { transform: scale(0.95); }
+
+.yt-btn-seta {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.15s;
+}
+
+.yt-btn:hover .yt-btn-seta { transform: translateX(0.25rem); }
+
+/* w-full max-w-6xl */
+.yt-playlists-bloco {
+  width: 100%;
+  max-width: 72rem;
+}
+
+/* mb-8 text-sm md:text-lg font-light tracking-wide text-white/40 lowercase italic */
+.yt-playlists-legenda {
+  margin: 0 0 2rem;
+  font-size: 0.875rem;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.025em;
+  text-transform: lowercase;
+  color: rgb(255 255 255 / 0.4);
+}
+
+@media (min-width: 768px) {
+  .yt-playlists-legenda { font-size: 1.125rem; }
+}
+
+/* grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6 */
+.yt-grade {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px)  { .yt-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .yt-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .yt-grade { gap: 1.5rem; } }
+
+/* group relative flex w-full flex-col overflow-hidden rounded-[20px]
+   border border-white/10 bg-white/5 backdrop-blur-xl transition-all
+   duration-500 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10 */
+.yt-card {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(255 255 255 / 0.05);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  text-decoration: none;
+  transition: all 0.5s;
+}
+
+.yt-card:hover {
+  transform: translateY(-0.25rem);
+  border-color: rgb(255 255 255 / 0.2);
+  background: rgb(255 255 255 / 0.1);
+  box-shadow: 0 0 40px -10px rgb(255 255 255 / 0.1);
+}
+
+/* relative aspect-video w-full overflow-hidden bg-black/40 */
+.yt-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: rgb(0 0 0 / 0.4);
+}
+
+/* absolute inset-0 h-full w-full object-cover opacity-80
+   transition-all duration-700 group-hover:scale-105 group-hover:opacity-100 */
+.yt-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: all 0.7s;
+}
+
+.yt-card:hover .yt-thumb img { transform: scale(1.05); opacity: 1; }
+
+/* absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/20 to-transparent */
+.yt-thumb-veu {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #0a0a0a, rgb(0 0 0 / 0.2), transparent);
+}
+
+/* absolute bottom-4 right-4 flex h-10 w-10 shrink-0 scale-95 items-center
+   justify-center rounded-full bg-red-600/90 text-white
+   shadow-[0_0_15px_rgba(220,38,38,0.5)] backdrop-blur-md transition-all
+   duration-500 group-hover:scale-110 group-hover:bg-red-500 */
+.yt-selo {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: rgb(220 38 38 / 0.9);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transform: scale(0.95);
+  transition: all 0.5s;
+}
+
+.yt-card:hover .yt-selo { transform: scale(1.1); background: rgb(239 68 68); }
+
+.yt-selo svg { width: 1.25rem; height: 1.25rem; }
+
+/* relative flex flex-col p-6 */
+.yt-card-corpo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+/* mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-red-400 */
+.yt-card-etiqueta {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #f87171;
+}
+
+/* text-xl md:text-2xl font-light tracking-tight text-white uppercase */
+.yt-card-titulo {
+  margin: 0;
+  font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .yt-card-titulo { font-size: 1.5rem; }
+}

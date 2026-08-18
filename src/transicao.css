@@ -1,0 +1,61 @@
+/* ==========================================================================
+   A transição entre páginas
+
+   A que sai desliza para cima e some; a que entra vem de baixo — **as duas ao
+   mesmo tempo**, como um único movimento contínuo.
+
+   Isto é feito com View Transitions entre documentos, e não com JavaScript,
+   porque não havia como fazê-lo à mão: o site é de páginas separadas, e num
+   navegador o documento antigo é destruído no instante em que o novo carrega.
+   Nunca existem os dois na tela. O que o `@view-transition` faz é justamente
+   isso: o navegador guarda um retrato da página que sai e anima esse retrato
+   contra a página que chega.
+
+   Aqui havia antes uma cortina que subia — um retângulo que cobria no fim de
+   uma página e continuava subindo na seguinte. Ela funcionava, mas era um
+   disfarce: escondia a troca em vez de mostrá-la, e ainda segurava a navegação
+   por meio segundo esperando a própria animação terminar.
+
+   Onde o navegador não suportar, nada disto se aplica e a navegação acontece
+   direto, sem animação. É degradação limpa: nenhum link deixa de funcionar.
+   ========================================================================== */
+
+@view-transition {
+  navigation: auto;
+}
+
+/* A curva é a mesma do resto do site — a `unmask` do projeto de referência,
+   que é cubic-bezier(.16, 1, .3, 1). Sai rápido e assenta devagar. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.62s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+  /* Sem mistura entre as duas: o padrão é um cruzamento de opacidade, e com
+     ele as duas páginas aparecem transparentes uma sobre a outra no meio do
+     caminho — o que se lê como falha, não como transição. Aqui uma cobre a
+     outra, e o movimento é o que conta. */
+  mix-blend-mode: normal;
+}
+
+/* A que sai: sobe e deixa a tela. */
+::view-transition-old(root) {
+  animation-name: pagina-sobe-e-sai;
+  z-index: 1;
+}
+
+/* A que entra: vem de baixo, por cima da que sai. */
+::view-transition-new(root) {
+  animation-name: pagina-vem-de-baixo;
+  z-index: 2;
+}
+
+@keyframes pagina-sobe-e-sai {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-100%); }
+}
+
+@keyframes pagina-vem-de-baixo {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}

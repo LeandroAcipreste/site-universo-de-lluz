@@ -1,0 +1,520 @@
+/* ==========================================================================
+   Hero
+   Duas camadas, como no quadplex80.com:
+   1. `.hero` — o container onde a cena 3D (three.js) monta o próprio <canvas>.
+      No original ele nasce vazio; o WebGL preenche depois.
+   2. `.hero__content` — o texto sobre a cena, que entra depois da intro.
+      Porte do componente Vue `data-v-c1cb5361`.
+   ========================================================================== */
+
+.hero {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  /* Fica atrás de todas as camadas, e é o que aparece se alguma demorar a
+     carregar. Nas cores do céu e das nuvens, para nenhuma fresta de borda
+     virar uma faixa escura. */
+  background: linear-gradient(180deg, #6f9dc4 0%, #b9cbd8 60%, #dfe6ea 100%);
+}
+
+/* --------------------------------------------------------------------------
+   A cena 3D
+   -------------------------------------------------------------------------- */
+
+/* O three.js monta o <canvas> aqui dentro. Ver hero/cena.js. */
+.hero__scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero__scene canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Camada de conteúdo
+   -------------------------------------------------------------------------- */
+
+.hero__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: #fff;
+  pointer-events: none;
+}
+
+/* A vinheta que escurece o pé da tela, para o texto se sustentar sobre a cena. */
+.hero__content::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40rem;
+  background: linear-gradient(180deg, #3c627800, #3c627899);
+  z-index: 1;
+}
+
+.hero__grid {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: 2rem;
+}
+
+.hero__col {
+  grid-column: span 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Cada bloco de texto sobe por baixo de um clip. */
+.hero__clip { display: block; overflow: hidden; }
+.hero__clip > * { display: block; will-change: transform, opacity; }
+
+/* --------------------------------------------------------------------------
+   O card da oração
+   Entra quando a cena termina, no lugar em que ficava o texto da hero.
+   -------------------------------------------------------------------------- */
+
+/* Sem painel: a oração vive sobre o céu, na mesma linguagem do texto que havia
+   aqui — branco, com o gradiente de baixo da hero dando o contraste. Um card
+   escuro e opaco destoava de tudo. */
+/* O texto é pintado por um gradiente recortado nas letras: branco em cima,
+   onde o fundo é o azul do céu, virando azul embaixo, onde começa o branco das
+   nuvens. Assim ele tem contraste nas duas pontas — branco sobre nuvem some, e
+   era o que acontecia.
+
+   A rampa é uma só, medida no card inteiro: por isso ela mora aqui e não em
+   cada bloco. Em cada bloco, cada um teria a rampa completa dentro de si e o
+   texto viraria uma escadinha; ancorada na janela (`background-attachment:
+   fixed`), ela deixa de acompanhar o card.
+
+   O que quebrava não era isto, era o `flex`: com o recorte no pai, o Chrome
+   pinta os glifos de descendentes que têm caixa própria fora do lugar, e os
+   itens de um container flex são exatamente isso. O selo e as aclamações saíam
+   empilhados no topo do card. Nenhum dos dois usa `flex` agora. */
+.oracao {
+  position: relative;
+  width: 100%;
+  max-width: 52rem;
+  text-align: left;
+  /* O azul é o azul do céu — o mesmo `#6f9dc4` do fundo da hero, ali em cima.
+     Nada de marinho: a oração vive dentro da cena, não sobre ela.
+
+     E as paradas não são decorativas. O selo e o título (0–22% do card) caem
+     sobre céu e ficam brancos; da primeira linha para baixo o fundo já é nuvem
+     branca, e o azul precisa ter chegado *inteiro* ali, não no meio do
+     caminho. Foi errar isso por poucos pontos que fez a primeira linha sumir. */
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #ffffff 17%,
+    #6f9dc4 29%,
+    #5987b2 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* Estado inicial da entrada, como nos botões: o card nasce um pouco abaixo
+     e apagado, e é o GSAP que o traz. */
+  opacity: 0;
+  transform: translateY(1.6rem);
+  will-change: transform, opacity;
+}
+
+/* Cada bloco da oração começa apagado e acende em cascata. Só opacidade — ver
+   a nota logo abaixo sobre por que aqui não pode haver deslocamento. */
+.oracao > * { opacity: 0; }
+
+/* Todo o texto fica transparente para o gradiente do pai aparecer nele.
+   A hierarquia passa a ser feita com opacidade, não com cor. */
+.oracao__selo,
+.oracao__titulo,
+.oracao__linha,
+.oracao__fecho,
+.oracao__aclamacoes {
+  color: transparent;
+  /* Um halo, para a faixa onde o céu vira nuvem e nenhuma das duas pontas do
+     gradiente se sustenta sozinha. Com `color: transparent` a sombra continua
+     sendo pintada — ela fica atrás do glifo, e o gradiente por cima só deixa
+     ver a borda. São duas: a curta define a letra contra a nuvem, a longa é só
+     um respiro. É contorno, não sombra: some no fundo e segura a leitura. */
+  text-shadow:
+    0 0.05rem 0.35rem rgb(20 52 86 / 0.55),
+    0 0.1rem 1.6rem rgb(23 58 94 / 0.45);
+}
+
+/* O selo no topo, no lugar do sobretítulo "111 WEST 57TH STREET".
+   Em bloco, com os losangos afastados por margem: `flex` aqui criaria caixas
+   descendentes, e é delas que o recorte de texto do Chrome não dá conta. */
+.oracao__selo {
+  margin: 0 0 2rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.oracao__selo span:first-child { margin-right: 0.9em; }
+.oracao__selo span:last-child { margin-left: 0.9em; }
+
+/* A mesma face e o mesmo corpo do título da hero. */
+.oracao__titulo {
+  margin: 0 0 2rem;
+  font-family: teodor, serif;
+  font-size: 3.5rem;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.oracao__linha {
+  margin: 0 0 0.9rem;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  opacity: 0.94;
+}
+
+.oracao__fecho {
+  margin: 2rem 0 1.4rem;
+  font-size: 1.4rem;
+  font-style: italic;
+  opacity: 0.94;
+}
+
+/* Também em bloco, pelo mesmo motivo do selo. */
+.oracao__aclamacoes {
+  margin: 0 0 2.4rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.oracao__aclamacoes span + span { margin-left: 2.2rem; }
+
+/* --------------------------------------------------------------------------
+   O menu
+   Os botões vieram do site antigo (`.ul-btn` em site-UL/src/ul-system.css),
+   com três mudanças pedidas:
+
+   1. Sem a borda animada — lá era um `::before` com o espectro da marca
+      recortado por máscara, fazendo um fio de 1px. Não existe aqui.
+   2. A fonte é a do projeto, não a Montserrat de lá. Botão e link não herdam
+      fonte por conta própria, daí o `font: inherit` explícito.
+   3. As cores. Lá o fundo era tinta escura, o texto quase branco e o
+      preenchimento do hover era o espectro azul-violeta-rosa da marca antiga.
+      Nada disso serve aqui: o fundo é nuvem clara, o branco em repouso sumiria
+      (é o problema que a oração já teve) e o lilás não tem parentesco nenhum
+      com um céu. Em repouso é o azul do céu da oração; no hover o azul preenche
+      e a letra fica branca.
+
+   O resto é como era: pílula de vidro, o preenchimento subindo por baixo, o
+   levantar de 2px e a sombra.
+   -------------------------------------------------------------------------- */
+
+.menu {
+  --ease-menu: cubic-bezier(0.16, 1, 0.3, 1);   /* o `--ul-ease` de lá */
+  position: relative;
+  display: block;
+}
+
+/* Obrigatório, e não é zelo: o `[hidden] { display: none }` vem da folha do
+   navegador, e qualquer `display` declarado aqui ganha dele. Sem esta linha o
+   menu aparecia junto com a cena, antes da hora. O card da oração nunca teve
+   o problema só porque não declara `display` nenhum. */
+.menu[hidden] { display: none; }
+
+/* --------------------------------------------------------------------------
+   O gatilho — só em tela estreita
+   Hambúrguer, a palavra "Menu" e uma seta. As duas barras viram um X e a seta
+   gira quando a lista abre, para o botão dizer em que estado está.
+   -------------------------------------------------------------------------- */
+
+.menu__gatilho {
+  display: none;   /* o @media do fim liga isto no celular */
+  align-items: center;
+  gap: 1em;
+
+  padding: 0.75em 1.6em;
+  border: 0;
+  border-radius: 999px;
+
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2f6091;
+  cursor: pointer;
+
+  background: rgb(255 255 255 / 0.28);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: blur(10px) saturate(150%);
+
+  pointer-events: auto;
+
+  /* Mesmo estado de partida dos botões: o GSAP o traz daqui até o natural. */
+  opacity: 0;
+  transform: translateY(1.8rem);
+
+  transition: color 0.4s var(--ease-menu), background-color 0.4s var(--ease-menu);
+}
+
+.menu__barras {
+  position: relative;
+  width: 1.6rem;
+  height: 0.9rem;
+  flex: none;
+}
+
+.menu__barras span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.45s var(--ease-menu);
+}
+
+.menu__barras span:first-child { top: 0; }
+.menu__barras span:last-child { bottom: 0; }
+
+/* Aberto: as barras se cruzam. O deslocamento é metade da altura da caixa,
+   para as duas se encontrarem no meio antes de girar. */
+.menu.esta-aberto .menu__barras span:first-child { transform: translateY(0.45rem) rotate(45deg); }
+.menu.esta-aberto .menu__barras span:last-child { transform: translateY(-0.45rem) rotate(-45deg); }
+
+/* A seta, feita com duas bordas de um quadrado girado — sem imagem nem SVG. */
+.menu__seta {
+  width: 0.7rem;
+  height: 0.7rem;
+  flex: none;
+  margin-left: auto;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-0.15rem) rotate(45deg);
+  transition: transform 0.45s var(--ease-menu);
+}
+
+.menu.esta-aberto .menu__seta { transform: translateY(0.15rem) rotate(225deg); }
+
+/* --------------------------------------------------------------------------
+   A lista
+   -------------------------------------------------------------------------- */
+
+.menu__lista {
+  display: flex;
+  /* No celular a lista quebra em linhas quando abre. O eixo vertical ao lado
+     da logo é a composição de tela larga, e está no @media do fim. */
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.menu__item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+  overflow: hidden;
+
+  padding: 0.75em 1.6em;
+  border: 0;
+  border-radius: 999px;
+
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+  color: #2f6091;
+
+  background: rgb(255 255 255 / 0.28);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: blur(10px) saturate(150%);
+
+  pointer-events: auto;   /* `.hero__content` desliga o ponteiro para a cena */
+
+  /* Estado inicial da entrada. O GSAP leva daqui até o natural — mesma divisão
+     de trabalho da introdução: a posição de partida é do CSS, o movimento é
+     do GSAP. */
+  opacity: 0;
+  transform: translateY(1.8rem);
+  will-change: opacity, transform;
+
+  /* O levantar do hover usa `translate`, não `transform`. São propriedades
+     separadas e se somam, então o GSAP pode escrever `transform` na entrada
+     sem que esta transição fique correndo atrás dele quadro a quadro. */
+  transition:
+    color 0.55s var(--ease-menu),
+    translate 0.55s var(--ease-menu),
+    box-shadow 0.55s var(--ease-menu),
+    background-color 0.55s var(--ease-menu);
+}
+
+/* O preenchimento que sobe. Fica em `z-index: -1` sob o texto, e é por isso
+   que o botão precisa de `isolation: isolate` — senão ele afunda para trás do
+   card inteiro em vez de ficar atrás só do próprio rótulo. */
+.menu__item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(180deg, #4d84b3 0%, #2f6091 100%);
+  transform: translate3d(0, 101%, 0);
+  transition: transform 0.6s var(--ease-menu);
+}
+
+.menu__item:hover,
+.menu__item:focus-visible {
+  color: #fff;
+  translate: 0 -2px;
+  box-shadow: 0 1.6rem 4.4rem -1.6rem rgb(47 96 145 / 0.75);
+}
+
+.menu__item:hover::after,
+.menu__item:focus-visible::after {
+  transform: translate3d(0, 0, 0);
+}
+
+.menu__item:active { translate: 0 0; scale: 0.985; }
+
+.menu__item:focus-visible {
+  outline: 2px solid rgb(47 96 145 / 0.6);
+  outline-offset: 3px;
+}
+
+/* Cada bloco surge em cascata quando entra — só opacidade.
+   Nada de `will-change: transform` aqui: isso promove cada bloco a uma camada
+   própria, e o gradiente recortado nas letras é pintado pelo pai. As duas
+   coisas juntas dessincronizam, e o texto sai fantasmado. O movimento fica em
+   `.oracao`, que é uma camada só. */
+.oracao__linha,
+.oracao__titulo,
+.oracao__fecho,
+.oracao__aclamacoes,
+.oracao__selo { will-change: opacity; }
+
+/* --------------------------------------------------------------------------
+   Celular
+   Aqui não cabe pôr a oração ao lado da logo: ela cobria o triângulo inteiro.
+   A tela vira uma pilha — gatilho no alto, o triângulo no vão do meio, a
+   oração embaixo — e o vão é o que garante que o triângulo apareça.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 649px) {
+  .hero__content { align-items: stretch; }
+
+  /* De grade a pilha, ocupando a altura toda: é o `space-between` que abre o
+     vão do meio, e é nele que o triângulo aparece. */
+  .hero__grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 2.4rem 2rem 3.2rem;
+  }
+
+  /* O gatilho vem primeiro na tela, mas continua depois no HTML — a ordem do
+     documento é a da leitura: oração, depois navegação. */
+  .hero__col--nav { order: -1; }
+  .hero__col { align-items: center; }
+
+  .menu__gatilho { display: inline-flex; }
+
+  /* Fechada por padrão. Nada de `visibility` ou altura zero: fechada ela não
+     ocupa lugar nenhum, senão comeria o vão do triângulo. */
+  .menu__lista { display: none; }
+
+  .menu.esta-aberto .menu__lista {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.2rem;
+  }
+
+  /* A oração encolhe para caber embaixo do triângulo sem apertar as margens.
+     Ela é o bloco mais alto da tela; cada décimo aqui vira espaço de sobra
+     para o vão do meio. */
+  .oracao {
+    max-width: none;
+    text-align: left;
+    /* Sem o trecho branco. No desktop o topo do card cai sobre céu azul e por
+       isso começa branco; aqui embaixo o card inteiro está sobre nuvem branca,
+       e o branco sumiria da primeira à última linha. */
+    background-image: linear-gradient(180deg, #5f90bd 0%, #2f6091 100%);
+  }
+  .oracao__selo { margin-bottom: 1.4rem; font-size: 1.05rem; }
+  .oracao__titulo { margin-bottom: 1.2rem; font-size: 2.6rem; }
+  .oracao__linha { margin-bottom: 0.5rem; font-size: 1.2rem; line-height: 1.35; }
+  .oracao__fecho { margin: 1.2rem 0 1rem; font-size: 1.2rem; }
+  .oracao__aclamacoes { margin-bottom: 0; font-size: 1.2rem; }
+  .oracao__aclamacoes span + span { margin-left: 1.6rem; }
+}
+
+@media (orientation: portrait) and (min-width: 650px) and (max-width: 1100px) {
+  .hero__grid { grid-template-columns: repeat(24, minmax(0, 1fr)); }
+  .hero__col { grid-column: 2 / span 10; }
+}
+
+@media (min-width: 650px) {
+  .hero__content { align-items: center; }
+  .hero__grid {
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+    padding-bottom: 0;
+  }
+  /* Mais largo que as 7 colunas do texto que havia aqui: o card da oração
+     precisa de espaço para as linhas não quebrarem. */
+  .hero__col {
+    grid-column: 2 / span 10;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  /* A logo fica no centro da tela e o seu círculo vai até uns 60% da largura.
+     A coluna do menu começa depois disso, para o eixo dos botões correr limpo
+     ao lado dela e não por cima.
+
+     O menu fica **no meio do vão** entre a logo e a borda direita, e a conta
+     que dá isso é da própria grade. O círculo da logo termina por volta dos
+     59% da largura; a coluna 15 de 24 começa em 58,3% e a coluna 24 acaba na
+     borda, então o centro desse trecho cai em 79,2% — que é praticamente o
+     meio entre 59% e 100%. Centrar dentro da coluna resolve, e resolve em
+     qualquer largura, sem número fixo.
+
+     Antes daqui o menu esteve encostado à esquerda da coluna (deixando a
+     largura inteira dela vazia à direita, uns 380 px em 1920) e depois colado
+     na borda. Nenhum dos dois era o meio. */
+  .hero__col--nav {
+    grid-column: 15 / -1;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Todos com a mesma largura, sem número mágico: a coluna encolhe até o
+     maior rótulo ("Conheça-nos") e o `stretch` leva os outros cinco até lá.
+     O `nowrap` é o que faz isso valer — em `wrap`, a linha mede o item mais
+     largo em vez da coluna, e cada botão volta a ter a sua própria largura. */
+  .menu__lista {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+  .hero__content::after { height: 17rem; background: linear-gradient(180deg, #3c627800, #3c62784d); }
+}
