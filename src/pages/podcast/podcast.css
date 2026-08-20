@@ -1,0 +1,350 @@
+/* ==========================================================================
+   Podcast — Entre Céus e Terra
+
+   Página nova, escrita aqui. O fundo é o da página do YouTube — o componente
+   comum (`fundo.css`) mais as cobrinhas de luz (`cobras.css`) —, como pedido.
+
+   A diferença de encargo em relação ao YouTube: lá são muitos cards pequenos
+   de vídeo, aqui são dois cartazes verticais e grandes. Por isso a página rola
+   em vez de caber numa tela, e por isso os cartazes têm proporção fixada.
+   ========================================================================== */
+
+@import url("/src/pages/comum/base.css");
+@import url("/src/pages/comum/nav.css");
+@import url("/src/pages/comum/fundo.css");
+@import url("/src/pages/comum/cobras.css");
+
+.pod-section {
+    position: relative;
+    min-height: 100svh;
+    overflow-x: clip;
+    background-color: #000;
+    color: #fff;
+}
+
+.pod-content {
+    position: relative;
+    z-index: 10;
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 7.5rem 1.5rem 5rem;
+}
+
+@media (min-width: 768px) {
+    .pod-content { padding: 9rem 2rem 6rem; }
+}
+
+/* --------------------------------------------------------------------------
+   Cabeçalho
+   -------------------------------------------------------------------------- */
+
+.pod-cabecalho {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+@media (min-width: 900px) {
+    .pod-cabecalho { text-align: left; }
+}
+
+.pod-sobretitulo {
+    margin: 0 0 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    will-change: transform, opacity;
+}
+
+.pod-titulo {
+    margin: 0 0 0.6rem;
+    font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.95)) drop-shadow(0 8px 24px rgba(0, 0, 0, 0.8));
+}
+
+/* Uma palavra por span, com as letras dentro. Sem o invólucro da palavra o
+   navegador quebra a linha entre duas letras quaisquer, porque cada letra é
+   uma caixa `inline-block` — é a mesma armadilha das páginas do livro e de
+   eventos. */
+.pod-palavra {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.pod-letra {
+    display: inline-block;
+    background: linear-gradient(135deg,
+        #ffffff 0%, #f1f5f9 20%, #cbd5e1 40%, #94a3b8 55%,
+        #475569 70%, #94a3b8 85%, #ffffff 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    will-change: transform, opacity;
+}
+
+.pod-espaco {
+    display: inline-block;
+    width: 0.28em;
+    will-change: transform, opacity;
+}
+
+.pod-apresentacao {
+    margin: 0;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    will-change: transform, opacity;
+}
+
+/* --------------------------------------------------------------------------
+   O texto de apresentação
+
+   `max-width` em ch e não em rem: a medida confortável de leitura se conta em
+   caracteres, não em pixels, e assim ela acompanha o corpo se ele mudar. O
+   bloco não depende do tamanho do texto — trocar a cópia não mexe no layout.
+   -------------------------------------------------------------------------- */
+
+.pod-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 62ch;
+    font-weight: 300;
+    line-height: 1.75;
+    font-size: 1rem;
+    color: #dcdcdc;
+    text-align: left;
+    will-change: transform, opacity;
+}
+
+.pod-texto p { margin: 0; }
+.pod-texto em { color: #fff; font-style: italic; }
+
+/* --------------------------------------------------------------------------
+   A grade: o texto e as duas emissoras
+
+   No celular, uma coluna só, na ordem do documento: o texto e, embaixo, os
+   dois cartazes.
+
+   No desktop, três colunas, com o texto **no meio**, entre os dois. Isso não é
+   feito com `order`, e sim com posição explícita de grade: assim a ordem do
+   documento continua sendo a de leitura, que é a que a tecla Tab e os leitores
+   de tela seguem. Trocar a ordem visual sem mexer no documento é justamente
+   para o que serve `grid-column`.
+
+   A coluna do meio é um pouco mais larga que as laterais porque leva texto
+   corrido, e as laterais levam imagem. `align-items: start` porque os três
+   têm alturas diferentes e esticá-los deformaria os cartazes.
+   -------------------------------------------------------------------------- */
+
+.pod-grade {
+    display: grid;
+    gap: 2.5rem;
+}
+
+@media (min-width: 900px) {
+    .pod-grade {
+        grid-template-columns: 1fr 1.15fr 1fr;
+        align-items: start;
+        gap: 2.5rem;
+    }
+
+    /* Coluna 1: Soul Cast. Coluna 2: o texto. Coluna 3: Paranormal.plus.
+       Todos na mesma linha, apesar de o texto vir primeiro no HTML. */
+    .pod-emissora--1 { grid-column: 1; grid-row: 1; }
+    .pod-texto       { grid-column: 2; grid-row: 1; }
+    .pod-emissora--2 { grid-column: 3; grid-row: 1; }
+
+    /* Um respiro no topo, para o texto começar na altura do primeiro cartaz
+       em vez de colado na borda de cima da grade. */
+    .pod-texto { padding-top: 0.5rem; }
+}
+
+.pod-emissora {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: rgba(0, 0, 0, 0.45);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    will-change: transform, opacity;
+}
+
+/* ── Os cartazes ──
+   A proporção de cada um vem do arquivo, e está aqui para o bloco não saltar
+   quando a imagem termina de baixar. São dois valores porque são duas imagens
+   com formatos diferentes. */
+
+.pod-cartaz {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.pod-cartaz img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pod-cartaz--1 { aspect-ratio: 1200 / 1600; }   /* 3:4 */
+.pod-cartaz--2 { aspect-ratio: 900 / 1600; }    /* 9:16 */
+
+/* Lado a lado, os dois cartazes dividem a mesma caixa.
+
+   Sozinhos eles têm formatos diferentes — 3:4 e 9:16 —, e em duas colunas isso
+   dava dois cards de alturas bem desiguais, com um vão morto embaixo do mais
+   baixo. Uma caixa só para os dois resolve.
+
+   E `contain`, não `cover`: são cartazes, feitos de texto e de um rosto. O
+   `cover` preencheria a caixa recortando as bordas, e o que sai da borda de um
+   cartaz é justamente o nome da emissora e o horário. Melhor a faixa de fundo
+   ao lado do mais estreito do que informação cortada. */
+@media (min-width: 900px) {
+    .pod-cartaz--1,
+    .pod-cartaz--2 { aspect-ratio: 4 / 5; }
+    .pod-cartaz img { object-fit: contain; }
+}
+
+/* Numa coluna só, os cartazes inteiros ficariam altos demais — o de 9:16
+   sozinho passaria da altura da tela num celular. Limitar a altura e recortar
+   pelo centro mantém o rosto e o título visíveis sem obrigar a rolar meio
+   metro. Em duas colunas o problema não existe e a proporção volta inteira. */
+@media (max-width: 899px) {
+    .pod-cartaz {
+        aspect-ratio: auto;
+        max-height: 62vh;
+    }
+    .pod-cartaz img { object-position: center top; }
+}
+
+/* --------------------------------------------------------------------------
+   Nome, horários e link
+   -------------------------------------------------------------------------- */
+
+.pod-emissora-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.pod-emissora-nome {
+    margin: 0;
+    font-family: 'Optima', 'Zapf Humanist', 'Tenor Sans', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1.25rem, 3.5vw, 1.6rem);
+    line-height: 1.15;
+    color: #fff;
+}
+
+/* `<dl>` porque é rótulo e valor: o dia e a hora. Cada par num `<div>`, que é
+   o que permite tratá-los como unidade sem quebrar a associação entre `<dt>`
+   e `<dd>`. */
+.pod-horarios {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 2rem;
+}
+
+.pod-horarios dt {
+    margin-bottom: 0.15rem;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.42);
+}
+
+.pod-horarios dd {
+    margin: 0;
+    font-weight: 300;
+    font-size: 1.15rem;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+}
+
+/* As ações de cada emissora. Embrulham porque são até três, e num cartão
+   estreito de três colunas elas não cabem numa linha só. */
+.pod-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.pod-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;          /* 44px — o alvo de toque */
+    padding: 0.55rem 1.3rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    background: rgb(255 255 255 / 0.08);
+    border: 1px solid rgb(255 255 255 / 0.18);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pod-btn:hover {
+    transform: scale(1.04);
+    background: rgb(255 255 255 / 0.14);
+    border-color: rgb(255 255 255 / 0.3);
+}
+
+.pod-btn:active { transform: scale(0.96); }
+
+/* O secundário: mesma pílula, sem preenchimento. O que muda entre os dois é a
+   cor de fundo, não o tamanho nem o alvo de toque, que continuam iguais. */
+.pod-btn--discreto {
+    background: transparent;
+    border-color: rgb(255 255 255 / 0.14);
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
+}
+
+.pod-btn--discreto:hover {
+    background: rgb(255 255 255 / 0.08);
+    border-color: rgb(255 255 255 / 0.28);
+    color: #fff;
+}
+
+.pod-btn-icone { width: 0.85rem; height: 0.85rem; flex: none; }
+
+/* --------------------------------------------------------------------------
+   Quem prefere menos movimento
+   A entrada é enfeite. O `podcast.js` também consulta isto e sai antes de
+   escrever estilo inline; esta regra é a rede de segurança para o caso de o
+   módulo não chegar a rodar.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .pod-sobretitulo, .pod-letra, .pod-espaco, .pod-apresentacao,
+    .pod-texto, .pod-emissora {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+}

@@ -13,6 +13,7 @@
     { "source": "/oracle", "destination": "/src/pages/oracle/oracle.html" },
     { "source": "/events", "destination": "/src/pages/events/events.html" },
     { "source": "/book", "destination": "/src/pages/book/book.html" },
+    { "source": "/podcast", "destination": "/src/pages/podcast/podcast.html" },
     { "source": "/youtube", "destination": "/src/pages/youtube/youtube.html" },
     { "source": "/privacy", "destination": "/src/pages/privacy/privacy.html" }
   ]

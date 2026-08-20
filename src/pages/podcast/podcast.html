@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Podcast — Universo de Luz</title>
+<meta name="description" content="Entre Céus e Terra: Olyvia Libório fala sobre espiritualidade na Soul Cast Web Rádio e na Paranormal.plus.">
+<link rel="icon" type="image/svg+xml" href="/public/img/logo.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="/public/img/logo-192.png">
+
+<!-- Caminhos a partir da raiz: a página é servida em `/podcast` por reescrita
+     (ver vercel.json), e ali um caminho relativo resolveria para a raiz. -->
+<style>@view-transition { navigation: auto }</style>
+<link rel="stylesheet" href="/src/transicao.css">
+<link rel="stylesheet" href="/src/pages/podcast/podcast.css">
+</head>
+
+<body>
+
+<section class="pod-section">
+
+  <!-- O mesmo fundo da página do YouTube: o componente comum (fotografia,
+       escurecimento e vinheta) mais as cobrinhas de luz. -->
+  <div class="fundo">
+    <img src="/src/pages/comum/img/fundo.jpg" alt="" class="fundo__img">
+    <div class="fundo__escuro"></div>
+    <div class="fundo__vinheta"></div>
+  </div>
+
+  <div class="snake-bg"></div>
+
+  <div class="pod-content">
+
+    <header class="pod-cabecalho">
+      <p class="pod-sobretitulo">Podcast</p>
+      <h1 class="pod-titulo"></h1>
+      <p class="pod-apresentacao">com Olyvia Libório</p>
+    </header>
+
+    <!-- ── O texto e as duas emissoras, na mesma grade ──
+
+         A ordem aqui é a de leitura, e é a do celular: primeiro o texto,
+         depois as duas emissoras. No desktop o CSS coloca o texto na coluna do
+         meio, entre os dois cartazes, sem mexer nesta ordem. É de propósito:
+         um leitor de tela e a tecla Tab seguem o documento, não o desenho, e
+         quando os dois divergem é o documento que precisa fazer sentido.
+
+         Os três são irmãos diretos da grade. Se as duas emissoras estivessem
+         numa <ul>, como estavam, elas seriam um item só de grade e não teria
+         como pôr o texto entre elas. -->
+    <div class="pod-grade">
+
+      <div class="pod-texto">
+        <p>
+          Agora existem mais dois pontos de encontro dos conteúdos, pensamentos
+          e reflexões de Olyvia Libório. Trata-se da web rádio Soul Cast e da
+          Paranormal.plus.
+        </p>
+        <p>
+          Nesses dois canais temos o programa <em>Entre Céus e Terra</em>,
+          através do qual Olyvia multiplica suas reflexões, pensamentos e
+          entendimentos sobre conceitos e questionamentos da vida, filosofia e
+          psicologia, e sobre como podemos aplicar uma espiritualidade sadia,
+          livre de dogmas e exclusões, para a materialidade progressista,
+          crescente e em escala evolutiva.
+        </p>
+      </div>
+
+      <article class="pod-emissora pod-emissora--1">
+        <!-- As proporções vêm dos arquivos: 1200×1600 e 900×1600. Estão
+             fixadas no CSS para o bloco não saltar quando a imagem chega. -->
+        <figure class="pod-cartaz pod-cartaz--1">
+          <img src="/public/img/PODCAST1.jpg"
+               alt="Cartaz do programa Entre Céus e Terra, com Olyvia Libório, na Soul Cast Web Rádio"
+               loading="lazy">
+        </figure>
+
+        <div class="pod-emissora-info">
+          <h2 class="pod-emissora-nome">Soul Cast Web Rádio</h2>
+          <dl class="pod-horarios">
+            <div><dt>Quinta</dt><dd>09h30</dd></div>
+            <div><dt>Sábado</dt><dd>22h30</dd></div>
+          </dl>
+          <!-- A Soul Cast não tem aplicativo em loja nenhuma: procurei na
+               Google Play e, na App Store, na API de busca da própria Apple
+               para o Brasil, e não há. O que ela oferece é um Web App, que o
+               site dela descreve como servindo em iOS, Android e PC. É o que
+               está aqui, com o nome certo — chamar isso de "baixar o
+               aplicativo" seria prometer o que não existe. -->
+          <div class="pod-acoes">
+            <a class="pod-btn" href="https://www.soulcast-webradio.com/app/"
+               target="_blank" rel="noopener noreferrer">
+              Ouvir no Web App
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round" class="pod-btn-icone" aria-hidden="true">
+                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+              </svg>
+            </a>
+            <a class="pod-btn pod-btn--discreto" href="https://www.instagram.com/soulcastwebradio/"
+               target="_blank" rel="noopener noreferrer">
+              @soulcastwebradio
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <article class="pod-emissora pod-emissora--2">
+        <figure class="pod-cartaz pod-cartaz--2">
+          <img src="/public/img/PODCAST2.jpg"
+               alt="Cartaz do programa Entre Céus e Terra, com Olyvia Libório, na Paranormal.plus"
+               loading="lazy">
+        </figure>
+
+        <div class="pod-emissora-info">
+          <h2 class="pod-emissora-nome">Paranormal.plus</h2>
+          <dl class="pod-horarios">
+            <div><dt>Quarta</dt><dd>16h00</dd></div>
+            <div><dt>Sexta</dt><dd>13h00</dd></div>
+          </dl>
+          <!-- O endereço do Play veio do site oficial da própria rádio, e não
+               de uma busca: há muito app de nome parecido na loja, e apontar
+               para o errado seria pior do que não apontar. Na App Store não há
+               versão desta rádio; conferido na API de busca da Apple para o
+               Brasil, que devolve só apps de caça-fantasmas sem relação. Para
+               quem está no iPhone, o site toca no navegador. -->
+          <div class="pod-acoes">
+            <a class="pod-btn"
+               href="https://play.google.com/store/apps/details?id=net.app4radio.paranormalplus"
+               target="_blank" rel="noopener noreferrer">
+              <!-- O triângulo do Google Play, desenhado aqui: o lucide não tem
+                   ícones de marca, e a insígnia oficial do Play é imagem com
+                   regras de uso próprias. -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                   fill="currentColor" class="pod-btn-icone" aria-hidden="true">
+                <path d="M3.6 1.8a1 1 0 0 0-.5.9v18.6a1 1 0 0 0 .5.9l10-9.9-10-10.5zm11.1 10.9 2.6 2.6-9.6 5.5 7-8.1zm0-1.4-7-8.1 9.6 5.5-2.6 2.6zm4 1.4 2.6-1.5a1 1 0 0 0 0-1.7l-2.6-1.5-2.9 2.4 2.9 2.3z"/>
+              </svg>
+              Baixar para Android
+            </a>
+            <a class="pod-btn pod-btn--discreto" href="https://paranormal.plus/"
+               target="_blank" rel="noopener noreferrer">
+              Ouvir no site
+            </a>
+            <a class="pod-btn pod-btn--discreto" href="https://www.instagram.com/paranormal.plus/"
+               target="_blank" rel="noopener noreferrer">
+              @paranormal.plus
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<script type="importmap">
+{
+  "imports": {
+    "gsap": "/public/lib/gsap/index.js"
+  }
+}
+</script>
+<script type="module" src="/src/pages/podcast/podcast.js"></script>
+</body>
+</html>
