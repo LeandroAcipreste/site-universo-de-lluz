@@ -47,147 +47,134 @@
   <!-- ── CONTEÚDO PRINCIPAL ── -->
   <div class="oracle-content">
 
-    <!-- ── COLUNA ESQUERDA: Título ── -->
+    <!-- ── O título, em cima e na largura toda ── -->
     <div class="oracle-title-col">
       <h1 class="oracle-title"></h1>
     </div>
 
-    <!-- ── COLUNA DIREITA: Card Informativo ── -->
+    <!-- ── O card, embaixo do título ──
+         Dentro dele, em tela larga, duas colunas: o texto à esquerda e o mapa
+         com os botões à direita. No celular tudo volta a ser uma coluna só, na
+         ordem do documento. -->
     <div class="oracle-card-col">
       <div class="oracle-card">
 
         <!-- Brilho interno -->
         <div class="oracle-card-glow"></div>
 
-        <h2 class="oracle-card-subtitle">
-          Como é o Oráculo?
-        </h2>
+        <div class="oracle-card-grade">
 
-        <div class="oracle-card-body">
-          <p>
-            O encontro dura 40 minutos onde Olyvia se conecta com seus
-            guias pessoais, servindo de ponte para mensagens e orientações
-            profundas.
-          </p>
-          <p>
-            Atendimentos às terças-feiras (presencial ou online) e um
-            sábado por mês (apenas online), mediante agendamento prévio.
-          </p>
-          <p>
-            Inclui receita via e-mail e limpeza energética obrigatória
-            para atendimentos presenciais na Livraria 3º Milênio, Salvador.
-          </p>
-          <p class="oracle-card-note">
-            *Serviço de descarrego com Ramaiana disponível nos dias de
-            atendimento presencial.
-          </p>
-        </div>
+          <div class="oracle-card-texto">
+            <h2 class="oracle-card-subtitle">
+              Como é o Oráculo?
+            </h2>
 
-        <!-- Onde acontece. O endereço vem antes do mapa de propósito: quem já
-             conhece a cidade resolve na primeira linha e não espera o mapa
-             carregar. -->
-        <div class="oracle-local">
-          <h3 class="oracle-local-titulo">Onde acontece</h3>
-          <p class="oracle-local-endereco">
-            <strong>Livraria Terceiro Milênio</strong><br>
-            Rua Macaúbas, 28 — Rio Vermelho, Salvador
-          </p>
+            <div class="oracle-card-body">
+              <p>
+                O encontro dura 40 minutos onde Olyvia se conecta com seus
+                guias pessoais, servindo de ponte para mensagens e orientações
+                profundas.
+              </p>
+              <p>
+                Atendimentos às terças-feiras (presencial ou online) e um
+                sábado por mês (apenas online), mediante agendamento prévio.
+              </p>
+              <p>
+                Inclui receita via e-mail e limpeza energética obrigatória
+                para atendimentos presenciais na Livraria 3º Milênio, Salvador.
+              </p>
+              <p class="oracle-card-note">
+                *Serviço de descarrego com Ramaiana disponível nos dias de
+                atendimento presencial.
+              </p>
+            </div>
 
-          <!-- O mapa é a única coisa de terceiros que o site carrega além das
-               bibliotecas. Por isso vem com `loading="lazy"`: só é buscado se
-               a pessoa chegar a vê-lo, e não custa nada a quem abre a página.
+          </div><!-- /.oracle-card-texto -->
 
-               O filtro escurece o mapa do Google, que é claro, para ele não
-               abrir um retângulo branco no meio de uma página de tinta. É o
-               mesmo recurso que os mapas em modo escuro usam: inverter e
-               girar o matiz devolve as cores aproximadamente onde estavam,
-               com o fundo escuro. -->
-          <!-- O endereço do mapa está em `data-src`, e não em `src`, de
-               propósito: em `src` o navegador pede o iframe ao carregar a
-               página, e o Google põe os cookies dele antes de qualquer
-               pergunta. Consentimento depois do fato não é consentimento.
+          <!-- A coluna da direita: onde acontece e o que fazer a respeito.
 
-               Quem move o endereço para `src` é o `oracle.js`, e só depois do
-               "aceitar" — ver `components/cookies/cookies.js`. Sem
-               consentimento fica no lugar dele um bloco com um botão, que
-               carrega na hora para quem quiser só aquele mapa. -->
-          <iframe
-            class="oracle-mapa"
-            title="Mapa da Livraria Terceiro Milênio, no Rio Vermelho"
-            data-src="https://www.google.com/maps?q=Livraria%20Terceiro%20Mil%C3%AAnio%2C%20Rua%20Maca%C3%BAbas%2C%2028%2C%20Rio%20Vermelho%2C%20Salvador%2C%20BA&output=embed"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            hidden
-            allowfullscreen></iframe>
+               O endereço vem antes do mapa de propósito: quem já conhece a
+               cidade resolve na primeira linha e não espera o mapa carregar. -->
+          <div class="oracle-card-lado">
 
-          <div class="oracle-local-acao">
-            <a class="oracle-livro-btn"
-               href="https://www.google.com/maps/dir/?api=1&destination=Livraria%20Terceiro%20Mil%C3%AAnio%2C%20Rua%20Maca%C3%BAbas%2C%2028%2C%20Rio%20Vermelho%2C%20Salvador%2C%20BA"
-               target="_blank" rel="noopener noreferrer">
-              Como chegar
-              <!-- <ArrowRight /> do lucide-react 0.544.0 -->
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                   fill="none" stroke="currentColor" stroke-width="2"
-                   stroke-linecap="round" stroke-linejoin="round"
-                   class="oracle-btn-icon" aria-hidden="true">
-                <path d="M5 12h14"/>
-                <path d="m12 5 7 7-7 7"/>
-              </svg>
-            </a>
-          </div>
-        </div>
+            <div class="oracle-local">
+              <h3 class="oracle-local-titulo">Onde acontece</h3>
+              <p class="oracle-local-endereco">
+                <strong>Livraria Terceiro Milênio</strong><br>
+                Rua Macaúbas, 28 — Rio Vermelho, Salvador
+              </p>
 
-        <!-- Botão compacto centralizado -->
-        <div class="oracle-btn-container">
-          <a
-            href="https://wa.me/5571996612421"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="oracle-btn">
-            Agendar Consulta
-            <!-- <ArrowRight /> do lucide-react 0.544.0 -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round"
-                 class="oracle-btn-icon" aria-hidden="true">
-              <path d="M5 12h14"/>
-              <path d="m12 5 7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
+              <!-- O mapa é a única coisa de terceiros que o site carrega além das
+                   bibliotecas. Por isso vem com `loading="lazy"`: só é buscado se
+                   a pessoa chegar a vê-lo, e não custa nada a quem abre a página.
 
-        <!-- O livro, no fim do card — embaixo do mapa e do agendamento.
+                   O filtro escurece o mapa do Google, que é claro, para ele não
+                   abrir um retângulo branco no meio de uma página de tinta. É o
+                   mesmo recurso que os mapas em modo escuro usam: inverter e
+                   girar o matiz devolve as cores aproximadamente onde estavam,
+                   com o fundo escuro. -->
+              <!-- O endereço do mapa está em `data-src`, e não em `src`, de
+                   propósito: em `src` o navegador pede o iframe ao carregar a
+                   página, e o Google põe os cookies dele antes de qualquer
+                   pergunta. Consentimento depois do fato não é consentimento.
 
-             Antes ficava na coluna do título, à esquerda. Ali ele competia com
-             o agendamento, que é o que a página existe para pedir; aqui vem
-             depois dele, como a oferta seguinte de quem já leu tudo.
+                   Quem move o endereço para `src` é o `oracle.js`, e só depois do
+                   "aceitar" — ver `components/cookies/cookies.js`. Sem
+                   consentimento fica no lugar dele um bloco com um botão, que
+                   carrega na hora para quem quiser só aquele mapa. -->
+              <iframe
+                class="oracle-mapa"
+                title="Mapa da Livraria Terceiro Milênio, no Rio Vermelho"
+                data-src="https://www.google.com/maps?q=Livraria%20Terceiro%20Mil%C3%AAnio%2C%20Rua%20Maca%C3%BAbas%2C%2028%2C%20Rio%20Vermelho%2C%20Salvador%2C%20BA&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                hidden
+                allowfullscreen></iframe>
 
-             O endereço vai limpo: o link que veio tinha `utm_source`,
-             `utm_medium`, `utm_content` e `fbclid` pendurados — parâmetros que
-             o Instagram e o Facebook acrescentam para rastrear de onde veio o
-             clique. Num link do próprio site eles não medem nada de útil e
-             carregam um identificador de sessão de rede social para dentro da
-             navegação de quem clica. -->
-        <div class="oracle-livro">
-          <img class="oracle-livro-capa"
-               src="/public/img/capa-do-livro.PNG"
-               alt="Capa do livro Inspirações para a Nova Era, de Olyvia Libório"
-               loading="lazy">
+              <div class="oracle-local-acao">
+                <a class="oracle-btn-secundario"
+                   href="https://www.google.com/maps/dir/?api=1&destination=Livraria%20Terceiro%20Mil%C3%AAnio%2C%20Rua%20Maca%C3%BAbas%2C%2028%2C%20Rio%20Vermelho%2C%20Salvador%2C%20BA"
+                   target="_blank" rel="noopener noreferrer">
+                  Como chegar
+                  <!-- <ArrowRight /> do lucide-react 0.544.0 -->
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round"
+                       class="oracle-btn-icon" aria-hidden="true">
+                    <path d="M5 12h14"/>
+                    <path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
 
-          <a class="oracle-livro-btn"
-             href="https://www.madras.com.br/espiritualidade/inspiracoes-para-a-nova-era"
-             target="_blank" rel="noopener noreferrer">
-            Comprar o livro
-            <!-- <ArrowRight /> do lucide-react 0.544.0 -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                 fill="none" stroke="currentColor" stroke-width="2"
-                 stroke-linecap="round" stroke-linejoin="round"
-                 class="oracle-btn-icon" aria-hidden="true">
-              <path d="M5 12h14"/>
-              <path d="m12 5 7 7-7 7"/>
-            </svg>
-          </a>
-        </div>
+            <!-- Botão compacto centralizado -->
+            <div class="oracle-btn-container">
+              <a
+                href="https://wa.me/5571996612421"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="oracle-btn">
+                Agendar Consulta
+                <!-- <ArrowRight /> do lucide-react 0.544.0 -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round"
+                     class="oracle-btn-icon" aria-hidden="true">
+                  <path d="M5 12h14"/>
+                  <path d="m12 5 7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+
+          </div><!-- /.oracle-card-lado -->
+
+          <!-- O livro saiu daqui. Ele tem página própria em `/book`, com a
+               sinopse inteira e a compra, e a entrada está no menu. Repetir a
+               capa e um botão de compra no meio da página que existe para pedir
+               o agendamento só disputava a atenção com ele. -->
+
+        </div><!-- /.oracle-card-grade -->
       </div>
     </div>
 
