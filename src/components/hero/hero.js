@@ -47,10 +47,36 @@ export function createHero(root) {
      então nada disto chega a rodar — mas o ouvinte fica de pé de qualquer
      forma, porque a largura pode mudar ao girar o aparelho. */
   const gatilho = menu.querySelector('.menu__gatilho');
+
+  /* Um trinco contra o clique fantasma. Num aparelho de toque, um único toque
+     produz uma sequência inteira — `touchend`, `mousedown`, `mouseup`,
+     `click` —, e quando alguma camada sai de baixo do dedo no meio disso o
+     WebKit chega a entregar dois `click`. Num alternador, dois cliques na
+     mesma ação é abrir e fechar de uma vez: o menu pisca e volta ao que
+     estava.
+
+     350ms é mais que a distância entre os dois eventos de um toque e menos
+     que a de dois toques deliberados. */
+  let ultimoToque = 0;
+
   gatilho.addEventListener('click', () => {
+    const agora = Date.now();
+    if (agora - ultimoToque < 350) return;
+    ultimoToque = agora;
+
     const aberto = menu.classList.toggle('esta-aberto');
     gatilho.setAttribute('aria-expanded', String(aberto));
   });
+
+  /* Tocar num item fecha a folha. A navegação leva um instante — a transição
+     entre páginas é do navegador —, e sem isto a folha fica aberta por cima da
+     página que está saindo. */
+  for (const item of menu.querySelectorAll('.menu__item')) {
+    item.addEventListener('click', () => {
+      menu.classList.remove('esta-aberto');
+      gatilho.setAttribute('aria-expanded', 'false');
+    });
+  }
 
   /* A troca de página não é daqui: é da transição em `src/transicao.css`,
      que o navegador conduz sozinho — a página que sai sobe, a que entra vem de

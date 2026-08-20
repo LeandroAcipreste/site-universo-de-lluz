@@ -539,8 +539,29 @@
     background: radial-gradient(120% 90% at 15% 10%, rgb(24 26 30 / 0.96), rgb(5 5 8 / 0.985));
 
     clip-path: inset(0 0 100% 0);
-    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
+
+    /* `visibility: hidden` fechada, e não só `clip-path` e `pointer-events`.
+
+       Os dois primeiros não bastam, e o motivo é uma regra do CSS que engana:
+       `pointer-events: none` num pai **não** desliga um filho que declara
+       `pointer-events: auto`. E os `.menu__item` declaram, porque o
+       `.hero__content` desliga o ponteiro para a cena e eles precisam
+       reativá-lo. Resultado: com o menu fechado, a folha continuava sendo uma
+       camada de links sobre a tela inteira, invisível, dependendo só de o
+       motor concordar que `clip-path` também recorta o teste de toque. O
+       WebKit nem sempre concorda, e daí o gatilho abrir e fechar na mesma
+       ação.
+
+       `visibility` não tem essa brecha: ela é herdada, e um descendente só
+       volta a ser visível (e tocável) se declarar `visible` explicitamente.
+       Nenhum aqui declara.
+
+       Ela entra na transição com `0s` de duração e um atraso igual ao da
+       cortina, para o sumiço acontecer **depois** do fecho, e não durante. */
+    visibility: hidden;
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0s linear 0.8s;
     counter-reset: entrada;
   }
 
@@ -565,6 +586,10 @@
   .menu.esta-aberto .menu__lista {
     clip-path: inset(0 0 0 0);
     pointer-events: auto;
+    /* Aparece na hora, sem o atraso do fecho. */
+    visibility: visible;
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0s linear 0s;
     -webkit-backdrop-filter: blur(22px);
     backdrop-filter: blur(22px);
   }

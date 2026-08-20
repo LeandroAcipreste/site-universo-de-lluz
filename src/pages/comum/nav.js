@@ -103,7 +103,22 @@ function alternar(abrir) {
   document.body.style.overflow = abrir ? 'hidden' : '';
 }
 
-gatilho.addEventListener('click', () => alternar(!barra.classList.contains('esta-aberto')));
+/* Um trinco contra o clique fantasma. Num aparelho de toque, um único toque
+   produz `touchend`, `mousedown`, `mouseup` e `click`, e quando alguma camada
+   sai de baixo do dedo no meio disso o WebKit chega a entregar dois `click`.
+   Num alternador, dois cliques na mesma ação é abrir e fechar de uma vez: o
+   menu pisca e volta ao que estava.
+
+   350ms é mais que a distância entre os dois eventos de um toque e menos que a
+   de dois toques deliberados. */
+let ultimoToque = 0;
+
+gatilho.addEventListener('click', () => {
+  const agora = Date.now();
+  if (agora - ultimoToque < 350) return;
+  ultimoToque = agora;
+  alternar(!barra.classList.contains('esta-aberto'));
+});
 
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && barra.classList.contains('esta-aberto')) alternar(false);

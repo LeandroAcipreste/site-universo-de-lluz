@@ -241,8 +241,18 @@
 
   /* Ela desce como uma cortina, em vez de aparecer. */
   clip-path: inset(0 0 100% 0);
-  transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
+
+  /* E some de verdade quando fechada. `pointer-events: none` aqui não desliga
+     os links: um filho que declare `pointer-events: auto` continua valendo, e
+     o `clip-path` só recorta o teste de toque se o motor colaborar. Fechada,
+     ela seria uma camada de links invisíveis sobre a tela inteira.
+
+     `visibility` é herdada e não tem essa brecha. Entra na transição com `0s`
+     e atraso igual ao da cortina, para sumir depois do fecho e não durante. */
+  visibility: hidden;
+  transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0s linear 0.8s;
 }
 
 /* O desfoque só existe com a folha aberta.
@@ -255,6 +265,9 @@
 .nav-folha.esta-aberto {
   clip-path: inset(0 0 0 0);
   pointer-events: auto;
+  visibility: visible;
+  transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0s linear 0s;
   -webkit-backdrop-filter: blur(22px);
   backdrop-filter: blur(22px);
 }
