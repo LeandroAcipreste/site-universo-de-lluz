@@ -221,33 +221,84 @@ export function criarCena(container) {
      Montagem
      ------------------------------------------------------------------ */
 
+  /* Uma textura branca de 1×1, para o lugar de uma que não chegou.
+
+     Ela não é para ficar bonita, é para a cena poder ser **construída**. Todo o
+     código abaixo lê `texturas[url]` e mexe em `.wrapS`, `.colorSpace`,
+     `.mapping`; com `undefined` ali, a montagem quebra na primeira linha e o
+     visitante fica preso no preloader. Com a reserva, falta uma nuvem e o
+     resto do site funciona. */
+  const texturaReserva = () => {
+    const t = new THREE.DataTexture(new Uint8Array([255, 255, 255, 255]), 1, 1);
+    t.needsUpdate = true;
+    return t;
+  };
+
+  /* Prazo para o conjunto das texturas. Generoso de propósito: são 5,7 MB, e
+     numa conexão fraca de verdade eles levam quase um minuto legítimo. O prazo
+     não existe para apressar quem está baixando devagar — existe para que um
+     pedido que **nunca responde** não deixe a página presa para sempre. Já
+     aconteceu neste projeto, com o gsap na CDN: o pedido saía e não voltava,
+     sem erro, e não havia o que o resgatasse. */
+  const PRAZO_DAS_TEXTURAS = 45000;
+
   async function montar(aoProgredir = () => {}) {
     const urls = [
       TRAVESSIA.textura, ADICIONAIS.textura, '/public/img/cena/cnoise.png',
       ...CAMADAS.map((c) => c.url), LOGO.url,
+      /* O céu vai pelo mesmo caminho das outras texturas, de propósito.
+         O arquivo é um JPEG UltraHDR e existe um `UltraHDRLoader` que
+         decodifica o mapa de ganho — mas ele faz isso em JavaScript, na thread
+         principal, e custava 2,2s num único quadro. Medi o resultado com e
+         sem: o perfil de brilho da cena saiu **idêntico**, faixa por faixa.
+         Pagar um travamento de 2,2s por nenhuma diferença visível não se
+         justifica. */
+      CEU.url,
     ];
     let prontos = 0;
-    const total = urls.length + 1;   // +1 pelo céu
+    const total = urls.length;
     const texturas = {};
+    const falhas = [];
 
-    /* O céu vai pelo mesmo caminho das outras texturas, de propósito.
-       O arquivo é um JPEG UltraHDR e existe um `UltraHDRLoader` que decodifica
-       o mapa de ganho — mas ele faz isso em JavaScript, na thread principal, e
-       custava 2,2s num único quadro. Medi o resultado com e sem: o perfil de
-       brilho da cena saiu **idêntico**, faixa por faixa. Pagar um travamento
-       de 2,2s por nenhuma diferença visível não se justifica. */
-    const ceuPromessa = carregar(CEU.url).then((t) => {
-      aoProgredir(++prontos / total * 100);
-      return t;
-    });
-
-    await Promise.all([
-      ...urls.map(async (url) => {
+    /* Cada pedido se resolve sempre, dê certo ou não. É a diferença entre
+       `allSettled` e `all`, escrita à mão para a barra de progresso andar
+       junto: com `Promise.all`, uma única textura que falhasse rejeitava o
+       conjunto e derrubava a abertura inteira — nove nuvens boas perdidas por
+       causa de uma. */
+    const pedir = async (url) => {
+      try {
         texturas[url] = await carregar(url);
-        aoProgredir(++prontos / total * 100);
-      }),
-      ceuPromessa.then((t) => { texturas[CEU.url] = t; }),
+      } catch {
+        falhas.push(url);
+      }
+      aoProgredir(++prontos / total * 100);
+    };
+
+    const todas = Promise.all(urls.map(pedir));
+
+    let expirou = false;
+    await Promise.race([
+      todas,
+      new Promise((ok) => setTimeout(() => { expirou = true; ok(); }, PRAZO_DAS_TEXTURAS)),
     ]);
+
+    /* O que não chegou — por erro ou por prazo — recebe a reserva. Daqui para
+       baixo, `texturas[url]` sempre existe. O que chegar atrasado simplesmente
+       não é usado, e isso não faz mal a ninguém. */
+    for (const url of urls) {
+      if (!texturas[url]) {
+        texturas[url] = texturaReserva();
+        if (!falhas.includes(url)) falhas.push(url);
+      }
+    }
+
+    if (falhas.length) {
+      console.warn(
+        `Cena: ${falhas.length} de ${urls.length} texturas não chegaram` +
+        (expirou ? ` (prazo de ${PRAZO_DAS_TEXTURAS / 1000}s esgotado)` : '') +
+        '. A cena monta assim mesmo.', falhas,
+      );
+    }
 
     const ruido = texturas['/public/img/cena/cnoise.png'];
     ruido.wrapS = ruido.wrapT = THREE.RepeatWrapping;
@@ -375,6 +426,10 @@ export function criarCena(container) {
        introdução animava, disputando a thread com ela. */
     ultimo = performance.now();
     requestAnimationFrame(quadro);
+
+    /* Quem chamou decide o que fazer com isto. Hoje o `main.js` só registra;
+       a cena já se vira sozinha com as reservas. */
+    return { falhas, expirou };
   }
 
   /** 240 sprites entre z -700 e 0, com a mesma semente do original. */
