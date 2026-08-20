@@ -111,22 +111,6 @@
   width: 100%;
   max-width: 52rem;
   text-align: left;
-  /* O azul é o azul do céu — o mesmo `#6f9dc4` do fundo da hero, ali em cima.
-     Nada de marinho: a oração vive dentro da cena, não sobre ela.
-
-     E as paradas não são decorativas. O selo e o título (0–22% do card) caem
-     sobre céu e ficam brancos; da primeira linha para baixo o fundo já é nuvem
-     branca, e o azul precisa ter chegado *inteiro* ali, não no meio do
-     caminho. Foi errar isso por poucos pontos que fez a primeira linha sumir. */
-  background-image: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #ffffff 17%,
-    #6f9dc4 29%,
-    #5987b2 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
 
   /* Estado inicial da entrada, como nos botões: o card nasce um pouco abaixo
      e apagado, e é o GSAP que o traz. */
@@ -135,26 +119,55 @@
   will-change: transform, opacity;
 }
 
-/* Cada bloco da oração começa apagado e acende em cascata. Só opacidade — ver
-   a nota logo abaixo sobre por que aqui não pode haver deslocamento. */
+/* Cada bloco da oração começa apagado e acende em cascata. */
 .oracao > * { opacity: 0; }
 
-/* Todo o texto fica transparente para o gradiente do pai aparecer nele.
-   A hierarquia passa a ser feita com opacidade, não com cor. */
+/* --------------------------------------------------------------------------
+   A cor da oração
+
+   Marinho sólido, e é a mesma nas duas larguras.
+
+   Aqui já houve um gradiente recortado nas letras — `background-clip: text` no
+   `.oracao`, com `color: transparent` nos filhos —, que ia do branco no topo
+   ao azul-céu embaixo. A ideia era boa: o topo do card cai sobre céu azul e o
+   resto sobre nuvem branca, e a cor acompanhava o fundo.
+
+   Só que a técnica não é confiável. Com ela o texto não tem cor: é um recorte
+   por onde aparece o fundo do elemento **pai**. Para funcionar, três coisas
+   precisam se comportar ao mesmo tempo — o recorte atravessar descendentes com
+   caixa própria, o `color: transparent` de cada um, e as opacidades parciais
+   que algumas linhas carregavam. Opacidade num descendente o compõe em
+   separado, e é aí que os motores divergem: no Chrome o gradiente atravessava,
+   no WebKit do iPhone não chegava, e sobrava o texto invisível com o halo da
+   sombra. A oração ficou ilegível num telefone de verdade por causa disso.
+
+   Cor sólida não depende de recorte, de composição nem de motor. Medido contra
+   os fundos que a oração encontra:
+
+     céu no topo da hero  #6f9dc4   4,06:1
+     meio do gradiente    #b9cbd8   7,01:1
+     nuvem clara          #dfe6ea   9,26:1
+     nuvem branca         #ffffff  11,69:1
+
+   O 4,06 é o pior caso, e cai justamente no selo e no título — que são texto
+   grande, onde o mínimo é 3:1. Do primeiro verso para baixo o fundo já é nuvem
+   e sobra folga.
+   -------------------------------------------------------------------------- */
+
 .oracao__selo,
 .oracao__titulo,
 .oracao__linha,
 .oracao__fecho,
 .oracao__aclamacoes {
-  color: transparent;
-  /* Um halo, para a faixa onde o céu vira nuvem e nenhuma das duas pontas do
-     gradiente se sustenta sozinha. Com `color: transparent` a sombra continua
-     sendo pintada — ela fica atrás do glifo, e o gradiente por cima só deixa
-     ver a borda. São duas: a curta define a letra contra a nuvem, a longa é só
-     um respiro. É contorno, não sombra: some no fundo e segura a leitura. */
-  text-shadow:
-    0 0.05rem 0.35rem rgb(20 52 86 / 0.55),
-    0 0.1rem 1.6rem rgb(23 58 94 / 0.45);
+  color: #143a5e;
+  /* Obrigatório junto com `color`: no WebKit o `-webkit-text-fill-color` ganha
+     dele, e um valor herdado de outra regra deixaria o texto transparente. */
+  -webkit-text-fill-color: #143a5e;
+  /* Um halo branco curto, para a letra se destacar onde a nuvem é mais escura
+     ou o céu mais fechado. É contorno, não sombra: some no fundo e segura a
+     leitura sem borrar o glifo. O halo escuro e largo que havia aqui existia
+     para sustentar texto transparente; sobre texto opaco ele só embaçava. */
+  text-shadow: 0 0 0.5rem rgb(255 255 255 / 0.85);
 }
 
 /* O selo no topo, no lugar do sobretítulo "111 WEST 57TH STREET".
@@ -185,14 +198,22 @@
   margin: 0 0 0.9rem;
   font-size: 1.4rem;
   line-height: 1.4;
-  opacity: 0.94;
 }
 
+/* O fecho recua um tom. Antes o recuo vinha de `opacity: 0.94`, que sob o
+   gradiente recortado era o único jeito de graduar; com cor sólida a graduação
+   é a própria cor — e some junto a opacidade parcial num filho, que era
+   justamente o que fazia o recorte falhar no WebKit.
+
+   #2c5580 dá 7,73:1 sobre nuvem branca. Ele fica só no fecho e no selo do
+   celular, que caem sobre nuvem; no desktop o selo é o marinho cheio, porque
+   lá ele cai sobre o céu, onde este tom daria 2,68:1. */
 .oracao__fecho {
   margin: 2rem 0 1.4rem;
   font-size: 1.4rem;
   font-style: italic;
-  opacity: 0.94;
+  color: #2c5580;
+  -webkit-text-fill-color: #2c5580;
 }
 
 /* Também em bloco, pelo mesmo motivo do selo. */
@@ -469,38 +490,148 @@
     justify-content: flex-start;
   }
 
-  .menu__gatilho { display: inline-flex; }
+  /* ── O menu do celular: hambúrguer e folha de tela cheia ──
 
-  /* Fechada por padrão. Nada de `visibility` ou altura zero: fechada ela não
-     ocupa lugar nenhum, senão comeria o vão do triângulo. */
-  .menu__lista { display: none; }
+     É o mesmo menu das páginas internas, refeito aqui em vez de reaproveitado
+     de `pages/comum/nav.css`. O motivo é a escala: aquele arquivo é das
+     páginas internas, onde 1rem são os 16px do navegador; aqui o `html` tem
+     `font-size: clamp(1px, 10 * 100vw / 390, 12px)` e 1rem ≈ 10px. Importar
+     nav.css aqui encolheria tudo a 62% — o hambúrguer viraria um botão de
+     27px, longe dos 44 que o dedo pede. Daí os números abaixo serem o dobro
+     dos de lá: 4.4rem aqui são os 2.75rem de lá.
 
-  .menu.esta-aberto .menu__lista {
-    display: flex;
+     Antes disto o gatilho era uma pílula escrita "MENU ∨" e a lista abria
+     empurrando a oração para baixo. */
+
+  .menu__gatilho {
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    margin-top: 1.2rem;
+    width: 4.4rem;             /* 44px — o alvo de toque */
+    height: 4.4rem;
+    padding: 0;
+    border-radius: 999px;
+    /* A palavra "Menu" é um nó de texto solto dentro do botão, sem elemento
+       próprio para esconder. `font-size: 0` a apaga; as barras têm medida
+       própria em rem e não se importam. */
+    font-size: 0;
+    position: relative;
+    z-index: 80;               /* acima da folha, senão o X some ao abrir */
   }
 
-  /* ── A oração, no meio da tela e com cor própria ──
+  .menu__seta { display: none; }
 
-     Aqui ela **não** usa `background-clip: text`. No desktop usa, e funciona;
-     no celular a mesma técnica deixou a oração ilegível num iPhone de verdade,
-     mostrando um texto lavado, quase da cor da nuvem.
+  /* A folha. Fechada ela é uma cortina recolhida: `clip-path` a some sem tirá-la
+     do lugar, e `position: fixed` a mantém fora do fluxo — assim ela nunca
+     come o vão do triângulo, que era o cuidado da versão anterior. */
+  .menu__lista {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 0.3rem;
+    margin: 0;
+    padding: 9rem 2.6rem 4rem;
 
-     O motivo é o que a técnica é. Com `background-clip: text` o texto não tem
-     cor: ele é um recorte por onde aparece o fundo do elemento **pai**. Para
-     dar certo, três coisas precisam se comportar ao mesmo tempo — o recorte
-     atravessar descendentes que têm caixa própria, o `color: transparent` de
-     cada um deles, e o `opacity: 0.94` que algumas linhas carregam. Opacidade
-     num descendente o compõe em separado, e composição em separado é
-     exatamente onde os motores divergem: no Chrome o gradiente do pai
-     atravessa, no WebKit do iPhone ele não chega, e sobra o texto transparente
-     com o halo da sombra — que é o borrão que se via.
+    background: radial-gradient(120% 90% at 15% 10%, rgb(24 26 30 / 0.96), rgb(5 5 8 / 0.985));
 
-     Não vale a pena descobrir a combinação que agrada os dois. O que a página
-     precisa é que a oração se leia, e para isso basta o texto ter cor. Um
-     azul-marinho sólido sobre a nuvem clara dá 8,6:1 — quase o dobro dos
-     4,5:1 exigidos —, e não depende de recorte, de composição nem de motor. */
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    counter-reset: entrada;
+  }
+
+  /* Com a folha aberta, a grade sobe.
+
+     O `z-index: 70` da folha não a leva a lugar nenhum sozinho: a
+     `.hero__grid` tem `z-index: 2` e é `position: relative`, o que cria um
+     contexto de empilhamento — lá dentro o 70 só disputa com os irmãos, e para
+     o resto da página a grade inteira continua valendo 2. Só que o rodapé é 50
+     e o aviso de cookies é 70, e os dois estão no corpo, fora da grade: a
+     folha abriria com os ícones do Instagram e o aviso por cima dela.
+
+     Quem precisa subir é a grade, e só enquanto o menu está aberto. Daí o
+     `:has()` — é a única forma de uma regra reagir a um estado que mora num
+     descendente. */
+  .hero__grid:has(.menu.esta-aberto) { z-index: 75; }
+
+  /* O desfoque só com a folha aberta. Fechada, `clip-path` esconde o desenho
+     mas `backdrop-filter` continua filtrando o que está atrás no WebKit — uma
+     camada de desfoque sobre a cena inteira, o tempo todo. Mesma armadilha do
+     `nav.css`. */
+  .menu.esta-aberto .menu__lista {
+    clip-path: inset(0 0 0 0);
+    pointer-events: auto;
+    -webkit-backdrop-filter: blur(22px);
+    backdrop-filter: blur(22px);
+  }
+
+  /* Os itens viram linhas de leitura, não mais botões em pílula. */
+  .menu__item {
+    counter-increment: entrada;
+    display: flex;
+    align-items: baseline;
+    gap: 1.7rem;
+    width: 100%;
+    padding: 1.24rem 0;
+    border: 0;
+    background: none;
+    border-radius: 0;
+    font-size: clamp(3rem, 8vw, 4.4rem);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: #f2f2f2;
+
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.7s var(--ease-menu), transform 0.7s var(--ease-menu);
+  }
+
+  /* O número de ordem, como na folha das páginas internas. Aqui ele vem de um
+     contador do CSS, e não de um <span> na marcação: a lista da home é de
+     âncoras simples, e numerá-las no HTML seria repetir no documento uma
+     informação que a ordem já carrega. */
+  .menu__item::before {
+    content: counter(entrada, decimal-leading-zero);
+    font-size: 1.24rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #9BA1A6;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* O sublinhado do desktop não existe aqui. */
+  .menu__item::after { display: none; }
+
+  /* Entram em cascata, uma depois da outra, quando a cortina desce. */
+  .menu.esta-aberto .menu__item {
+    opacity: 1;
+    transform: none;
+  }
+
+  .menu__item:nth-child(1) { transition-delay: 0.16s; }
+  .menu__item:nth-child(2) { transition-delay: 0.215s; }
+  .menu__item:nth-child(3) { transition-delay: 0.27s; }
+  .menu__item:nth-child(4) { transition-delay: 0.325s; }
+  .menu__item:nth-child(5) { transition-delay: 0.38s; }
+  .menu__item:nth-child(6) { transition-delay: 0.435s; }
+  .menu__item:nth-child(7) { transition-delay: 0.49s; }
+  .menu__item:nth-child(8) { transition-delay: 0.545s; }
+
+  /* ── A oração no celular ──
+
+     A cor não está mais aqui: o marinho vale para as duas larguras e mora nas
+     regras de cima, com a medida de contraste. Aqui ficaram só as diferenças
+     de verdade — a medida, o alinhamento e os corpos.
+
+     Este bloco já foi bem maior. Ele desligava o `background-clip: text` do
+     desktop e repunha cor, porque a técnica funcionava no Chrome e deixava a
+     oração ilegível no iPhone. Com o recorte fora do projeto inteiro, não há
+     mais o que desligar. */
   .oracao {
     max-width: 34rem;
     /* Centrada, e não alinhada à esquerda como no desktop. Lá o card divide a
@@ -508,46 +639,16 @@
        está sozinho embaixo do triângulo, e o eixo da composição é o mesmo
        eixo dele. */
     text-align: center;
-
-    /* Desliga o recorte herdado da regra de cima. As três linhas andam
-       juntas: sem `background-image: none` o gradiente continuaria pintado
-       atrás do texto agora opaco. */
-    background-image: none;
-    -webkit-background-clip: border-box;
-    background-clip: border-box;
   }
 
-  /* As aclamações são quatro palavras soltas numa linha só; centradas, a
-     margem lateral de cada uma vira espaço entre elas e nada mais. */
+  /* Centrado, o afastamento dos losangos vira espaço entre eles e o texto. */
   .oracao__selo span:first-child { margin-right: 0.7em; }
   .oracao__selo span:last-child { margin-left: 0.7em; }
 
-  /* Cor de verdade, e não `transparent`. O `-webkit-text-fill-color` é
-     obrigatório: no WebKit ele ganha de `color`, e sem zerá-lo aqui o texto
-     continuaria transparente por causa da regra de cima. */
-  .oracao__selo,
-  .oracao__titulo,
-  .oracao__linha,
-  .oracao__fecho,
-  .oracao__aclamacoes {
-    color: #143a5e;
-    -webkit-text-fill-color: #143a5e;
-    /* A sombra larga de 1.6rem sai. Ela existia para segurar o texto
-       transparente contra a nuvem; com cor sólida ela só embaça o glifo. Fica
-       um fio branco de meio pixel, que separa a letra da nuvem sem borrar
-       nada — o oposto do que havia. */
-    text-shadow: 0 0 0.5rem rgb(255 255 255 / 0.85);
-  }
-
-  /* A hierarquia volta a ser feita com cor, que é o que sobra quando não há
-     gradiente: o selo e o fecho recuam, o corpo fica cheio. */
+  /* O selo recua um tom, como o fecho. Só no celular: aqui ele cai sobre nuvem
+     branca, onde #2c5580 dá 7,73:1. No desktop ele cai sobre o céu, onde este
+     tom daria 2,68:1 — lá vale o marinho cheio. */
   .oracao__selo { color: #2c5580; -webkit-text-fill-color: #2c5580; }
-  .oracao__fecho { color: #2c5580; -webkit-text-fill-color: #2c5580; }
-
-  /* E as opacidades parciais somem. Com `background-clip: text` elas eram o
-     jeito de graduar; agora só apagariam o texto sem motivo. */
-  .oracao__linha,
-  .oracao__fecho { opacity: 1; }
 
   .oracao__selo { margin-bottom: 1.4rem; font-size: 1.05rem; }
   .oracao__titulo { margin-bottom: 1.2rem; font-size: 2.6rem; }
