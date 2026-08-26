@@ -406,15 +406,55 @@
     display: block;
     width: 100%;
     height: 180px;
+    border: 0;
+    border-radius: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   O escurecimento do mapa, e por que ele deixou de ser um `filter`
+
+   Havia aqui `filter: invert(0.92) hue-rotate(180deg) saturate(0.75)
+   brightness(0.95)` no próprio iframe. A ideia era boa: o mapa do Google é
+   claro e abriria um retângulo branco numa página de tinta, e inverter mais
+   girar o matiz é o recurso que os mapas em modo escuro usam.
+
+   O preço era o carregamento. `filter` num iframe obriga o navegador a
+   rasterizar e refiltrar o conteúdo **a cada quadro**, e um mapa vivo redesenha
+   o tempo todo. Medido três vezes cada, no mesmo aparelho:
+
+     com o filtro   mediana 49,6s   amostras 114,0 · 49,6 · 35,1
+     sem o filtro   mediana 21,3s   amostras  21,8 · 21,3 · 16,8
+
+   Menos da metade do tempo. E repare na dispersão: com o filtro uma amostra
+   deu quase dois minutos; sem ele os três tempos ficam juntos.
+
+   No lugar dele, uma camada escura por cima. Ela não filtra nada: é um plano
+   de cor que o compositor desenha uma vez, e custa perto de zero. Não deixa o
+   mapa com aparência de tema escuro — deixa mais apagado, que é o suficiente
+   para ele não furar a página. `pointer-events: none` para o mapa continuar
+   podendo ser arrastado e ampliado por baixo dela.
+   -------------------------------------------------------------------------- */
+
+/* Explícito, mesmo já valendo por padrão: a regra logo abaixo declara
+   `position`, não `display`, então o `[hidden]` da folha do navegador
+   sobrevive. Fica escrito porque foi exatamente esse detalhe que, no iframe,
+   deixou 210px de vão morto no card — e o próximo a mexer aqui merece o aviso.  */
+.oracle-mapa-moldura[hidden] { display: none; }
+
+.oracle-mapa-moldura {
+    position: relative;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 12px;
+    overflow: hidden;
+    line-height: 0;   /* mata a folga que o iframe herda de linha de texto */
+}
 
-    /* O mapa do Google é claro e abriria um retângulo branco numa página de
-       tinta. Inverter e girar o matiz devolve as cores aproximadamente onde
-       estavam, com o fundo escuro — é o mesmo recurso dos mapas em modo
-       escuro. Não é perfeito, e é o preço de embutir um serviço de terceiro
-       que não oferece tema. */
-    filter: invert(0.92) hue-rotate(180deg) saturate(0.75) brightness(0.95);
+.oracle-mapa-moldura::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: rgb(8 6 16 / 0.34);
 }
 
 @media (min-width: 768px) {

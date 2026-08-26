@@ -10,7 +10,7 @@
 
 /** As abas, na ordem em que aparecem. */
 export const CATEGORIAS = [
-  { key: 'simpatias', label: 'Simpatias' },
+  { key: 'simpatias', label: 'Proteção' },
   { key: 'oracoes', label: 'Orações' },
 ];
 

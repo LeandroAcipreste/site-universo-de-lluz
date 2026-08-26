@@ -27,6 +27,7 @@ import '../comum/nav.js';   // a barra se monta sozinha
    Enquanto não houver "sim", no lugar dele fica um bloco com um botão. Não é
    aviso de erro: é o mapa esperando, e quem clicar carrega só este mapa. */
 const mapa = document.querySelector('.oracle-mapa');
+const molduraDoMapa = document.querySelector('.oracle-mapa-moldura');
 
 const espera = document.createElement('div');
 espera.className = 'espera-terceiro';
@@ -40,14 +41,18 @@ espera.innerHTML = `
 function carregarMapa() {
   if (!mapa || mapa.src) return;   // `src` vazio até aqui: nada foi pedido
   mapa.src = mapa.dataset.src;
-  mapa.hidden = false;
+  /* Quem estava escondido é a moldura, não o iframe: o iframe sozinho deixaria
+     uma caixa vazia com borda na tela enquanto o mapa não viesse. */
+  molduraDoMapa.hidden = false;
   espera.remove();
 }
 
 espera.querySelector('button').addEventListener('click', carregarMapa);
 
 if (mapa) {
-  mapa.insertAdjacentElement('beforebegin', espera);
+  /* Antes da **moldura**, e não do iframe: o iframe mora dentro dela, e ela
+     nasce escondida — o bloco de espera ficaria invisível junto. */
+  molduraDoMapa.insertAdjacentElement('beforebegin', espera);
   quandoAceitar(carregarMapa);
 }
 

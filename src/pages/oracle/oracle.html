@@ -104,16 +104,13 @@
                 Rua Macaúbas, 28 — Rio Vermelho, Salvador
               </p>
 
-              <!-- O mapa é a única coisa de terceiros que o site carrega além das
-                   bibliotecas. Por isso vem com `loading="lazy"`: só é buscado se
-                   a pessoa chegar a vê-lo, e não custa nada a quem abre a página.
+              <!-- O mapa é a única coisa de terceiros que esta página carrega
+                   além das bibliotecas, e o único embutido do site que grava
+                   cookies. Quem o escurece é a camada da moldura, no CSS, e
+                   não um `filter` no iframe — o porquê, com os tempos medidos,
+                   está lá.
 
-                   O filtro escurece o mapa do Google, que é claro, para ele não
-                   abrir um retângulo branco no meio de uma página de tinta. É o
-                   mesmo recurso que os mapas em modo escuro usam: inverter e
-                   girar o matiz devolve as cores aproximadamente onde estavam,
-                   com o fundo escuro. -->
-              <!-- O endereço do mapa está em `data-src`, e não em `src`, de
+                   O endereço do mapa está em `data-src`, e não em `src`, de
                    propósito: em `src` o navegador pede o iframe ao carregar a
                    página, e o Google põe os cookies dele antes de qualquer
                    pergunta. Consentimento depois do fato não é consentimento.
@@ -122,14 +119,21 @@
                    "aceitar" — ver `components/cookies/cookies.js`. Sem
                    consentimento fica no lugar dele um bloco com um botão, que
                    carrega na hora para quem quiser só aquele mapa. -->
-              <iframe
-                class="oracle-mapa"
-                title="Mapa da Livraria Terceiro Milênio, no Rio Vermelho"
-                data-src="https://www.google.com/maps?q=Livraria%20Terceiro%20Mil%C3%AAnio%2C%20Rua%20Maca%C3%BAbas%2C%2028%2C%20Rio%20Vermelho%2C%20Salvador%2C%20BA&output=embed"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                hidden
-                allowfullscreen></iframe>
+              <!-- Sem `loading="lazy"`: o mapa só é pedido depois de um clique
+                   explícito em "Carregar o mapa", então adiar de novo o que a
+                   pessoa acabou de pedir não economiza nada e só atrasa.
+
+                   O `hidden` está na moldura, e não no iframe: escondido no
+                   iframe, a moldura ficaria na tela como uma caixa vazia com
+                   borda. -->
+              <div class="oracle-mapa-moldura" hidden>
+                <iframe
+                  class="oracle-mapa"
+                  title="Mapa da Livraria Terceiro Milênio, no Rio Vermelho"
+                  data-src="https://www.google.com/maps?q=Livraria%20Terceiro%20Mil%C3%AAnio%2C%20Rua%20Maca%C3%BAbas%2C%2028%2C%20Rio%20Vermelho%2C%20Salvador%2C%20BA&output=embed"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen></iframe>
+              </div>
 
               <div class="oracle-local-acao">
                 <a class="oracle-btn-secundario"
