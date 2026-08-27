@@ -106,18 +106,25 @@ export const DEFESAS = {
       tag: 'DEF_07',
       title: 'Bolha Tripla de São Miguel',
       description: 'Proteção ao sair de casa.',
+      /* Sete linhas, e não as onze em que este texto nasceu.
+
+         Cada linha é um <p>, e cada <p> paga dois preços de altura: o respiro
+         que o separa do seguinte e a sobra da última linha, que quase nunca
+         chega ao fim da largura. Onze parágrafos custavam uns 70px só nisso,
+         num card que já era o mais longo do site.
+
+         Juntando o que é uma ideia só (os três raios numa linha, as três
+         camadas noutra) o texto cabe inteiro no corpo natural de 12px, sem o
+         `encaixe.js` precisar encolher nada nem o card voltar a rolar por
+         dentro. Nenhuma instrução saiu. */
       cardLines: [
-        'Visualize três raios saindo do centro do seu peito.',
-        'O raio azul é a proteção e a segurança divina, o amarelo é a sabedoria e o cor-de-rosa é o amor incondicional.',
-        'Esses três raios formam uma bolha, a Bolha Tripla de São Miguel Arcanjo.',
-        'Ela envolve todo o seu ser a partir desse centro, como um invólucro sagrado.',
-        'A camada externa, no tom azul anil, é a que protege.',
-        'A camada amarela, intermediária, dá sabedoria e discernimento.',
-        'A de dentro, onde você se vê, é o cor-de-rosa do puro amor incondicional.',
-        'Quando vir a bolha pronta, diga três vezes: “Bolha Tripla de São Miguel, ativar”.',
+        'Visualize três raios saindo do centro do seu peito: o azul é a proteção e a segurança divina, o amarelo é a sabedoria e o cor-de-rosa é o amor incondicional.',
+        'Eles formam a Bolha Tripla de São Miguel Arcanjo, que envolve todo o seu ser como um invólucro sagrado.',
+        'A camada externa, azul anil, protege; a amarela, no meio, dá sabedoria e discernimento; a de dentro, onde você se vê, é o puro amor incondicional.',
+        'Com a bolha pronta, diga três vezes: “Bolha Tripla de São Miguel, ativar”.',
         'Cumpra seus compromissos e, ao voltar para casa em segurança, diga: “Bolha Tripla de São Miguel, desativar”.',
-        'A ativação e a desativação são importantes para garantir a sua segurança.',
-        'Se você esquecer, não há nenhum efeito colateral: a bolha se dispersa naturalmente.',
+        'Ativar e desativar são igualmente importantes para a sua segurança.',
+        'Se esquecer, não há efeito colateral: a bolha se dispersa naturalmente.',
       ],
     },
   ],

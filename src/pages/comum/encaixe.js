@@ -135,6 +135,21 @@ export function criarEncaixe({ secao, prefixo }) {
     const cartao = cards?.children[indice]?.firstElementChild;
     if (!cartao) return;
 
+    /* Não se mede contra um espaço que ainda não existe.
+
+       No primeiro quadro o painel de baixo chega a ter **zero** de altura:
+       ele é `flex: 1 1 auto`, e enquanto o palco não sabe quanto mede não há
+       sobra para distribuir. Medido: 0px de painel e 20px de card contra 147
+       de conteúdo. A fábrica então encolhia até os dois pisos para caber num
+       espaço imaginário, e como nada tornava a medir aquele card, ele ficava
+       em 10px o resto da visita. Era o primeiro card das Defesas nascendo
+       ilegível com 382 caracteres, enquanto outro de 390 cabia em 12px.
+
+       Aqui a medição é descartada, e quem chama de volta é o observador lá
+       embaixo, no instante em que o painel ganhar altura de verdade. */
+    if (direita.clientHeight < 80) return;
+    alturaVista = direita.clientHeight;
+
     cartao.classList.add('encaixe__cartao');
 
     const cabe = () => cartao.scrollHeight <= cartao.clientHeight + 1;
@@ -162,6 +177,10 @@ export function criarEncaixe({ secao, prefixo }) {
 
   let pedido = 0;
   let ultimoIndice = 0;
+  let fonteJaPedida = false;
+  /** A altura do painel de baixo na última medição válida. */
+  let alturaVista = 0;
+  let jaAssentou = false;
 
   /**
    * Mede e encaixa o card de índice `indice` — o que está na tela. Sem
@@ -177,7 +196,56 @@ export function criarEncaixe({ secao, prefixo }) {
       if (!noCelular.matches) return soltar();
       encaixarTitulo();
       encaixarCard(ultimoIndice);
+      esperarAFonte();
+      assentar();
     });
+  }
+
+  /**
+   * Mede outra vez quando a fonte do site chegar.
+   *
+   * As fontes do projeto são `font-display: swap`: o primeiro desenho sai na
+   * reserva do sistema e a NHaas entra depois. As duas não medem igual, e a
+   * reserva é a mais larga — medir antes da troca encolhe o card para caber um
+   * texto que, com a fonte certa, já cabia. Medido num telefone de 375px: o
+   * primeiro card das Defesas nascia nos dois pisos (10px, espaços em 0,40)
+   * com 382 caracteres, enquanto outro de 390 cabia inteiro em 12px. Voltando
+   * a ele depois, cabia em 12px também: a diferença era só o instante.
+   *
+   * E é preciso pedir `fonts.ready` **daqui**, depois da primeira medição, e
+   * não lá embaixo junto dos outros ouvintes. A promessa resolve quando o
+   * carregamento em curso termina, e antes de existir texto na tela não há
+   * carregamento nenhum: pedida cedo demais, ela resolve de imediato e a nova
+   * medição acontece antes da troca de fonte, que é o que já se tentou.
+   *
+   * Uma vez por página, e só sobre o card que está na tela.
+   */
+  function esperarAFonte() {
+    if (fonteJaPedida || !document.fonts) return;
+    fonteJaPedida = true;
+    document.fonts.ready.then(() => ajustar());
+  }
+
+  /**
+   * Uma medição a mais, meio segundo depois da primeira.
+   *
+   * `fonts.ready` promete menos do que parece: ela resolve quando os
+   * carregamentos **em curso** terminam, e as duas fontes do projeto não
+   * começam juntas — o peso 500 só é pedido quando aparece o primeiro texto
+   * que o usa. Dá para a promessa resolver no meio do caminho.
+   *
+   * Medido em Limpezas, num aparelho de 360px: o primeiro card cabia na
+   * medição, transbordava 12px um segundo depois e voltava a caber quando
+   * tudo assentava. Doze pixels são uma barra de rolagem aparecendo sozinha
+   * num card que estava certo.
+   *
+   * Meio segundo é depois de qualquer troca de fonte e antes de alguém ter
+   * lido o card inteiro. Uma vez por página.
+   */
+  function assentar() {
+    if (jaAssentou) return;
+    jaAssentou = true;
+    setTimeout(() => ajustar(), 500);
   }
 
   /* Girar o aparelho, abrir o teclado, a barra do navegador sumir: tudo muda a
@@ -186,6 +254,26 @@ export function criarEncaixe({ secao, prefixo }) {
   window.addEventListener('resize', ajustar);
   window.visualViewport?.addEventListener('resize', ajustar);
   noCelular.addEventListener('change', ajustar);
+
+  /* E, sobretudo, sempre que o espaço do card mudar de tamanho.
+
+     É o que fecha o buraco do primeiro quadro, e sem precisar saber por que
+     ele acontece: o painel nasce com zero, o observador vê a altura chegar e
+     manda medir de novo. Serve igual para a barra do navegador que some ao
+     rolar, para o aparelho que gira e para o título que muda de duas linhas
+     para três, que é o que muda a sobra de baixo.
+
+     A guarda de altura é contra laço: `ajustar()` mexe no que está **dentro**
+     do card, não na altura do painel, então o observador não deveria se
+     acordar sozinho. "Não deveria" não é garantia nenhuma num observador de
+     tamanho, e por isso só uma mudança real de altura passa daqui. */
+  if (direita && window.ResizeObserver) {
+    new ResizeObserver(() => {
+      if (Math.abs(direita.clientHeight - alturaVista) < 2) return;
+      ajustar();
+    }).observe(direita);
+  }
+
 
   return { ajustar };
 }
