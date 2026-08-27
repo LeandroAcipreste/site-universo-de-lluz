@@ -27,6 +27,11 @@
 <style>@view-transition { navigation: auto }</style>
 <link rel="stylesheet" href="/src/transicao.css">
 <link rel="stylesheet" href="/src/pages/cleansing/cleansing.css">
+<!-- Depois da folha da página, e não por @import dentro dela: o layout de
+     celular das três páginas mora aqui, e quem vem depois é quem manda numa
+     disputa de mesma especificidade. Um @import chegaria antes de tudo, que
+     é o contrário do que se quer. -->
+<link rel="stylesheet" href="/src/pages/comum/encaixe.css">
 </head>
 
 <body>

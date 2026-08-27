@@ -1,0 +1,169 @@
+/* ==========================================================================
+   Encaixe — o layout de celular das três páginas de carrossel
+
+   Orações, Defesas e Limpezas têm três folhas de ~460 linhas que são a mesma
+   coisa a menos de cinco diferenças de cor. Esta folha não as substitui: ela
+   governa só o que precisa saber o tamanho da tela, e só no celular. Cor,
+   brilho e decoração continuam em cada uma.
+
+   As classes `encaixe__*` não estão em marcação nenhuma — quem as carimba é
+   `encaixe.js`, em tempo de execução. É o que permite uma folha só valer para
+   três páginas cujos elementos, em boa parte, o JS é que desenha.
+
+   As medidas que encolhem passam por duas variáveis que o mesmo módulo
+   escreve depois de medir:
+
+     --enc-espaco   os respiros e recuos do card   (piso 0,40)
+     --enc-corpo    o corpo do texto do card       (piso 10px)
+     --enc-titulo   o nome da oração               (piso 0,62)
+
+   Todas nascem em 1: sem o JS, o layout é o natural, e nada some.
+   ========================================================================== */
+
+@media (max-width: 767px) {
+
+  /* ── O palco ──
+
+     Era `position: sticky; top: 80px; height: calc(100vh - 80px)`, e havia
+     dois erros nisso.
+
+     O primeiro: `sticky` não faz nada aqui. `rolagem.js` tranca o `body`
+     (`overflow: hidden`), então não existe rolagem para grudar, e o `top: 80px`
+     nunca chegou a ser aplicado — o palco começava em y=0, ou seja, **debaixo
+     da barra de navegação**. As abas nasciam atrás dela.
+
+     O segundo: 80px era um chute, e `100vh` no celular é a altura da janela
+     *sem* a barra do navegador — o pé do palco caía fora da tela. `100svh` é a
+     altura pequena, a que vale com a barra à mostra: a única que cabe sempre.
+     E o topo agora é medido, não suposto. */
+  .encaixe__palco {
+    position: relative;
+    top: auto;
+    height: 100vh;
+    height: 100svh;
+    padding-top: var(--enc-topo, 64px);
+  }
+
+  /* ── Painel de cima: abas, nome, seta ──
+
+     Era `height: 25%`. Uma proporção fixa não sabe se o nome tem uma linha ou
+     três: com "Prece para proteção de Arcanjo Miguel ao sair de casa" o texto
+     estourava a caixa, e com um nome curto sobrava espaço morto que fazia
+     falta ao card.
+
+     Agora ele toma o que precisa (`flex: 0 0 auto`) e nada mais, com um teto
+     de 46% para que um nome muito longo não coma o card. Quem faz caber
+     dentro do teto é o `--enc-titulo`, que o JS mede. */
+  .encaixe__esq {
+    flex: 0 0 auto;
+    height: auto;
+    max-height: 46%;
+    overflow: hidden;
+    justify-content: flex-start;
+    padding: 0.85rem 1.25rem 0.7rem;
+  }
+
+  .encaixe__abas {
+    flex: 0 0 auto;
+    margin-bottom: 0.7rem;
+  }
+
+  /* O `min-height: 60px` do original saiu: ele era um piso para um espaço que
+     agora se mede sozinho, e num nome de uma linha só sobrava vazio. */
+  .encaixe__titulo-area {
+    flex: 0 1 auto;
+    min-height: 0;
+    justify-content: flex-start;
+  }
+
+  /* ── A seta ──
+
+     Era `position: absolute; bottom: 1rem`, ancorada no painel de cima. Num
+     painel de altura fixa isso funcionava; num painel que agora encolhe até o
+     conteúdo, ela passava por cima do nome da oração.
+
+     No fluxo ela não tem como se sobrepor a nada: é a última linha da coluna,
+     e ou há espaço para ela ou o teto de 46% já obrigou o título a encolher. */
+  .encaixe__seta {
+    position: static;
+    flex: 0 0 auto;
+    margin-top: 0.55rem;
+  }
+
+  /* ── Painel de baixo: o card ──
+
+     Era `height: 75%`, o par do 25% de cima. Agora é o que sobrar — e sobra
+     mais, porque o painel de cima parou de reservar espaço que não usa. */
+  .encaixe__dir {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+  }
+
+  /* O recuo tem de ficar no slot, não no viewport.
+
+     O slot é `position: absolute; inset: 0`, e um elemento assim se mede
+     pela **caixa de recuo** do ancestral posicionado, não pela caixa de
+     conteúdo: os 1,5rem de `padding` do viewport nunca chegaram a afastar
+     coisa alguma. Quem sempre mandou foi o `padding: 1rem` do próprio slot.
+
+     Aqui o viewport zera — para não guardar uma medida que não faz nada — e
+     o slot fica com o recuo de verdade, mais estreito que o de origem: 1rem
+     de cada lado num telefone de 375 é largura que faz falta ao texto. */
+  .encaixe__cards {
+    height: 100%;
+    padding: 0;
+  }
+
+  .encaixe__cards > [class*="-card-slot"] {
+    padding: 0.5rem 0.75rem 0.8rem;
+  }
+
+  /* ── O card ──
+
+     `max-height: 80svh` era alto demais para o espaço que ele de fato tem: o
+     card mora dentro do painel de baixo, não da tela. `100%` o prende ao que
+     existe, que é o que torna a medição do `encaixe.js` verdadeira.
+
+     `overflow-y: auto` fica, e não é contradição: é o último recurso, para o
+     texto que nem no piso de 10px couber. `rolagem.js` sabe distinguir essa
+     rolagem interna de um gesto de trocar de card. */
+  .encaixe__cartao {
+    max-height: 100%;
+    padding: calc(1.6rem * var(--enc-espaco, 1)) calc(1.3rem * var(--enc-espaco, 1));
+    border-radius: calc(1.75rem * var(--enc-espaco, 1));
+  }
+
+  /* Os seletores por sufixo são de propósito. As três páginas nomeiam estas
+     peças com o prefixo do seu próprio card — `card-prayer__body`,
+     `card-defense__body`, `card-energy__body` —, e o que elas têm em comum é
+     justamente o sufixo. Alcançá-las por ele é o que evita repetir esta folha
+     três vezes.
+
+     `*=` e não `$=` porque a peça pode ter mais de uma classe: o que importa é
+     que o sufixo esteja lá, não que seja o fim do atributo. */
+  .encaixe__cartao [class*="__body"] {
+    margin-bottom: calc(1.3rem * var(--enc-espaco, 1));
+    gap: calc(0.45rem * var(--enc-espaco, 1));
+    padding-left: calc(1.1rem * var(--enc-espaco, 1));
+    padding-top: calc(0.5rem * var(--enc-espaco, 1));
+    padding-bottom: calc(0.5rem * var(--enc-espaco, 1));
+  }
+
+  .encaixe__cartao [class*="__line"] {
+    font-size: calc(12px * var(--enc-corpo, 1));
+    line-height: 1.45;
+  }
+
+  .encaixe__cartao [class*="__watermark"] {
+    gap: calc(0.75rem * var(--enc-espaco, 1));
+  }
+
+  .encaixe__cartao [class*="__watermark-text"] {
+    font-size: calc(9px * var(--enc-corpo, 1));
+  }
+}
+
+/* No monitor nada disto vale, e o `--enc-topo` não faz falta: as folhas das
+   três páginas voltam a mandar sozinhas, com o layout de duas colunas do
+   original. */

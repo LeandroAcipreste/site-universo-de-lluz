@@ -17,6 +17,7 @@
 
 import gsap from 'gsap';
 import { rolagemPorGesto } from './rolagem.js';
+import { criarEncaixe } from './encaixe.js';
 
 /** O `<ChevronDown>` do lucide-react 0.544.0, com os atributos padrão. */
 const CHEVRON = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -40,6 +41,10 @@ export function montarCarrossel({ prefixo, banco, categorias, corpoDoCard, taman
   const areaTitulo = $('title-area');
   const viewport = $('cards-viewport');
   const indicador = $('scroll-indicator');
+
+  /* Quem faz tudo caber na tela do celular. Ele mede depois de cada troca
+     de card, então precisa nascer antes do primeiro desenho. */
+  const encaixe = criarEncaixe({ secao, prefixo });
 
   /* O original declara categorias que o banco de dados nem sempre traz — em
      `defensesData.ts` existe a aba "Orações" mas a chave `oracoes` não está no
@@ -114,6 +119,8 @@ export function montarCarrossel({ prefixo, banco, categorias, corpoDoCard, taman
       });
       slot.style.pointerEvents = ativo ? 'auto' : 'none';
     });
+
+    encaixe.ajustar(indice);
   }
 
   // ── um quadro ──
@@ -145,7 +152,7 @@ export function montarCarrossel({ prefixo, banco, categorias, corpoDoCard, taman
       if (vez !== vezDoTitulo) return;
       areaTitulo.innerHTML = `
         <div class="${p('motion-container')}">
-          <h3 class="${p('title')}"${tamanhoDoTitulo ? ` style="font-size: ${tamanhoDoTitulo(atual.title)}"` : ''}>${atual.title}</h3>
+          <h3 class="${p('title')}"${tamanhoDoTitulo ? ` style="font-size: calc((${tamanhoDoTitulo(atual.title)}) * var(--enc-titulo, 1))"` : ''}>${atual.title}</h3>
           <p class="${p('description')}">${atual.description}</p>
           <div class="${p('progress-track')}">
             <div class="${p('progress-bar')}" style="width: ${total > 1 ? (indice / (total - 1)) * 100 : 100}%"></div>
@@ -153,6 +160,10 @@ export function montarCarrossel({ prefixo, banco, categorias, corpoDoCard, taman
         </div>`;
       gsap.fromTo(areaTitulo.firstElementChild,
         { opacity: 0, x: -10 * sentido }, { opacity: 1, x: 0, duration: 0.4 });
+
+      /* O nome novo pode ter mais linhas que o antigo, o que muda a altura
+         do painel de cima e, com ela, o espaço que sobra para o card. */
+      encaixe.ajustar(indice);
     };
 
     if (antigo) gsap.to(antigo, { opacity: 0, x: 10 * sentido, duration: 0.4, onComplete: trocar });
@@ -174,6 +185,11 @@ export function montarCarrossel({ prefixo, banco, categorias, corpoDoCard, taman
     });
 
     gsap.to(indicador, { opacity: indice < total - 1 ? 1 : 0, duration: 0.3 });
+
+    /* Cada card tem o seu tamanho: uma oração de treze linhas e uma de três
+       não cabem do mesmo jeito, e o encaixe é medido por card, não uma vez
+       para todos. */
+    encaixe.ajustar(indice);
   }
 
   // ── a seta que pulsa ──
