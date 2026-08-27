@@ -99,5 +99,26 @@ export const DEFESAS = {
         'Enterre isso bem longe da sua casa ou do seu local de trabalho.',
       ],
     },
+    /* Esta não veio do site antigo: é texto novo, escrito pela autora e
+       revisado a pedido dela. Por isso a grafia aqui está corrigida, e não
+       preservada como a das seis anteriores. */
+    {
+      tag: 'DEF_07',
+      title: 'Bolha Tripla de São Miguel',
+      description: 'Proteção ao sair de casa.',
+      cardLines: [
+        'Visualize três raios saindo do centro do seu peito.',
+        'O raio azul é a proteção e a segurança divina, o amarelo é a sabedoria e o cor-de-rosa é o amor incondicional.',
+        'Esses três raios formam uma bolha, a Bolha Tripla de São Miguel Arcanjo.',
+        'Ela envolve todo o seu ser a partir desse centro, como um invólucro sagrado.',
+        'A camada externa, no tom azul anil, é a que protege.',
+        'A camada amarela, intermediária, dá sabedoria e discernimento.',
+        'A de dentro, onde você se vê, é o cor-de-rosa do puro amor incondicional.',
+        'Quando vir a bolha pronta, diga três vezes: “Bolha Tripla de São Miguel, ativar”.',
+        'Cumpra seus compromissos e, ao voltar para casa em segurança, diga: “Bolha Tripla de São Miguel, desativar”.',
+        'A ativação e a desativação são importantes para garantir a sua segurança.',
+        'Se você esquecer, não há nenhum efeito colateral: a bolha se dispersa naturalmente.',
+      ],
+    },
   ],
 };
