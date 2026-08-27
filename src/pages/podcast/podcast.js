@@ -1,5 +1,5 @@
 /**
- * Podcast — comportamento
+ * Webrádio — comportamento
  *
  * O mesmo par das outras páginas novas: quebrar o título em letras e conduzir
  * a entrada, com os números do Oráculo (0,55s, `power3.out`, 0,035s entre

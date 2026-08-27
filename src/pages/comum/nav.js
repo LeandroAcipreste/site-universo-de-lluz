@@ -32,7 +32,7 @@ export const ENTRADAS = [
      card do fim daquela página encontra a entrada no lugar onde já estava
      olhando. */
   { rotulo: 'Livro', caminho: '/book' },
-  { rotulo: 'Podcast', caminho: '/podcast' },
+  { rotulo: 'Webrádio', caminho: '/podcast' },
   { rotulo: 'YouTube', caminho: '/youtube' },
 ];
 
