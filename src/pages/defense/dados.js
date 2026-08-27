@@ -64,7 +64,7 @@ export const DEFESAS = {
     },
     {
       tag: 'DEF_04',
-      title: 'Bolha Tripla de Miguel”',
+      title: 'Bolha Tripla de São Miguel',
       description: 'Para fazerao sair de casa.',
       cardLines: [
         'Para proteção energética constante, utilize o poder das plantas.',
