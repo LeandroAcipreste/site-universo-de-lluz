@@ -48,24 +48,33 @@ export function createHero(root) {
      forma, porque a largura pode mudar ao girar o aparelho. */
   const gatilho = menu.querySelector('.menu__gatilho');
 
-  /* Um trinco contra o clique fantasma. Num aparelho de toque, um único toque
-     produz uma sequência inteira — `touchend`, `mousedown`, `mouseup`,
-     `click` —, e quando alguma camada sai de baixo do dedo no meio disso o
-     WebKit chega a entregar dois `click`. Num alternador, dois cliques na
-     mesma ação é abrir e fechar de uma vez: o menu pisca e volta ao que
-     estava.
+  /* ── Abrir e fechar ──
 
-     350ms é mais que a distância entre os dois eventos de um toque e menos
-     que a de dois toques deliberados. */
-  let ultimoToque = 0;
+     Tudo aqui passa por **um** ouvinte, de `pointerdown`, na **fase de
+     captura do documento**. Não é elegância: é o que fez o X finalmente
+     fechar.
 
-  /** Deixa passar um toque só por vez. `false` quer dizer "isto é fantasma". */
-  function podeAlternar() {
-    const agora = Date.now();
-    if (agora - ultimoToque < 350) return false;
-    ultimoToque = agora;
-    return true;
-  }
+     A tentativa anterior pendurava `click` no botão e outro na folha, e
+     confiava em `z-index: 80` contra 70 para o toque no X chegar ao botão.
+     Não chegava. Com a folha aberta ela é uma camada de tela cheia com
+     `backdrop-filter`, e quando duas camadas assim se sobrepõem no celular o
+     teste de toque não segue a ordem de pintura que o CSS promete — o clique
+     ia parar em qualquer lugar, ou em lugar nenhum.
+
+     Na captura do documento não há a quem perguntar: todo toque na página
+     passa por aqui **antes** de chegar a qualquer elemento, seja qual for a
+     camada que o receba, e ninguém no caminho pode engoli-lo. Quem decide o
+     que fazer é `evento.target` — se caiu no gatilho, alterna; se caiu na
+     folha aberta fora de um link, fecha. As duas rotas dão o mesmo resultado
+     quando o alvo é ambíguo, que é o caso do X.
+
+     E `pointerdown` em vez de `click` porque ele dispara **uma vez** por
+     toque. O clique fantasma — os dois `click` que o WebKit entrega quando
+     uma camada sai de baixo do dedo — simplesmente não existe neste evento,
+     e o trinco de 350ms que havia aqui deixa de ser necessário. */
+
+  /** Até quando ignorar o `click` sintético que vem depois do toque. */
+  let travaAte = 0;
 
   function alternar(abrir) {
     menu.classList.toggle('esta-aberto', abrir);
@@ -73,28 +82,46 @@ export function createHero(root) {
     gatilho.setAttribute('aria-label', abrir ? 'Fechar menu' : 'Abrir menu');
   }
 
-  gatilho.addEventListener('click', () => {
-    if (!podeAlternar()) return;
-    alternar(!menu.classList.contains('esta-aberto'));
-  });
+  document.addEventListener('pointerdown', (evento) => {
+    const alvo = evento.target;
+    if (!(alvo instanceof Element)) return;
 
-  /* Tocar na folha, fora dos links, fecha.
+    const aberto = menu.classList.contains('esta-aberto');
 
-     E isto não é só o conforto de fechar tocando no fundo: é o que garante o
-     X. Com a folha aberta ela é uma camada de tela cheia com
-     `backdrop-filter`, e no WebKit uma camada dessas insiste em receber o
-     toque mesmo com o gatilho declarado acima dela (`z-index: 80` contra 70).
-     Quando isso acontece o clique nunca chega ao botão e o X não fecha nada.
-     Com o ouvinte aqui, o toque fecha por onde quer que ele entre — e como
-     este fecha em vez de alternar, as duas rotas juntas dão o mesmo
-     resultado. */
-  const lista = menu.querySelector('.menu__lista');
+    if (alvo.closest('.menu__gatilho')) {
+      alternar(!aberto);
+      travaAte = Date.now() + 400;
+      return;
+    }
 
-  lista.addEventListener('click', (evento) => {
-    /* Um link cuida de si logo abaixo — e o gatilho não está aqui dentro. */
-    if (evento.target.closest('.menu__item')) return;
-    if (!podeAlternar()) return;
+    /* Com a folha fechada não há mais nada a fazer — e é isto que deixa o
+       desktop intocado, onde ela nunca está aberta. */
+    if (!aberto) return;
+
+    /* Um link fecha e navega sozinho, no `click` lá embaixo. Fechar já aqui
+       tiraria a folha de baixo do dedo antes do clique, e a navegação se
+       perderia. */
+    if (alvo.closest('.menu__item')) return;
+
+    /* Sobrou o fundo da folha: fecha. */
     alternar(false);
+    travaAte = Date.now() + 400;
+  }, true);
+
+  /* O `click` que o navegador sintetiza depois do toque cai sobre a camada
+     que acabou de mudar — e, com a folha abrindo, isso é um link no meio da
+     tela. Sem esta trava, abrir o menu navegava para a página que por acaso
+     estivesse sob o dedo. */
+  document.addEventListener('click', (evento) => {
+    if (Date.now() >= travaAte) return;
+    evento.preventDefault();
+    evento.stopPropagation();
+  }, true);
+
+  /* O teclado não passa por `pointerdown`: Enter e Espaço no botão chegam
+     como `click`, e a trava acima já terá vencido. */
+  gatilho.addEventListener('click', () => {
+    alternar(!menu.classList.contains('esta-aberto'));
   });
 
   /* Tocar num item fecha a folha. A navegação leva um instante — a transição
