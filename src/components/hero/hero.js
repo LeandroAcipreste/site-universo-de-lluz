@@ -59,24 +59,57 @@ export function createHero(root) {
      que a de dois toques deliberados. */
   let ultimoToque = 0;
 
-  gatilho.addEventListener('click', () => {
+  /** Deixa passar um toque só por vez. `false` quer dizer "isto é fantasma". */
+  function podeAlternar() {
     const agora = Date.now();
-    if (agora - ultimoToque < 350) return;
+    if (agora - ultimoToque < 350) return false;
     ultimoToque = agora;
+    return true;
+  }
 
-    const aberto = menu.classList.toggle('esta-aberto');
-    gatilho.setAttribute('aria-expanded', String(aberto));
+  function alternar(abrir) {
+    menu.classList.toggle('esta-aberto', abrir);
+    gatilho.setAttribute('aria-expanded', String(abrir));
+    gatilho.setAttribute('aria-label', abrir ? 'Fechar menu' : 'Abrir menu');
+  }
+
+  gatilho.addEventListener('click', () => {
+    if (!podeAlternar()) return;
+    alternar(!menu.classList.contains('esta-aberto'));
+  });
+
+  /* Tocar na folha, fora dos links, fecha.
+
+     E isto não é só o conforto de fechar tocando no fundo: é o que garante o
+     X. Com a folha aberta ela é uma camada de tela cheia com
+     `backdrop-filter`, e no WebKit uma camada dessas insiste em receber o
+     toque mesmo com o gatilho declarado acima dela (`z-index: 80` contra 70).
+     Quando isso acontece o clique nunca chega ao botão e o X não fecha nada.
+     Com o ouvinte aqui, o toque fecha por onde quer que ele entre — e como
+     este fecha em vez de alternar, as duas rotas juntas dão o mesmo
+     resultado. */
+  const lista = menu.querySelector('.menu__lista');
+
+  lista.addEventListener('click', (evento) => {
+    /* Um link cuida de si logo abaixo — e o gatilho não está aqui dentro. */
+    if (evento.target.closest('.menu__item')) return;
+    if (!podeAlternar()) return;
+    alternar(false);
   });
 
   /* Tocar num item fecha a folha. A navegação leva um instante — a transição
      entre páginas é do navegador —, e sem isto a folha fica aberta por cima da
      página que está saindo. */
   for (const item of menu.querySelectorAll('.menu__item')) {
-    item.addEventListener('click', () => {
-      menu.classList.remove('esta-aberto');
-      gatilho.setAttribute('aria-expanded', 'false');
-    });
+    item.addEventListener('click', () => alternar(false));
   }
+
+  /* No teclado, Escape — como na barra das páginas internas. */
+  window.addEventListener('keydown', (evento) => {
+    if (evento.key === 'Escape' && menu.classList.contains('esta-aberto')) {
+      alternar(false);
+    }
+  });
 
   /* A troca de página não é daqui: é da transição em `src/transicao.css`,
      que o navegador conduz sozinho — a página que sai sobe, a que entra vem de
