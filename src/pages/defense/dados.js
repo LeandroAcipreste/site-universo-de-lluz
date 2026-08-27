@@ -64,8 +64,8 @@ export const DEFESAS = {
     },
     {
       tag: 'DEF_04',
-      title: 'Bolha Tripla de São Miguel',
-      description: 'Para fazerao sair de casa.',
+      title: 'PROTEÇÃO DAS PLANTAS SAGRADAS',
+      description: 'para proteger o ambiente',
       cardLines: [
         'Para proteção energética constante, utilize o poder das plantas.',
         'Coloque vasos em vários pontos estratégicos da sua casa ou comércio.',
